@@ -1,7 +1,63 @@
-# source: http://localhost:4466/tweef/dev
-# timestamp: Thu Nov 29 2018 10:28:24 GMT-0600 (Central Standard Time)
+# source: http://localhost:4466/tweef1/dev
+# timestamp: Tue Jan 01 2019 21:22:38 GMT-0600 (Central Standard Time)
+
+type AggregateCoral {
+  count: Int!
+}
+
+type AggregateEquipment {
+  count: Int!
+}
+
+type AggregateFollower {
+  count: Int!
+}
+
+type AggregateFollowing {
+  count: Int!
+}
+
+type AggregateLikeCoral {
+  count: Int!
+}
+
+type AggregateLikeTank {
+  count: Int!
+}
+
+type AggregateLikeTankPost {
+  count: Int!
+}
+
+type AggregateLikeTankReply {
+  count: Int!
+}
+
+type AggregateProfile {
+  count: Int!
+}
+
+type AggregateTank {
+  count: Int!
+}
+
+type AggregateTankImage {
+  count: Int!
+}
+
+type AggregateTankPost {
+  count: Int!
+}
+
+type AggregateTankReply {
+  count: Int!
+}
 
 type AggregateUser {
+  count: Int!
+}
+
+type AggregateWaterParameters {
   count: Int!
 }
 
@@ -10,10 +66,2299 @@ type BatchPayload {
   count: Long!
 }
 
+type Coral implements Node {
+  id: ID!
+  profile: Profile!
+  price: Float!
+  user: User!
+  images: [String!]!
+  largeImages: [String!]!
+  likes(where: LikeCoralWhereInput, orderBy: LikeCoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeCoral!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type CoralConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CoralEdge]!
+  aggregate: AggregateCoral!
+}
+
+input CoralCreateimagesInput {
+  set: [String!]
+}
+
+input CoralCreateInput {
+  price: Float!
+  images: CoralCreateimagesInput
+  largeImages: CoralCreatelargeImagesInput
+  profile: ProfileCreateOneWithoutCoralsInput!
+  user: UserCreateOneInput!
+  likes: LikeCoralCreateManyWithoutCoralInput
+}
+
+input CoralCreatelargeImagesInput {
+  set: [String!]
+}
+
+input CoralCreateManyWithoutProfileInput {
+  create: [CoralCreateWithoutProfileInput!]
+  connect: [CoralWhereUniqueInput!]
+}
+
+input CoralCreateOneWithoutLikesInput {
+  create: CoralCreateWithoutLikesInput
+  connect: CoralWhereUniqueInput
+}
+
+input CoralCreateWithoutLikesInput {
+  price: Float!
+  images: CoralCreateimagesInput
+  largeImages: CoralCreatelargeImagesInput
+  profile: ProfileCreateOneWithoutCoralsInput!
+  user: UserCreateOneInput!
+}
+
+input CoralCreateWithoutProfileInput {
+  price: Float!
+  images: CoralCreateimagesInput
+  largeImages: CoralCreatelargeImagesInput
+  user: UserCreateOneInput!
+  likes: LikeCoralCreateManyWithoutCoralInput
+}
+
+"""An edge in a connection."""
+type CoralEdge {
+  """The item at the end of the edge."""
+  node: Coral!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CoralOrderByInput {
+  id_ASC
+  id_DESC
+  price_ASC
+  price_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CoralPreviousValues {
+  id: ID!
+  price: Float!
+  images: [String!]!
+  largeImages: [String!]!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type CoralSubscriptionPayload {
+  mutation: MutationType!
+  node: Coral
+  updatedFields: [String!]
+  previousValues: CoralPreviousValues
+}
+
+input CoralSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CoralSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CoralSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CoralSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CoralWhereInput
+}
+
+input CoralUpdateimagesInput {
+  set: [String!]
+}
+
+input CoralUpdateInput {
+  price: Float
+  images: CoralUpdateimagesInput
+  largeImages: CoralUpdatelargeImagesInput
+  profile: ProfileUpdateOneRequiredWithoutCoralsInput
+  user: UserUpdateOneRequiredInput
+  likes: LikeCoralUpdateManyWithoutCoralInput
+}
+
+input CoralUpdatelargeImagesInput {
+  set: [String!]
+}
+
+input CoralUpdateManyMutationInput {
+  price: Float
+  images: CoralUpdateimagesInput
+  largeImages: CoralUpdatelargeImagesInput
+}
+
+input CoralUpdateManyWithoutProfileInput {
+  create: [CoralCreateWithoutProfileInput!]
+  connect: [CoralWhereUniqueInput!]
+  disconnect: [CoralWhereUniqueInput!]
+  delete: [CoralWhereUniqueInput!]
+  update: [CoralUpdateWithWhereUniqueWithoutProfileInput!]
+  upsert: [CoralUpsertWithWhereUniqueWithoutProfileInput!]
+}
+
+input CoralUpdateOneRequiredWithoutLikesInput {
+  create: CoralCreateWithoutLikesInput
+  connect: CoralWhereUniqueInput
+  update: CoralUpdateWithoutLikesDataInput
+  upsert: CoralUpsertWithoutLikesInput
+}
+
+input CoralUpdateWithoutLikesDataInput {
+  price: Float
+  images: CoralUpdateimagesInput
+  largeImages: CoralUpdatelargeImagesInput
+  profile: ProfileUpdateOneRequiredWithoutCoralsInput
+  user: UserUpdateOneRequiredInput
+}
+
+input CoralUpdateWithoutProfileDataInput {
+  price: Float
+  images: CoralUpdateimagesInput
+  largeImages: CoralUpdatelargeImagesInput
+  user: UserUpdateOneRequiredInput
+  likes: LikeCoralUpdateManyWithoutCoralInput
+}
+
+input CoralUpdateWithWhereUniqueWithoutProfileInput {
+  where: CoralWhereUniqueInput!
+  data: CoralUpdateWithoutProfileDataInput!
+}
+
+input CoralUpsertWithoutLikesInput {
+  update: CoralUpdateWithoutLikesDataInput!
+  create: CoralCreateWithoutLikesInput!
+}
+
+input CoralUpsertWithWhereUniqueWithoutProfileInput {
+  where: CoralWhereUniqueInput!
+  update: CoralUpdateWithoutProfileDataInput!
+  create: CoralCreateWithoutProfileInput!
+}
+
+input CoralWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CoralWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CoralWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CoralWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  price: Float
+
+  """All values that are not equal to given value."""
+  price_not: Float
+
+  """All values that are contained in given list."""
+  price_in: [Float!]
+
+  """All values that are not contained in given list."""
+  price_not_in: [Float!]
+
+  """All values less than the given value."""
+  price_lt: Float
+
+  """All values less than or equal the given value."""
+  price_lte: Float
+
+  """All values greater than the given value."""
+  price_gt: Float
+
+  """All values greater than or equal the given value."""
+  price_gte: Float
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  profile: ProfileWhereInput
+  user: UserWhereInput
+  likes_every: LikeCoralWhereInput
+  likes_some: LikeCoralWhereInput
+  likes_none: LikeCoralWhereInput
+}
+
+input CoralWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
+
+type Equipment implements Node {
+  id: ID!
+  tank: Tank!
+  tankDimensions: String!
+  glassType: String!
+  calrx: String!
+  salt: String!
+  lighting: String!
+  skimmer: String!
+  algaeScrubber: String!
+  powerhead: String!
+  liverock: String!
+  sand: String!
+  heater: String!
+  testKits: String!
+  addictives: String!
+  dosingPumps: String!
+  others: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type EquipmentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [EquipmentEdge]!
+  aggregate: AggregateEquipment!
+}
+
+input EquipmentCreateInput {
+  tankDimensions: String!
+  glassType: String!
+  calrx: String!
+  salt: String!
+  lighting: String!
+  skimmer: String!
+  algaeScrubber: String!
+  powerhead: String!
+  liverock: String!
+  sand: String!
+  heater: String!
+  testKits: String!
+  addictives: String!
+  dosingPumps: String!
+  others: String!
+  tank: TankCreateOneWithoutEquipementInput!
+}
+
+input EquipmentCreateOneWithoutTankInput {
+  create: EquipmentCreateWithoutTankInput
+  connect: EquipmentWhereUniqueInput
+}
+
+input EquipmentCreateWithoutTankInput {
+  tankDimensions: String!
+  glassType: String!
+  calrx: String!
+  salt: String!
+  lighting: String!
+  skimmer: String!
+  algaeScrubber: String!
+  powerhead: String!
+  liverock: String!
+  sand: String!
+  heater: String!
+  testKits: String!
+  addictives: String!
+  dosingPumps: String!
+  others: String!
+}
+
+"""An edge in a connection."""
+type EquipmentEdge {
+  """The item at the end of the edge."""
+  node: Equipment!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum EquipmentOrderByInput {
+  id_ASC
+  id_DESC
+  tankDimensions_ASC
+  tankDimensions_DESC
+  glassType_ASC
+  glassType_DESC
+  calrx_ASC
+  calrx_DESC
+  salt_ASC
+  salt_DESC
+  lighting_ASC
+  lighting_DESC
+  skimmer_ASC
+  skimmer_DESC
+  algaeScrubber_ASC
+  algaeScrubber_DESC
+  powerhead_ASC
+  powerhead_DESC
+  liverock_ASC
+  liverock_DESC
+  sand_ASC
+  sand_DESC
+  heater_ASC
+  heater_DESC
+  testKits_ASC
+  testKits_DESC
+  addictives_ASC
+  addictives_DESC
+  dosingPumps_ASC
+  dosingPumps_DESC
+  others_ASC
+  others_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type EquipmentPreviousValues {
+  id: ID!
+  tankDimensions: String!
+  glassType: String!
+  calrx: String!
+  salt: String!
+  lighting: String!
+  skimmer: String!
+  algaeScrubber: String!
+  powerhead: String!
+  liverock: String!
+  sand: String!
+  heater: String!
+  testKits: String!
+  addictives: String!
+  dosingPumps: String!
+  others: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type EquipmentSubscriptionPayload {
+  mutation: MutationType!
+  node: Equipment
+  updatedFields: [String!]
+  previousValues: EquipmentPreviousValues
+}
+
+input EquipmentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EquipmentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EquipmentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EquipmentSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: EquipmentWhereInput
+}
+
+input EquipmentUpdateInput {
+  tankDimensions: String
+  glassType: String
+  calrx: String
+  salt: String
+  lighting: String
+  skimmer: String
+  algaeScrubber: String
+  powerhead: String
+  liverock: String
+  sand: String
+  heater: String
+  testKits: String
+  addictives: String
+  dosingPumps: String
+  others: String
+  tank: TankUpdateOneRequiredWithoutEquipementInput
+}
+
+input EquipmentUpdateManyMutationInput {
+  tankDimensions: String
+  glassType: String
+  calrx: String
+  salt: String
+  lighting: String
+  skimmer: String
+  algaeScrubber: String
+  powerhead: String
+  liverock: String
+  sand: String
+  heater: String
+  testKits: String
+  addictives: String
+  dosingPumps: String
+  others: String
+}
+
+input EquipmentUpdateOneWithoutTankInput {
+  create: EquipmentCreateWithoutTankInput
+  connect: EquipmentWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: EquipmentUpdateWithoutTankDataInput
+  upsert: EquipmentUpsertWithoutTankInput
+}
+
+input EquipmentUpdateWithoutTankDataInput {
+  tankDimensions: String
+  glassType: String
+  calrx: String
+  salt: String
+  lighting: String
+  skimmer: String
+  algaeScrubber: String
+  powerhead: String
+  liverock: String
+  sand: String
+  heater: String
+  testKits: String
+  addictives: String
+  dosingPumps: String
+  others: String
+}
+
+input EquipmentUpsertWithoutTankInput {
+  update: EquipmentUpdateWithoutTankDataInput!
+  create: EquipmentCreateWithoutTankInput!
+}
+
+input EquipmentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EquipmentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EquipmentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EquipmentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  tankDimensions: String
+
+  """All values that are not equal to given value."""
+  tankDimensions_not: String
+
+  """All values that are contained in given list."""
+  tankDimensions_in: [String!]
+
+  """All values that are not contained in given list."""
+  tankDimensions_not_in: [String!]
+
+  """All values less than the given value."""
+  tankDimensions_lt: String
+
+  """All values less than or equal the given value."""
+  tankDimensions_lte: String
+
+  """All values greater than the given value."""
+  tankDimensions_gt: String
+
+  """All values greater than or equal the given value."""
+  tankDimensions_gte: String
+
+  """All values containing the given string."""
+  tankDimensions_contains: String
+
+  """All values not containing the given string."""
+  tankDimensions_not_contains: String
+
+  """All values starting with the given string."""
+  tankDimensions_starts_with: String
+
+  """All values not starting with the given string."""
+  tankDimensions_not_starts_with: String
+
+  """All values ending with the given string."""
+  tankDimensions_ends_with: String
+
+  """All values not ending with the given string."""
+  tankDimensions_not_ends_with: String
+  glassType: String
+
+  """All values that are not equal to given value."""
+  glassType_not: String
+
+  """All values that are contained in given list."""
+  glassType_in: [String!]
+
+  """All values that are not contained in given list."""
+  glassType_not_in: [String!]
+
+  """All values less than the given value."""
+  glassType_lt: String
+
+  """All values less than or equal the given value."""
+  glassType_lte: String
+
+  """All values greater than the given value."""
+  glassType_gt: String
+
+  """All values greater than or equal the given value."""
+  glassType_gte: String
+
+  """All values containing the given string."""
+  glassType_contains: String
+
+  """All values not containing the given string."""
+  glassType_not_contains: String
+
+  """All values starting with the given string."""
+  glassType_starts_with: String
+
+  """All values not starting with the given string."""
+  glassType_not_starts_with: String
+
+  """All values ending with the given string."""
+  glassType_ends_with: String
+
+  """All values not ending with the given string."""
+  glassType_not_ends_with: String
+  calrx: String
+
+  """All values that are not equal to given value."""
+  calrx_not: String
+
+  """All values that are contained in given list."""
+  calrx_in: [String!]
+
+  """All values that are not contained in given list."""
+  calrx_not_in: [String!]
+
+  """All values less than the given value."""
+  calrx_lt: String
+
+  """All values less than or equal the given value."""
+  calrx_lte: String
+
+  """All values greater than the given value."""
+  calrx_gt: String
+
+  """All values greater than or equal the given value."""
+  calrx_gte: String
+
+  """All values containing the given string."""
+  calrx_contains: String
+
+  """All values not containing the given string."""
+  calrx_not_contains: String
+
+  """All values starting with the given string."""
+  calrx_starts_with: String
+
+  """All values not starting with the given string."""
+  calrx_not_starts_with: String
+
+  """All values ending with the given string."""
+  calrx_ends_with: String
+
+  """All values not ending with the given string."""
+  calrx_not_ends_with: String
+  salt: String
+
+  """All values that are not equal to given value."""
+  salt_not: String
+
+  """All values that are contained in given list."""
+  salt_in: [String!]
+
+  """All values that are not contained in given list."""
+  salt_not_in: [String!]
+
+  """All values less than the given value."""
+  salt_lt: String
+
+  """All values less than or equal the given value."""
+  salt_lte: String
+
+  """All values greater than the given value."""
+  salt_gt: String
+
+  """All values greater than or equal the given value."""
+  salt_gte: String
+
+  """All values containing the given string."""
+  salt_contains: String
+
+  """All values not containing the given string."""
+  salt_not_contains: String
+
+  """All values starting with the given string."""
+  salt_starts_with: String
+
+  """All values not starting with the given string."""
+  salt_not_starts_with: String
+
+  """All values ending with the given string."""
+  salt_ends_with: String
+
+  """All values not ending with the given string."""
+  salt_not_ends_with: String
+  lighting: String
+
+  """All values that are not equal to given value."""
+  lighting_not: String
+
+  """All values that are contained in given list."""
+  lighting_in: [String!]
+
+  """All values that are not contained in given list."""
+  lighting_not_in: [String!]
+
+  """All values less than the given value."""
+  lighting_lt: String
+
+  """All values less than or equal the given value."""
+  lighting_lte: String
+
+  """All values greater than the given value."""
+  lighting_gt: String
+
+  """All values greater than or equal the given value."""
+  lighting_gte: String
+
+  """All values containing the given string."""
+  lighting_contains: String
+
+  """All values not containing the given string."""
+  lighting_not_contains: String
+
+  """All values starting with the given string."""
+  lighting_starts_with: String
+
+  """All values not starting with the given string."""
+  lighting_not_starts_with: String
+
+  """All values ending with the given string."""
+  lighting_ends_with: String
+
+  """All values not ending with the given string."""
+  lighting_not_ends_with: String
+  skimmer: String
+
+  """All values that are not equal to given value."""
+  skimmer_not: String
+
+  """All values that are contained in given list."""
+  skimmer_in: [String!]
+
+  """All values that are not contained in given list."""
+  skimmer_not_in: [String!]
+
+  """All values less than the given value."""
+  skimmer_lt: String
+
+  """All values less than or equal the given value."""
+  skimmer_lte: String
+
+  """All values greater than the given value."""
+  skimmer_gt: String
+
+  """All values greater than or equal the given value."""
+  skimmer_gte: String
+
+  """All values containing the given string."""
+  skimmer_contains: String
+
+  """All values not containing the given string."""
+  skimmer_not_contains: String
+
+  """All values starting with the given string."""
+  skimmer_starts_with: String
+
+  """All values not starting with the given string."""
+  skimmer_not_starts_with: String
+
+  """All values ending with the given string."""
+  skimmer_ends_with: String
+
+  """All values not ending with the given string."""
+  skimmer_not_ends_with: String
+  algaeScrubber: String
+
+  """All values that are not equal to given value."""
+  algaeScrubber_not: String
+
+  """All values that are contained in given list."""
+  algaeScrubber_in: [String!]
+
+  """All values that are not contained in given list."""
+  algaeScrubber_not_in: [String!]
+
+  """All values less than the given value."""
+  algaeScrubber_lt: String
+
+  """All values less than or equal the given value."""
+  algaeScrubber_lte: String
+
+  """All values greater than the given value."""
+  algaeScrubber_gt: String
+
+  """All values greater than or equal the given value."""
+  algaeScrubber_gte: String
+
+  """All values containing the given string."""
+  algaeScrubber_contains: String
+
+  """All values not containing the given string."""
+  algaeScrubber_not_contains: String
+
+  """All values starting with the given string."""
+  algaeScrubber_starts_with: String
+
+  """All values not starting with the given string."""
+  algaeScrubber_not_starts_with: String
+
+  """All values ending with the given string."""
+  algaeScrubber_ends_with: String
+
+  """All values not ending with the given string."""
+  algaeScrubber_not_ends_with: String
+  powerhead: String
+
+  """All values that are not equal to given value."""
+  powerhead_not: String
+
+  """All values that are contained in given list."""
+  powerhead_in: [String!]
+
+  """All values that are not contained in given list."""
+  powerhead_not_in: [String!]
+
+  """All values less than the given value."""
+  powerhead_lt: String
+
+  """All values less than or equal the given value."""
+  powerhead_lte: String
+
+  """All values greater than the given value."""
+  powerhead_gt: String
+
+  """All values greater than or equal the given value."""
+  powerhead_gte: String
+
+  """All values containing the given string."""
+  powerhead_contains: String
+
+  """All values not containing the given string."""
+  powerhead_not_contains: String
+
+  """All values starting with the given string."""
+  powerhead_starts_with: String
+
+  """All values not starting with the given string."""
+  powerhead_not_starts_with: String
+
+  """All values ending with the given string."""
+  powerhead_ends_with: String
+
+  """All values not ending with the given string."""
+  powerhead_not_ends_with: String
+  liverock: String
+
+  """All values that are not equal to given value."""
+  liverock_not: String
+
+  """All values that are contained in given list."""
+  liverock_in: [String!]
+
+  """All values that are not contained in given list."""
+  liverock_not_in: [String!]
+
+  """All values less than the given value."""
+  liverock_lt: String
+
+  """All values less than or equal the given value."""
+  liverock_lte: String
+
+  """All values greater than the given value."""
+  liverock_gt: String
+
+  """All values greater than or equal the given value."""
+  liverock_gte: String
+
+  """All values containing the given string."""
+  liverock_contains: String
+
+  """All values not containing the given string."""
+  liverock_not_contains: String
+
+  """All values starting with the given string."""
+  liverock_starts_with: String
+
+  """All values not starting with the given string."""
+  liverock_not_starts_with: String
+
+  """All values ending with the given string."""
+  liverock_ends_with: String
+
+  """All values not ending with the given string."""
+  liverock_not_ends_with: String
+  sand: String
+
+  """All values that are not equal to given value."""
+  sand_not: String
+
+  """All values that are contained in given list."""
+  sand_in: [String!]
+
+  """All values that are not contained in given list."""
+  sand_not_in: [String!]
+
+  """All values less than the given value."""
+  sand_lt: String
+
+  """All values less than or equal the given value."""
+  sand_lte: String
+
+  """All values greater than the given value."""
+  sand_gt: String
+
+  """All values greater than or equal the given value."""
+  sand_gte: String
+
+  """All values containing the given string."""
+  sand_contains: String
+
+  """All values not containing the given string."""
+  sand_not_contains: String
+
+  """All values starting with the given string."""
+  sand_starts_with: String
+
+  """All values not starting with the given string."""
+  sand_not_starts_with: String
+
+  """All values ending with the given string."""
+  sand_ends_with: String
+
+  """All values not ending with the given string."""
+  sand_not_ends_with: String
+  heater: String
+
+  """All values that are not equal to given value."""
+  heater_not: String
+
+  """All values that are contained in given list."""
+  heater_in: [String!]
+
+  """All values that are not contained in given list."""
+  heater_not_in: [String!]
+
+  """All values less than the given value."""
+  heater_lt: String
+
+  """All values less than or equal the given value."""
+  heater_lte: String
+
+  """All values greater than the given value."""
+  heater_gt: String
+
+  """All values greater than or equal the given value."""
+  heater_gte: String
+
+  """All values containing the given string."""
+  heater_contains: String
+
+  """All values not containing the given string."""
+  heater_not_contains: String
+
+  """All values starting with the given string."""
+  heater_starts_with: String
+
+  """All values not starting with the given string."""
+  heater_not_starts_with: String
+
+  """All values ending with the given string."""
+  heater_ends_with: String
+
+  """All values not ending with the given string."""
+  heater_not_ends_with: String
+  testKits: String
+
+  """All values that are not equal to given value."""
+  testKits_not: String
+
+  """All values that are contained in given list."""
+  testKits_in: [String!]
+
+  """All values that are not contained in given list."""
+  testKits_not_in: [String!]
+
+  """All values less than the given value."""
+  testKits_lt: String
+
+  """All values less than or equal the given value."""
+  testKits_lte: String
+
+  """All values greater than the given value."""
+  testKits_gt: String
+
+  """All values greater than or equal the given value."""
+  testKits_gte: String
+
+  """All values containing the given string."""
+  testKits_contains: String
+
+  """All values not containing the given string."""
+  testKits_not_contains: String
+
+  """All values starting with the given string."""
+  testKits_starts_with: String
+
+  """All values not starting with the given string."""
+  testKits_not_starts_with: String
+
+  """All values ending with the given string."""
+  testKits_ends_with: String
+
+  """All values not ending with the given string."""
+  testKits_not_ends_with: String
+  addictives: String
+
+  """All values that are not equal to given value."""
+  addictives_not: String
+
+  """All values that are contained in given list."""
+  addictives_in: [String!]
+
+  """All values that are not contained in given list."""
+  addictives_not_in: [String!]
+
+  """All values less than the given value."""
+  addictives_lt: String
+
+  """All values less than or equal the given value."""
+  addictives_lte: String
+
+  """All values greater than the given value."""
+  addictives_gt: String
+
+  """All values greater than or equal the given value."""
+  addictives_gte: String
+
+  """All values containing the given string."""
+  addictives_contains: String
+
+  """All values not containing the given string."""
+  addictives_not_contains: String
+
+  """All values starting with the given string."""
+  addictives_starts_with: String
+
+  """All values not starting with the given string."""
+  addictives_not_starts_with: String
+
+  """All values ending with the given string."""
+  addictives_ends_with: String
+
+  """All values not ending with the given string."""
+  addictives_not_ends_with: String
+  dosingPumps: String
+
+  """All values that are not equal to given value."""
+  dosingPumps_not: String
+
+  """All values that are contained in given list."""
+  dosingPumps_in: [String!]
+
+  """All values that are not contained in given list."""
+  dosingPumps_not_in: [String!]
+
+  """All values less than the given value."""
+  dosingPumps_lt: String
+
+  """All values less than or equal the given value."""
+  dosingPumps_lte: String
+
+  """All values greater than the given value."""
+  dosingPumps_gt: String
+
+  """All values greater than or equal the given value."""
+  dosingPumps_gte: String
+
+  """All values containing the given string."""
+  dosingPumps_contains: String
+
+  """All values not containing the given string."""
+  dosingPumps_not_contains: String
+
+  """All values starting with the given string."""
+  dosingPumps_starts_with: String
+
+  """All values not starting with the given string."""
+  dosingPumps_not_starts_with: String
+
+  """All values ending with the given string."""
+  dosingPumps_ends_with: String
+
+  """All values not ending with the given string."""
+  dosingPumps_not_ends_with: String
+  others: String
+
+  """All values that are not equal to given value."""
+  others_not: String
+
+  """All values that are contained in given list."""
+  others_in: [String!]
+
+  """All values that are not contained in given list."""
+  others_not_in: [String!]
+
+  """All values less than the given value."""
+  others_lt: String
+
+  """All values less than or equal the given value."""
+  others_lte: String
+
+  """All values greater than the given value."""
+  others_gt: String
+
+  """All values greater than or equal the given value."""
+  others_gte: String
+
+  """All values containing the given string."""
+  others_contains: String
+
+  """All values not containing the given string."""
+  others_not_contains: String
+
+  """All values starting with the given string."""
+  others_starts_with: String
+
+  """All values not starting with the given string."""
+  others_not_starts_with: String
+
+  """All values ending with the given string."""
+  others_ends_with: String
+
+  """All values not ending with the given string."""
+  others_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  tank: TankWhereInput
+}
+
+input EquipmentWhereUniqueInput {
+  id: ID
+}
+
+type Follower implements Node {
+  id: ID!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type FollowerConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FollowerEdge]!
+  aggregate: AggregateFollower!
+}
+
+input FollowerCreateInput {
+  user: UserCreateOneWithoutFollowersInput!
+}
+
+input FollowerCreateManyWithoutUserInput {
+  connect: [FollowerWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type FollowerEdge {
+  """The item at the end of the edge."""
+  node: Follower!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FollowerOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FollowerPreviousValues {
+  id: ID!
+}
+
+type FollowerSubscriptionPayload {
+  mutation: MutationType!
+  node: Follower
+  updatedFields: [String!]
+  previousValues: FollowerPreviousValues
+}
+
+input FollowerSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FollowerSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FollowerSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FollowerSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FollowerWhereInput
+}
+
+input FollowerUpdateInput {
+  user: UserUpdateOneRequiredWithoutFollowersInput
+}
+
+input FollowerUpdateManyWithoutUserInput {
+  connect: [FollowerWhereUniqueInput!]
+  disconnect: [FollowerWhereUniqueInput!]
+  delete: [FollowerWhereUniqueInput!]
+}
+
+input FollowerWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FollowerWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FollowerWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FollowerWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  user: UserWhereInput
+}
+
+input FollowerWhereUniqueInput {
+  id: ID
+}
+
+type Following implements Node {
+  id: ID!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type FollowingConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FollowingEdge]!
+  aggregate: AggregateFollowing!
+}
+
+input FollowingCreateInput {
+  user: UserCreateOneWithoutFollowingsInput!
+}
+
+input FollowingCreateManyWithoutUserInput {
+  connect: [FollowingWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type FollowingEdge {
+  """The item at the end of the edge."""
+  node: Following!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FollowingOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FollowingPreviousValues {
+  id: ID!
+}
+
+type FollowingSubscriptionPayload {
+  mutation: MutationType!
+  node: Following
+  updatedFields: [String!]
+  previousValues: FollowingPreviousValues
+}
+
+input FollowingSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FollowingSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FollowingSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FollowingSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FollowingWhereInput
+}
+
+input FollowingUpdateInput {
+  user: UserUpdateOneRequiredWithoutFollowingsInput
+}
+
+input FollowingUpdateManyWithoutUserInput {
+  connect: [FollowingWhereUniqueInput!]
+  disconnect: [FollowingWhereUniqueInput!]
+  delete: [FollowingWhereUniqueInput!]
+}
+
+input FollowingWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FollowingWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FollowingWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FollowingWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  user: UserWhereInput
+}
+
+input FollowingWhereUniqueInput {
+  id: ID
+}
 
 """Raw JSON value"""
 scalar Json
+
+type LikeCoral implements Node {
+  id: ID!
+  coral: Coral!
+  author: User!
+}
+
+"""A connection to a list of items."""
+type LikeCoralConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LikeCoralEdge]!
+  aggregate: AggregateLikeCoral!
+}
+
+input LikeCoralCreateInput {
+  coral: CoralCreateOneWithoutLikesInput!
+  author: UserCreateOneInput!
+}
+
+input LikeCoralCreateManyWithoutCoralInput {
+  create: [LikeCoralCreateWithoutCoralInput!]
+  connect: [LikeCoralWhereUniqueInput!]
+}
+
+input LikeCoralCreateWithoutCoralInput {
+  author: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LikeCoralEdge {
+  """The item at the end of the edge."""
+  node: LikeCoral!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LikeCoralOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LikeCoralPreviousValues {
+  id: ID!
+}
+
+type LikeCoralSubscriptionPayload {
+  mutation: MutationType!
+  node: LikeCoral
+  updatedFields: [String!]
+  previousValues: LikeCoralPreviousValues
+}
+
+input LikeCoralSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikeCoralSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikeCoralSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikeCoralSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LikeCoralWhereInput
+}
+
+input LikeCoralUpdateInput {
+  coral: CoralUpdateOneRequiredWithoutLikesInput
+  author: UserUpdateOneRequiredInput
+}
+
+input LikeCoralUpdateManyWithoutCoralInput {
+  create: [LikeCoralCreateWithoutCoralInput!]
+  connect: [LikeCoralWhereUniqueInput!]
+  disconnect: [LikeCoralWhereUniqueInput!]
+  delete: [LikeCoralWhereUniqueInput!]
+  update: [LikeCoralUpdateWithWhereUniqueWithoutCoralInput!]
+  upsert: [LikeCoralUpsertWithWhereUniqueWithoutCoralInput!]
+}
+
+input LikeCoralUpdateWithoutCoralDataInput {
+  author: UserUpdateOneRequiredInput
+}
+
+input LikeCoralUpdateWithWhereUniqueWithoutCoralInput {
+  where: LikeCoralWhereUniqueInput!
+  data: LikeCoralUpdateWithoutCoralDataInput!
+}
+
+input LikeCoralUpsertWithWhereUniqueWithoutCoralInput {
+  where: LikeCoralWhereUniqueInput!
+  update: LikeCoralUpdateWithoutCoralDataInput!
+  create: LikeCoralCreateWithoutCoralInput!
+}
+
+input LikeCoralWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikeCoralWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikeCoralWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikeCoralWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  coral: CoralWhereInput
+  author: UserWhereInput
+}
+
+input LikeCoralWhereUniqueInput {
+  id: ID
+}
+
+type LikeTank implements Node {
+  id: ID!
+  tank: Tank!
+  author: User!
+}
+
+"""A connection to a list of items."""
+type LikeTankConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LikeTankEdge]!
+  aggregate: AggregateLikeTank!
+}
+
+input LikeTankCreateInput {
+  tank: TankCreateOneWithoutLikesInput!
+  author: UserCreateOneInput!
+}
+
+input LikeTankCreateManyWithoutTankInput {
+  create: [LikeTankCreateWithoutTankInput!]
+  connect: [LikeTankWhereUniqueInput!]
+}
+
+input LikeTankCreateWithoutTankInput {
+  author: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LikeTankEdge {
+  """The item at the end of the edge."""
+  node: LikeTank!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LikeTankOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LikeTankPost implements Node {
+  id: ID!
+  post: TankPost!
+  author: User!
+}
+
+"""A connection to a list of items."""
+type LikeTankPostConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LikeTankPostEdge]!
+  aggregate: AggregateLikeTankPost!
+}
+
+input LikeTankPostCreateInput {
+  post: TankPostCreateOneWithoutLikesInput!
+  author: UserCreateOneInput!
+}
+
+input LikeTankPostCreateManyWithoutPostInput {
+  create: [LikeTankPostCreateWithoutPostInput!]
+  connect: [LikeTankPostWhereUniqueInput!]
+}
+
+input LikeTankPostCreateWithoutPostInput {
+  author: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LikeTankPostEdge {
+  """The item at the end of the edge."""
+  node: LikeTankPost!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LikeTankPostOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LikeTankPostPreviousValues {
+  id: ID!
+}
+
+type LikeTankPostSubscriptionPayload {
+  mutation: MutationType!
+  node: LikeTankPost
+  updatedFields: [String!]
+  previousValues: LikeTankPostPreviousValues
+}
+
+input LikeTankPostSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikeTankPostSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikeTankPostSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikeTankPostSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LikeTankPostWhereInput
+}
+
+input LikeTankPostUpdateInput {
+  post: TankPostUpdateOneRequiredWithoutLikesInput
+  author: UserUpdateOneRequiredInput
+}
+
+input LikeTankPostUpdateManyWithoutPostInput {
+  create: [LikeTankPostCreateWithoutPostInput!]
+  connect: [LikeTankPostWhereUniqueInput!]
+  disconnect: [LikeTankPostWhereUniqueInput!]
+  delete: [LikeTankPostWhereUniqueInput!]
+  update: [LikeTankPostUpdateWithWhereUniqueWithoutPostInput!]
+  upsert: [LikeTankPostUpsertWithWhereUniqueWithoutPostInput!]
+}
+
+input LikeTankPostUpdateWithoutPostDataInput {
+  author: UserUpdateOneRequiredInput
+}
+
+input LikeTankPostUpdateWithWhereUniqueWithoutPostInput {
+  where: LikeTankPostWhereUniqueInput!
+  data: LikeTankPostUpdateWithoutPostDataInput!
+}
+
+input LikeTankPostUpsertWithWhereUniqueWithoutPostInput {
+  where: LikeTankPostWhereUniqueInput!
+  update: LikeTankPostUpdateWithoutPostDataInput!
+  create: LikeTankPostCreateWithoutPostInput!
+}
+
+input LikeTankPostWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikeTankPostWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikeTankPostWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikeTankPostWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  post: TankPostWhereInput
+  author: UserWhereInput
+}
+
+input LikeTankPostWhereUniqueInput {
+  id: ID
+}
+
+type LikeTankPreviousValues {
+  id: ID!
+}
+
+type LikeTankReply implements Node {
+  id: ID!
+  author: User!
+  reply: TankReply!
+}
+
+"""A connection to a list of items."""
+type LikeTankReplyConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LikeTankReplyEdge]!
+  aggregate: AggregateLikeTankReply!
+}
+
+input LikeTankReplyCreateInput {
+  author: UserCreateOneInput!
+  reply: TankReplyCreateOneWithoutLikesInput!
+}
+
+input LikeTankReplyCreateManyWithoutReplyInput {
+  create: [LikeTankReplyCreateWithoutReplyInput!]
+  connect: [LikeTankReplyWhereUniqueInput!]
+}
+
+input LikeTankReplyCreateWithoutReplyInput {
+  author: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LikeTankReplyEdge {
+  """The item at the end of the edge."""
+  node: LikeTankReply!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LikeTankReplyOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LikeTankReplyPreviousValues {
+  id: ID!
+}
+
+type LikeTankReplySubscriptionPayload {
+  mutation: MutationType!
+  node: LikeTankReply
+  updatedFields: [String!]
+  previousValues: LikeTankReplyPreviousValues
+}
+
+input LikeTankReplySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikeTankReplySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikeTankReplySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikeTankReplySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LikeTankReplyWhereInput
+}
+
+input LikeTankReplyUpdateInput {
+  author: UserUpdateOneRequiredInput
+  reply: TankReplyUpdateOneRequiredWithoutLikesInput
+}
+
+input LikeTankReplyUpdateManyWithoutReplyInput {
+  create: [LikeTankReplyCreateWithoutReplyInput!]
+  connect: [LikeTankReplyWhereUniqueInput!]
+  disconnect: [LikeTankReplyWhereUniqueInput!]
+  delete: [LikeTankReplyWhereUniqueInput!]
+  update: [LikeTankReplyUpdateWithWhereUniqueWithoutReplyInput!]
+  upsert: [LikeTankReplyUpsertWithWhereUniqueWithoutReplyInput!]
+}
+
+input LikeTankReplyUpdateWithoutReplyDataInput {
+  author: UserUpdateOneRequiredInput
+}
+
+input LikeTankReplyUpdateWithWhereUniqueWithoutReplyInput {
+  where: LikeTankReplyWhereUniqueInput!
+  data: LikeTankReplyUpdateWithoutReplyDataInput!
+}
+
+input LikeTankReplyUpsertWithWhereUniqueWithoutReplyInput {
+  where: LikeTankReplyWhereUniqueInput!
+  update: LikeTankReplyUpdateWithoutReplyDataInput!
+  create: LikeTankReplyCreateWithoutReplyInput!
+}
+
+input LikeTankReplyWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikeTankReplyWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikeTankReplyWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikeTankReplyWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  author: UserWhereInput
+  reply: TankReplyWhereInput
+}
+
+input LikeTankReplyWhereUniqueInput {
+  id: ID
+}
+
+type LikeTankSubscriptionPayload {
+  mutation: MutationType!
+  node: LikeTank
+  updatedFields: [String!]
+  previousValues: LikeTankPreviousValues
+}
+
+input LikeTankSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikeTankSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikeTankSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikeTankSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LikeTankWhereInput
+}
+
+input LikeTankUpdateInput {
+  tank: TankUpdateOneRequiredWithoutLikesInput
+  author: UserUpdateOneRequiredInput
+}
+
+input LikeTankUpdateManyWithoutTankInput {
+  create: [LikeTankCreateWithoutTankInput!]
+  connect: [LikeTankWhereUniqueInput!]
+  disconnect: [LikeTankWhereUniqueInput!]
+  delete: [LikeTankWhereUniqueInput!]
+  update: [LikeTankUpdateWithWhereUniqueWithoutTankInput!]
+  upsert: [LikeTankUpsertWithWhereUniqueWithoutTankInput!]
+}
+
+input LikeTankUpdateWithoutTankDataInput {
+  author: UserUpdateOneRequiredInput
+}
+
+input LikeTankUpdateWithWhereUniqueWithoutTankInput {
+  where: LikeTankWhereUniqueInput!
+  data: LikeTankUpdateWithoutTankDataInput!
+}
+
+input LikeTankUpsertWithWhereUniqueWithoutTankInput {
+  where: LikeTankWhereUniqueInput!
+  update: LikeTankUpdateWithoutTankDataInput!
+  create: LikeTankCreateWithoutTankInput!
+}
+
+input LikeTankWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikeTankWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikeTankWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikeTankWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  tank: TankWhereInput
+  author: UserWhereInput
+}
+
+input LikeTankWhereUniqueInput {
+  id: ID
+}
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -22,11 +2367,88 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createProfile(data: ProfileCreateInput!): Profile!
+  createTank(data: TankCreateInput!): Tank!
+  createEquipment(data: EquipmentCreateInput!): Equipment!
+  createWaterParameters(data: WaterParametersCreateInput!): WaterParameters!
+  createTankPost(data: TankPostCreateInput!): TankPost!
+  createTankReply(data: TankReplyCreateInput!): TankReply!
+  createCoral(data: CoralCreateInput!): Coral!
+  createLikeTankReply(data: LikeTankReplyCreateInput!): LikeTankReply!
+  createLikeTankPost(data: LikeTankPostCreateInput!): LikeTankPost!
+  createLikeCoral(data: LikeCoralCreateInput!): LikeCoral!
+  createLikeTank(data: LikeTankCreateInput!): LikeTank!
+  createTankImage(data: TankImageCreateInput!): TankImage!
+  createFollower(data: FollowerCreateInput!): Follower!
+  createFollowing(data: FollowingCreateInput!): Following!
   createUser(data: UserCreateInput!): User!
+  updateProfile(data: ProfileUpdateInput!, where: ProfileWhereUniqueInput!): Profile
+  updateTank(data: TankUpdateInput!, where: TankWhereUniqueInput!): Tank
+  updateEquipment(data: EquipmentUpdateInput!, where: EquipmentWhereUniqueInput!): Equipment
+  updateWaterParameters(data: WaterParametersUpdateInput!, where: WaterParametersWhereUniqueInput!): WaterParameters
+  updateTankPost(data: TankPostUpdateInput!, where: TankPostWhereUniqueInput!): TankPost
+  updateTankReply(data: TankReplyUpdateInput!, where: TankReplyWhereUniqueInput!): TankReply
+  updateCoral(data: CoralUpdateInput!, where: CoralWhereUniqueInput!): Coral
+  updateLikeTankReply(data: LikeTankReplyUpdateInput!, where: LikeTankReplyWhereUniqueInput!): LikeTankReply
+  updateLikeTankPost(data: LikeTankPostUpdateInput!, where: LikeTankPostWhereUniqueInput!): LikeTankPost
+  updateLikeCoral(data: LikeCoralUpdateInput!, where: LikeCoralWhereUniqueInput!): LikeCoral
+  updateLikeTank(data: LikeTankUpdateInput!, where: LikeTankWhereUniqueInput!): LikeTank
+  updateTankImage(data: TankImageUpdateInput!, where: TankImageWhereUniqueInput!): TankImage
+  updateFollower(data: FollowerUpdateInput!, where: FollowerWhereUniqueInput!): Follower
+  updateFollowing(data: FollowingUpdateInput!, where: FollowingWhereUniqueInput!): Following
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteProfile(where: ProfileWhereUniqueInput!): Profile
+  deleteTank(where: TankWhereUniqueInput!): Tank
+  deleteEquipment(where: EquipmentWhereUniqueInput!): Equipment
+  deleteWaterParameters(where: WaterParametersWhereUniqueInput!): WaterParameters
+  deleteTankPost(where: TankPostWhereUniqueInput!): TankPost
+  deleteTankReply(where: TankReplyWhereUniqueInput!): TankReply
+  deleteCoral(where: CoralWhereUniqueInput!): Coral
+  deleteLikeTankReply(where: LikeTankReplyWhereUniqueInput!): LikeTankReply
+  deleteLikeTankPost(where: LikeTankPostWhereUniqueInput!): LikeTankPost
+  deleteLikeCoral(where: LikeCoralWhereUniqueInput!): LikeCoral
+  deleteLikeTank(where: LikeTankWhereUniqueInput!): LikeTank
+  deleteTankImage(where: TankImageWhereUniqueInput!): TankImage
+  deleteFollower(where: FollowerWhereUniqueInput!): Follower
+  deleteFollowing(where: FollowingWhereUniqueInput!): Following
   deleteUser(where: UserWhereUniqueInput!): User
+  upsertProfile(where: ProfileWhereUniqueInput!, create: ProfileCreateInput!, update: ProfileUpdateInput!): Profile!
+  upsertTank(where: TankWhereUniqueInput!, create: TankCreateInput!, update: TankUpdateInput!): Tank!
+  upsertEquipment(where: EquipmentWhereUniqueInput!, create: EquipmentCreateInput!, update: EquipmentUpdateInput!): Equipment!
+  upsertWaterParameters(where: WaterParametersWhereUniqueInput!, create: WaterParametersCreateInput!, update: WaterParametersUpdateInput!): WaterParameters!
+  upsertTankPost(where: TankPostWhereUniqueInput!, create: TankPostCreateInput!, update: TankPostUpdateInput!): TankPost!
+  upsertTankReply(where: TankReplyWhereUniqueInput!, create: TankReplyCreateInput!, update: TankReplyUpdateInput!): TankReply!
+  upsertCoral(where: CoralWhereUniqueInput!, create: CoralCreateInput!, update: CoralUpdateInput!): Coral!
+  upsertLikeTankReply(where: LikeTankReplyWhereUniqueInput!, create: LikeTankReplyCreateInput!, update: LikeTankReplyUpdateInput!): LikeTankReply!
+  upsertLikeTankPost(where: LikeTankPostWhereUniqueInput!, create: LikeTankPostCreateInput!, update: LikeTankPostUpdateInput!): LikeTankPost!
+  upsertLikeCoral(where: LikeCoralWhereUniqueInput!, create: LikeCoralCreateInput!, update: LikeCoralUpdateInput!): LikeCoral!
+  upsertLikeTank(where: LikeTankWhereUniqueInput!, create: LikeTankCreateInput!, update: LikeTankUpdateInput!): LikeTank!
+  upsertTankImage(where: TankImageWhereUniqueInput!, create: TankImageCreateInput!, update: TankImageUpdateInput!): TankImage!
+  upsertFollower(where: FollowerWhereUniqueInput!, create: FollowerCreateInput!, update: FollowerUpdateInput!): Follower!
+  upsertFollowing(where: FollowingWhereUniqueInput!, create: FollowingCreateInput!, update: FollowingUpdateInput!): Following!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyTanks(data: TankUpdateManyMutationInput!, where: TankWhereInput): BatchPayload!
+  updateManyEquipments(data: EquipmentUpdateManyMutationInput!, where: EquipmentWhereInput): BatchPayload!
+  updateManyWaterParameterses(data: WaterParametersUpdateManyMutationInput!, where: WaterParametersWhereInput): BatchPayload!
+  updateManyTankPosts(data: TankPostUpdateManyMutationInput!, where: TankPostWhereInput): BatchPayload!
+  updateManyTankReplies(data: TankReplyUpdateManyMutationInput!, where: TankReplyWhereInput): BatchPayload!
+  updateManyCorals(data: CoralUpdateManyMutationInput!, where: CoralWhereInput): BatchPayload!
+  updateManyTankImages(data: TankImageUpdateManyMutationInput!, where: TankImageWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyProfiles(where: ProfileWhereInput): BatchPayload!
+  deleteManyTanks(where: TankWhereInput): BatchPayload!
+  deleteManyEquipments(where: EquipmentWhereInput): BatchPayload!
+  deleteManyWaterParameterses(where: WaterParametersWhereInput): BatchPayload!
+  deleteManyTankPosts(where: TankPostWhereInput): BatchPayload!
+  deleteManyTankReplies(where: TankReplyWhereInput): BatchPayload!
+  deleteManyCorals(where: CoralWhereInput): BatchPayload!
+  deleteManyLikeTankReplies(where: LikeTankReplyWhereInput): BatchPayload!
+  deleteManyLikeTankPosts(where: LikeTankPostWhereInput): BatchPayload!
+  deleteManyLikeCorals(where: LikeCoralWhereInput): BatchPayload!
+  deleteManyLikeTanks(where: LikeTankWhereInput): BatchPayload!
+  deleteManyTankImages(where: TankImageWhereInput): BatchPayload!
+  deleteManyFollowers(where: FollowerWhereInput): BatchPayload!
+  deleteManyFollowings(where: FollowingWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
@@ -58,13 +2480,343 @@ type PageInfo {
   endCursor: String
 }
 
+enum Permission {
+  ADMIN
+  USER
+}
+
 enum PrismaDatabase {
   default
 }
 
+type Profile implements Node {
+  id: ID!
+  author: User!
+  corals(where: CoralWhereInput, orderBy: CoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Coral!]
+  tanks(where: TankWhereInput, orderBy: TankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tank!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type ProfileConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ProfileEdge]!
+  aggregate: AggregateProfile!
+}
+
+input ProfileCreateInput {
+  author: UserCreateOneWithoutProfileInput!
+  corals: CoralCreateManyWithoutProfileInput
+  tanks: TankCreateManyWithoutProfileInput
+}
+
+input ProfileCreateOneWithoutAuthorInput {
+  create: ProfileCreateWithoutAuthorInput
+  connect: ProfileWhereUniqueInput
+}
+
+input ProfileCreateOneWithoutCoralsInput {
+  create: ProfileCreateWithoutCoralsInput
+  connect: ProfileWhereUniqueInput
+}
+
+input ProfileCreateOneWithoutTanksInput {
+  create: ProfileCreateWithoutTanksInput
+  connect: ProfileWhereUniqueInput
+}
+
+input ProfileCreateWithoutAuthorInput {
+  corals: CoralCreateManyWithoutProfileInput
+  tanks: TankCreateManyWithoutProfileInput
+}
+
+input ProfileCreateWithoutCoralsInput {
+  author: UserCreateOneWithoutProfileInput!
+  tanks: TankCreateManyWithoutProfileInput
+}
+
+input ProfileCreateWithoutTanksInput {
+  author: UserCreateOneWithoutProfileInput!
+  corals: CoralCreateManyWithoutProfileInput
+}
+
+"""An edge in a connection."""
+type ProfileEdge {
+  """The item at the end of the edge."""
+  node: Profile!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ProfileOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ProfilePreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type ProfileSubscriptionPayload {
+  mutation: MutationType!
+  node: Profile
+  updatedFields: [String!]
+  previousValues: ProfilePreviousValues
+}
+
+input ProfileSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProfileSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProfileSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProfileSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ProfileWhereInput
+}
+
+input ProfileUpdateInput {
+  author: UserUpdateOneRequiredWithoutProfileInput
+  corals: CoralUpdateManyWithoutProfileInput
+  tanks: TankUpdateManyWithoutProfileInput
+}
+
+input ProfileUpdateOneRequiredWithoutCoralsInput {
+  create: ProfileCreateWithoutCoralsInput
+  connect: ProfileWhereUniqueInput
+  update: ProfileUpdateWithoutCoralsDataInput
+  upsert: ProfileUpsertWithoutCoralsInput
+}
+
+input ProfileUpdateOneRequiredWithoutTanksInput {
+  create: ProfileCreateWithoutTanksInput
+  connect: ProfileWhereUniqueInput
+  update: ProfileUpdateWithoutTanksDataInput
+  upsert: ProfileUpsertWithoutTanksInput
+}
+
+input ProfileUpdateOneWithoutAuthorInput {
+  create: ProfileCreateWithoutAuthorInput
+  connect: ProfileWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: ProfileUpdateWithoutAuthorDataInput
+  upsert: ProfileUpsertWithoutAuthorInput
+}
+
+input ProfileUpdateWithoutAuthorDataInput {
+  corals: CoralUpdateManyWithoutProfileInput
+  tanks: TankUpdateManyWithoutProfileInput
+}
+
+input ProfileUpdateWithoutCoralsDataInput {
+  author: UserUpdateOneRequiredWithoutProfileInput
+  tanks: TankUpdateManyWithoutProfileInput
+}
+
+input ProfileUpdateWithoutTanksDataInput {
+  author: UserUpdateOneRequiredWithoutProfileInput
+  corals: CoralUpdateManyWithoutProfileInput
+}
+
+input ProfileUpsertWithoutAuthorInput {
+  update: ProfileUpdateWithoutAuthorDataInput!
+  create: ProfileCreateWithoutAuthorInput!
+}
+
+input ProfileUpsertWithoutCoralsInput {
+  update: ProfileUpdateWithoutCoralsDataInput!
+  create: ProfileCreateWithoutCoralsInput!
+}
+
+input ProfileUpsertWithoutTanksInput {
+  update: ProfileUpdateWithoutTanksDataInput!
+  create: ProfileCreateWithoutTanksInput!
+}
+
+input ProfileWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProfileWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProfileWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProfileWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  author: UserWhereInput
+  corals_every: CoralWhereInput
+  corals_some: CoralWhereInput
+  corals_none: CoralWhereInput
+  tanks_every: TankWhereInput
+  tanks_some: TankWhereInput
+  tanks_none: TankWhereInput
+}
+
+input ProfileWhereUniqueInput {
+  id: ID
+}
+
 type Query {
+  profiles(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Profile]!
+  tanks(where: TankWhereInput, orderBy: TankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tank]!
+  equipments(where: EquipmentWhereInput, orderBy: EquipmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Equipment]!
+  waterParameterses(where: WaterParametersWhereInput, orderBy: WaterParametersOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WaterParameters]!
+  tankPosts(where: TankPostWhereInput, orderBy: TankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankPost]!
+  tankReplies(where: TankReplyWhereInput, orderBy: TankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankReply]!
+  corals(where: CoralWhereInput, orderBy: CoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Coral]!
+  likeTankReplies(where: LikeTankReplyWhereInput, orderBy: LikeTankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTankReply]!
+  likeTankPosts(where: LikeTankPostWhereInput, orderBy: LikeTankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTankPost]!
+  likeCorals(where: LikeCoralWhereInput, orderBy: LikeCoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeCoral]!
+  likeTanks(where: LikeTankWhereInput, orderBy: LikeTankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTank]!
+  tankImages(where: TankImageWhereInput, orderBy: TankImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankImage]!
+  followers(where: FollowerWhereInput, orderBy: FollowerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Follower]!
+  followings(where: FollowingWhereInput, orderBy: FollowingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Following]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  profile(where: ProfileWhereUniqueInput!): Profile
+  tank(where: TankWhereUniqueInput!): Tank
+  equipment(where: EquipmentWhereUniqueInput!): Equipment
+  waterParameters(where: WaterParametersWhereUniqueInput!): WaterParameters
+  tankPost(where: TankPostWhereUniqueInput!): TankPost
+  tankReply(where: TankReplyWhereUniqueInput!): TankReply
+  coral(where: CoralWhereUniqueInput!): Coral
+  likeTankReply(where: LikeTankReplyWhereUniqueInput!): LikeTankReply
+  likeTankPost(where: LikeTankPostWhereUniqueInput!): LikeTankPost
+  likeCoral(where: LikeCoralWhereUniqueInput!): LikeCoral
+  likeTank(where: LikeTankWhereUniqueInput!): LikeTank
+  tankImage(where: TankImageWhereUniqueInput!): TankImage
+  follower(where: FollowerWhereUniqueInput!): Follower
+  following(where: FollowingWhereUniqueInput!): Following
   user(where: UserWhereUniqueInput!): User
+  profilesConnection(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProfileConnection!
+  tanksConnection(where: TankWhereInput, orderBy: TankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TankConnection!
+  equipmentsConnection(where: EquipmentWhereInput, orderBy: EquipmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EquipmentConnection!
+  waterParametersesConnection(where: WaterParametersWhereInput, orderBy: WaterParametersOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WaterParametersConnection!
+  tankPostsConnection(where: TankPostWhereInput, orderBy: TankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TankPostConnection!
+  tankRepliesConnection(where: TankReplyWhereInput, orderBy: TankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TankReplyConnection!
+  coralsConnection(where: CoralWhereInput, orderBy: CoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CoralConnection!
+  likeTankRepliesConnection(where: LikeTankReplyWhereInput, orderBy: LikeTankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeTankReplyConnection!
+  likeTankPostsConnection(where: LikeTankPostWhereInput, orderBy: LikeTankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeTankPostConnection!
+  likeCoralsConnection(where: LikeCoralWhereInput, orderBy: LikeCoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeCoralConnection!
+  likeTanksConnection(where: LikeTankWhereInput, orderBy: LikeTankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeTankConnection!
+  tankImagesConnection(where: TankImageWhereInput, orderBy: TankImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TankImageConnection!
+  followersConnection(where: FollowerWhereInput, orderBy: FollowerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FollowerConnection!
+  followingsConnection(where: FollowingWhereInput, orderBy: FollowingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FollowingConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -75,7 +2827,1471 @@ type Query {
 }
 
 type Subscription {
+  profile(where: ProfileSubscriptionWhereInput): ProfileSubscriptionPayload
+  tank(where: TankSubscriptionWhereInput): TankSubscriptionPayload
+  equipment(where: EquipmentSubscriptionWhereInput): EquipmentSubscriptionPayload
+  waterParameters(where: WaterParametersSubscriptionWhereInput): WaterParametersSubscriptionPayload
+  tankPost(where: TankPostSubscriptionWhereInput): TankPostSubscriptionPayload
+  tankReply(where: TankReplySubscriptionWhereInput): TankReplySubscriptionPayload
+  coral(where: CoralSubscriptionWhereInput): CoralSubscriptionPayload
+  likeTankReply(where: LikeTankReplySubscriptionWhereInput): LikeTankReplySubscriptionPayload
+  likeTankPost(where: LikeTankPostSubscriptionWhereInput): LikeTankPostSubscriptionPayload
+  likeCoral(where: LikeCoralSubscriptionWhereInput): LikeCoralSubscriptionPayload
+  likeTank(where: LikeTankSubscriptionWhereInput): LikeTankSubscriptionPayload
+  tankImage(where: TankImageSubscriptionWhereInput): TankImageSubscriptionPayload
+  follower(where: FollowerSubscriptionWhereInput): FollowerSubscriptionPayload
+  following(where: FollowingSubscriptionWhereInput): FollowingSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Tank implements Node {
+  id: ID!
+  profile: Profile!
+  title: String!
+  equipement: Equipment
+  parameters: WaterParameters
+  posts(where: TankPostWhereInput, orderBy: TankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankPost!]
+  images(where: TankImageWhereInput, orderBy: TankImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankImage!]
+  likes(where: LikeTankWhereInput, orderBy: LikeTankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTank!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type TankConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TankEdge]!
+  aggregate: AggregateTank!
+}
+
+input TankCreateInput {
+  title: String!
+  profile: ProfileCreateOneWithoutTanksInput!
+  equipement: EquipmentCreateOneWithoutTankInput
+  parameters: WaterParametersCreateOneWithoutTankInput
+  posts: TankPostCreateManyWithoutTankInput
+  images: TankImageCreateManyWithoutTankInput
+  likes: LikeTankCreateManyWithoutTankInput
+}
+
+input TankCreateManyWithoutProfileInput {
+  create: [TankCreateWithoutProfileInput!]
+  connect: [TankWhereUniqueInput!]
+}
+
+input TankCreateOneWithoutEquipementInput {
+  create: TankCreateWithoutEquipementInput
+  connect: TankWhereUniqueInput
+}
+
+input TankCreateOneWithoutImagesInput {
+  create: TankCreateWithoutImagesInput
+  connect: TankWhereUniqueInput
+}
+
+input TankCreateOneWithoutLikesInput {
+  create: TankCreateWithoutLikesInput
+  connect: TankWhereUniqueInput
+}
+
+input TankCreateOneWithoutParametersInput {
+  create: TankCreateWithoutParametersInput
+  connect: TankWhereUniqueInput
+}
+
+input TankCreateOneWithoutPostsInput {
+  create: TankCreateWithoutPostsInput
+  connect: TankWhereUniqueInput
+}
+
+input TankCreateWithoutEquipementInput {
+  title: String!
+  profile: ProfileCreateOneWithoutTanksInput!
+  parameters: WaterParametersCreateOneWithoutTankInput
+  posts: TankPostCreateManyWithoutTankInput
+  images: TankImageCreateManyWithoutTankInput
+  likes: LikeTankCreateManyWithoutTankInput
+}
+
+input TankCreateWithoutImagesInput {
+  title: String!
+  profile: ProfileCreateOneWithoutTanksInput!
+  equipement: EquipmentCreateOneWithoutTankInput
+  parameters: WaterParametersCreateOneWithoutTankInput
+  posts: TankPostCreateManyWithoutTankInput
+  likes: LikeTankCreateManyWithoutTankInput
+}
+
+input TankCreateWithoutLikesInput {
+  title: String!
+  profile: ProfileCreateOneWithoutTanksInput!
+  equipement: EquipmentCreateOneWithoutTankInput
+  parameters: WaterParametersCreateOneWithoutTankInput
+  posts: TankPostCreateManyWithoutTankInput
+  images: TankImageCreateManyWithoutTankInput
+}
+
+input TankCreateWithoutParametersInput {
+  title: String!
+  profile: ProfileCreateOneWithoutTanksInput!
+  equipement: EquipmentCreateOneWithoutTankInput
+  posts: TankPostCreateManyWithoutTankInput
+  images: TankImageCreateManyWithoutTankInput
+  likes: LikeTankCreateManyWithoutTankInput
+}
+
+input TankCreateWithoutPostsInput {
+  title: String!
+  profile: ProfileCreateOneWithoutTanksInput!
+  equipement: EquipmentCreateOneWithoutTankInput
+  parameters: WaterParametersCreateOneWithoutTankInput
+  images: TankImageCreateManyWithoutTankInput
+  likes: LikeTankCreateManyWithoutTankInput
+}
+
+input TankCreateWithoutProfileInput {
+  title: String!
+  equipement: EquipmentCreateOneWithoutTankInput
+  parameters: WaterParametersCreateOneWithoutTankInput
+  posts: TankPostCreateManyWithoutTankInput
+  images: TankImageCreateManyWithoutTankInput
+  likes: LikeTankCreateManyWithoutTankInput
+}
+
+"""An edge in a connection."""
+type TankEdge {
+  """The item at the end of the edge."""
+  node: Tank!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+type TankImage implements Node {
+  id: ID!
+  image: String!
+  tank: Tank!
+}
+
+"""A connection to a list of items."""
+type TankImageConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TankImageEdge]!
+  aggregate: AggregateTankImage!
+}
+
+input TankImageCreateInput {
+  image: String!
+  tank: TankCreateOneWithoutImagesInput!
+}
+
+input TankImageCreateManyWithoutTankInput {
+  create: [TankImageCreateWithoutTankInput!]
+  connect: [TankImageWhereUniqueInput!]
+}
+
+input TankImageCreateWithoutTankInput {
+  image: String!
+}
+
+"""An edge in a connection."""
+type TankImageEdge {
+  """The item at the end of the edge."""
+  node: TankImage!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TankImageOrderByInput {
+  id_ASC
+  id_DESC
+  image_ASC
+  image_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TankImagePreviousValues {
+  id: ID!
+  image: String!
+}
+
+type TankImageSubscriptionPayload {
+  mutation: MutationType!
+  node: TankImage
+  updatedFields: [String!]
+  previousValues: TankImagePreviousValues
+}
+
+input TankImageSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankImageSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankImageSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankImageSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TankImageWhereInput
+}
+
+input TankImageUpdateInput {
+  image: String
+  tank: TankUpdateOneRequiredWithoutImagesInput
+}
+
+input TankImageUpdateManyMutationInput {
+  image: String
+}
+
+input TankImageUpdateManyWithoutTankInput {
+  create: [TankImageCreateWithoutTankInput!]
+  connect: [TankImageWhereUniqueInput!]
+  disconnect: [TankImageWhereUniqueInput!]
+  delete: [TankImageWhereUniqueInput!]
+  update: [TankImageUpdateWithWhereUniqueWithoutTankInput!]
+  upsert: [TankImageUpsertWithWhereUniqueWithoutTankInput!]
+}
+
+input TankImageUpdateWithoutTankDataInput {
+  image: String
+}
+
+input TankImageUpdateWithWhereUniqueWithoutTankInput {
+  where: TankImageWhereUniqueInput!
+  data: TankImageUpdateWithoutTankDataInput!
+}
+
+input TankImageUpsertWithWhereUniqueWithoutTankInput {
+  where: TankImageWhereUniqueInput!
+  update: TankImageUpdateWithoutTankDataInput!
+  create: TankImageCreateWithoutTankInput!
+}
+
+input TankImageWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankImageWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankImageWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankImageWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  image: String
+
+  """All values that are not equal to given value."""
+  image_not: String
+
+  """All values that are contained in given list."""
+  image_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_not_in: [String!]
+
+  """All values less than the given value."""
+  image_lt: String
+
+  """All values less than or equal the given value."""
+  image_lte: String
+
+  """All values greater than the given value."""
+  image_gt: String
+
+  """All values greater than or equal the given value."""
+  image_gte: String
+
+  """All values containing the given string."""
+  image_contains: String
+
+  """All values not containing the given string."""
+  image_not_contains: String
+
+  """All values starting with the given string."""
+  image_starts_with: String
+
+  """All values not starting with the given string."""
+  image_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_ends_with: String
+
+  """All values not ending with the given string."""
+  image_not_ends_with: String
+  tank: TankWhereInput
+}
+
+input TankImageWhereUniqueInput {
+  id: ID
+}
+
+enum TankOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TankPost implements Node {
+  id: ID!
+  body: String!
+  replies(where: TankReplyWhereInput, orderBy: TankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankReply!]
+  author: User!
+  tank: Tank!
+  likes(where: LikeTankPostWhereInput, orderBy: LikeTankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTankPost!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type TankPostConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TankPostEdge]!
+  aggregate: AggregateTankPost!
+}
+
+input TankPostCreateInput {
+  body: String!
+  replies: TankReplyCreateManyWithoutPostInput
+  author: UserCreateOneWithoutTankPostsInput!
+  tank: TankCreateOneWithoutPostsInput!
+  likes: LikeTankPostCreateManyWithoutPostInput
+}
+
+input TankPostCreateManyWithoutAuthorInput {
+  create: [TankPostCreateWithoutAuthorInput!]
+  connect: [TankPostWhereUniqueInput!]
+}
+
+input TankPostCreateManyWithoutTankInput {
+  create: [TankPostCreateWithoutTankInput!]
+  connect: [TankPostWhereUniqueInput!]
+}
+
+input TankPostCreateOneWithoutLikesInput {
+  create: TankPostCreateWithoutLikesInput
+  connect: TankPostWhereUniqueInput
+}
+
+input TankPostCreateOneWithoutRepliesInput {
+  create: TankPostCreateWithoutRepliesInput
+  connect: TankPostWhereUniqueInput
+}
+
+input TankPostCreateWithoutAuthorInput {
+  body: String!
+  replies: TankReplyCreateManyWithoutPostInput
+  tank: TankCreateOneWithoutPostsInput!
+  likes: LikeTankPostCreateManyWithoutPostInput
+}
+
+input TankPostCreateWithoutLikesInput {
+  body: String!
+  replies: TankReplyCreateManyWithoutPostInput
+  author: UserCreateOneWithoutTankPostsInput!
+  tank: TankCreateOneWithoutPostsInput!
+}
+
+input TankPostCreateWithoutRepliesInput {
+  body: String!
+  author: UserCreateOneWithoutTankPostsInput!
+  tank: TankCreateOneWithoutPostsInput!
+  likes: LikeTankPostCreateManyWithoutPostInput
+}
+
+input TankPostCreateWithoutTankInput {
+  body: String!
+  replies: TankReplyCreateManyWithoutPostInput
+  author: UserCreateOneWithoutTankPostsInput!
+  likes: LikeTankPostCreateManyWithoutPostInput
+}
+
+"""An edge in a connection."""
+type TankPostEdge {
+  """The item at the end of the edge."""
+  node: TankPost!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TankPostOrderByInput {
+  id_ASC
+  id_DESC
+  body_ASC
+  body_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TankPostPreviousValues {
+  id: ID!
+  body: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type TankPostSubscriptionPayload {
+  mutation: MutationType!
+  node: TankPost
+  updatedFields: [String!]
+  previousValues: TankPostPreviousValues
+}
+
+input TankPostSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankPostSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankPostSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankPostSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TankPostWhereInput
+}
+
+input TankPostUpdateInput {
+  body: String
+  replies: TankReplyUpdateManyWithoutPostInput
+  author: UserUpdateOneRequiredWithoutTankPostsInput
+  tank: TankUpdateOneRequiredWithoutPostsInput
+  likes: LikeTankPostUpdateManyWithoutPostInput
+}
+
+input TankPostUpdateManyMutationInput {
+  body: String
+}
+
+input TankPostUpdateManyWithoutAuthorInput {
+  create: [TankPostCreateWithoutAuthorInput!]
+  connect: [TankPostWhereUniqueInput!]
+  disconnect: [TankPostWhereUniqueInput!]
+  delete: [TankPostWhereUniqueInput!]
+  update: [TankPostUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [TankPostUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input TankPostUpdateManyWithoutTankInput {
+  create: [TankPostCreateWithoutTankInput!]
+  connect: [TankPostWhereUniqueInput!]
+  disconnect: [TankPostWhereUniqueInput!]
+  delete: [TankPostWhereUniqueInput!]
+  update: [TankPostUpdateWithWhereUniqueWithoutTankInput!]
+  upsert: [TankPostUpsertWithWhereUniqueWithoutTankInput!]
+}
+
+input TankPostUpdateOneRequiredWithoutLikesInput {
+  create: TankPostCreateWithoutLikesInput
+  connect: TankPostWhereUniqueInput
+  update: TankPostUpdateWithoutLikesDataInput
+  upsert: TankPostUpsertWithoutLikesInput
+}
+
+input TankPostUpdateOneRequiredWithoutRepliesInput {
+  create: TankPostCreateWithoutRepliesInput
+  connect: TankPostWhereUniqueInput
+  update: TankPostUpdateWithoutRepliesDataInput
+  upsert: TankPostUpsertWithoutRepliesInput
+}
+
+input TankPostUpdateWithoutAuthorDataInput {
+  body: String
+  replies: TankReplyUpdateManyWithoutPostInput
+  tank: TankUpdateOneRequiredWithoutPostsInput
+  likes: LikeTankPostUpdateManyWithoutPostInput
+}
+
+input TankPostUpdateWithoutLikesDataInput {
+  body: String
+  replies: TankReplyUpdateManyWithoutPostInput
+  author: UserUpdateOneRequiredWithoutTankPostsInput
+  tank: TankUpdateOneRequiredWithoutPostsInput
+}
+
+input TankPostUpdateWithoutRepliesDataInput {
+  body: String
+  author: UserUpdateOneRequiredWithoutTankPostsInput
+  tank: TankUpdateOneRequiredWithoutPostsInput
+  likes: LikeTankPostUpdateManyWithoutPostInput
+}
+
+input TankPostUpdateWithoutTankDataInput {
+  body: String
+  replies: TankReplyUpdateManyWithoutPostInput
+  author: UserUpdateOneRequiredWithoutTankPostsInput
+  likes: LikeTankPostUpdateManyWithoutPostInput
+}
+
+input TankPostUpdateWithWhereUniqueWithoutAuthorInput {
+  where: TankPostWhereUniqueInput!
+  data: TankPostUpdateWithoutAuthorDataInput!
+}
+
+input TankPostUpdateWithWhereUniqueWithoutTankInput {
+  where: TankPostWhereUniqueInput!
+  data: TankPostUpdateWithoutTankDataInput!
+}
+
+input TankPostUpsertWithoutLikesInput {
+  update: TankPostUpdateWithoutLikesDataInput!
+  create: TankPostCreateWithoutLikesInput!
+}
+
+input TankPostUpsertWithoutRepliesInput {
+  update: TankPostUpdateWithoutRepliesDataInput!
+  create: TankPostCreateWithoutRepliesInput!
+}
+
+input TankPostUpsertWithWhereUniqueWithoutAuthorInput {
+  where: TankPostWhereUniqueInput!
+  update: TankPostUpdateWithoutAuthorDataInput!
+  create: TankPostCreateWithoutAuthorInput!
+}
+
+input TankPostUpsertWithWhereUniqueWithoutTankInput {
+  where: TankPostWhereUniqueInput!
+  update: TankPostUpdateWithoutTankDataInput!
+  create: TankPostCreateWithoutTankInput!
+}
+
+input TankPostWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankPostWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankPostWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankPostWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  body: String
+
+  """All values that are not equal to given value."""
+  body_not: String
+
+  """All values that are contained in given list."""
+  body_in: [String!]
+
+  """All values that are not contained in given list."""
+  body_not_in: [String!]
+
+  """All values less than the given value."""
+  body_lt: String
+
+  """All values less than or equal the given value."""
+  body_lte: String
+
+  """All values greater than the given value."""
+  body_gt: String
+
+  """All values greater than or equal the given value."""
+  body_gte: String
+
+  """All values containing the given string."""
+  body_contains: String
+
+  """All values not containing the given string."""
+  body_not_contains: String
+
+  """All values starting with the given string."""
+  body_starts_with: String
+
+  """All values not starting with the given string."""
+  body_not_starts_with: String
+
+  """All values ending with the given string."""
+  body_ends_with: String
+
+  """All values not ending with the given string."""
+  body_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  replies_every: TankReplyWhereInput
+  replies_some: TankReplyWhereInput
+  replies_none: TankReplyWhereInput
+  author: UserWhereInput
+  tank: TankWhereInput
+  likes_every: LikeTankPostWhereInput
+  likes_some: LikeTankPostWhereInput
+  likes_none: LikeTankPostWhereInput
+}
+
+input TankPostWhereUniqueInput {
+  id: ID
+}
+
+type TankPreviousValues {
+  id: ID!
+  title: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type TankReply implements Node {
+  id: ID!
+  body: String!
+  author: User!
+  post: TankPost!
+  likes(where: LikeTankReplyWhereInput, orderBy: LikeTankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTankReply!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type TankReplyConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TankReplyEdge]!
+  aggregate: AggregateTankReply!
+}
+
+input TankReplyCreateInput {
+  body: String!
+  author: UserCreateOneWithoutTankRepliesInput!
+  post: TankPostCreateOneWithoutRepliesInput!
+  likes: LikeTankReplyCreateManyWithoutReplyInput
+}
+
+input TankReplyCreateManyWithoutAuthorInput {
+  create: [TankReplyCreateWithoutAuthorInput!]
+  connect: [TankReplyWhereUniqueInput!]
+}
+
+input TankReplyCreateManyWithoutPostInput {
+  create: [TankReplyCreateWithoutPostInput!]
+  connect: [TankReplyWhereUniqueInput!]
+}
+
+input TankReplyCreateOneWithoutLikesInput {
+  create: TankReplyCreateWithoutLikesInput
+  connect: TankReplyWhereUniqueInput
+}
+
+input TankReplyCreateWithoutAuthorInput {
+  body: String!
+  post: TankPostCreateOneWithoutRepliesInput!
+  likes: LikeTankReplyCreateManyWithoutReplyInput
+}
+
+input TankReplyCreateWithoutLikesInput {
+  body: String!
+  author: UserCreateOneWithoutTankRepliesInput!
+  post: TankPostCreateOneWithoutRepliesInput!
+}
+
+input TankReplyCreateWithoutPostInput {
+  body: String!
+  author: UserCreateOneWithoutTankRepliesInput!
+  likes: LikeTankReplyCreateManyWithoutReplyInput
+}
+
+"""An edge in a connection."""
+type TankReplyEdge {
+  """The item at the end of the edge."""
+  node: TankReply!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TankReplyOrderByInput {
+  id_ASC
+  id_DESC
+  body_ASC
+  body_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TankReplyPreviousValues {
+  id: ID!
+  body: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type TankReplySubscriptionPayload {
+  mutation: MutationType!
+  node: TankReply
+  updatedFields: [String!]
+  previousValues: TankReplyPreviousValues
+}
+
+input TankReplySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankReplySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankReplySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankReplySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TankReplyWhereInput
+}
+
+input TankReplyUpdateInput {
+  body: String
+  author: UserUpdateOneRequiredWithoutTankRepliesInput
+  post: TankPostUpdateOneRequiredWithoutRepliesInput
+  likes: LikeTankReplyUpdateManyWithoutReplyInput
+}
+
+input TankReplyUpdateManyMutationInput {
+  body: String
+}
+
+input TankReplyUpdateManyWithoutAuthorInput {
+  create: [TankReplyCreateWithoutAuthorInput!]
+  connect: [TankReplyWhereUniqueInput!]
+  disconnect: [TankReplyWhereUniqueInput!]
+  delete: [TankReplyWhereUniqueInput!]
+  update: [TankReplyUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [TankReplyUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input TankReplyUpdateManyWithoutPostInput {
+  create: [TankReplyCreateWithoutPostInput!]
+  connect: [TankReplyWhereUniqueInput!]
+  disconnect: [TankReplyWhereUniqueInput!]
+  delete: [TankReplyWhereUniqueInput!]
+  update: [TankReplyUpdateWithWhereUniqueWithoutPostInput!]
+  upsert: [TankReplyUpsertWithWhereUniqueWithoutPostInput!]
+}
+
+input TankReplyUpdateOneRequiredWithoutLikesInput {
+  create: TankReplyCreateWithoutLikesInput
+  connect: TankReplyWhereUniqueInput
+  update: TankReplyUpdateWithoutLikesDataInput
+  upsert: TankReplyUpsertWithoutLikesInput
+}
+
+input TankReplyUpdateWithoutAuthorDataInput {
+  body: String
+  post: TankPostUpdateOneRequiredWithoutRepliesInput
+  likes: LikeTankReplyUpdateManyWithoutReplyInput
+}
+
+input TankReplyUpdateWithoutLikesDataInput {
+  body: String
+  author: UserUpdateOneRequiredWithoutTankRepliesInput
+  post: TankPostUpdateOneRequiredWithoutRepliesInput
+}
+
+input TankReplyUpdateWithoutPostDataInput {
+  body: String
+  author: UserUpdateOneRequiredWithoutTankRepliesInput
+  likes: LikeTankReplyUpdateManyWithoutReplyInput
+}
+
+input TankReplyUpdateWithWhereUniqueWithoutAuthorInput {
+  where: TankReplyWhereUniqueInput!
+  data: TankReplyUpdateWithoutAuthorDataInput!
+}
+
+input TankReplyUpdateWithWhereUniqueWithoutPostInput {
+  where: TankReplyWhereUniqueInput!
+  data: TankReplyUpdateWithoutPostDataInput!
+}
+
+input TankReplyUpsertWithoutLikesInput {
+  update: TankReplyUpdateWithoutLikesDataInput!
+  create: TankReplyCreateWithoutLikesInput!
+}
+
+input TankReplyUpsertWithWhereUniqueWithoutAuthorInput {
+  where: TankReplyWhereUniqueInput!
+  update: TankReplyUpdateWithoutAuthorDataInput!
+  create: TankReplyCreateWithoutAuthorInput!
+}
+
+input TankReplyUpsertWithWhereUniqueWithoutPostInput {
+  where: TankReplyWhereUniqueInput!
+  update: TankReplyUpdateWithoutPostDataInput!
+  create: TankReplyCreateWithoutPostInput!
+}
+
+input TankReplyWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankReplyWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankReplyWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankReplyWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  body: String
+
+  """All values that are not equal to given value."""
+  body_not: String
+
+  """All values that are contained in given list."""
+  body_in: [String!]
+
+  """All values that are not contained in given list."""
+  body_not_in: [String!]
+
+  """All values less than the given value."""
+  body_lt: String
+
+  """All values less than or equal the given value."""
+  body_lte: String
+
+  """All values greater than the given value."""
+  body_gt: String
+
+  """All values greater than or equal the given value."""
+  body_gte: String
+
+  """All values containing the given string."""
+  body_contains: String
+
+  """All values not containing the given string."""
+  body_not_contains: String
+
+  """All values starting with the given string."""
+  body_starts_with: String
+
+  """All values not starting with the given string."""
+  body_not_starts_with: String
+
+  """All values ending with the given string."""
+  body_ends_with: String
+
+  """All values not ending with the given string."""
+  body_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  author: UserWhereInput
+  post: TankPostWhereInput
+  likes_every: LikeTankReplyWhereInput
+  likes_some: LikeTankReplyWhereInput
+  likes_none: LikeTankReplyWhereInput
+}
+
+input TankReplyWhereUniqueInput {
+  id: ID
+}
+
+type TankSubscriptionPayload {
+  mutation: MutationType!
+  node: Tank
+  updatedFields: [String!]
+  previousValues: TankPreviousValues
+}
+
+input TankSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TankWhereInput
+}
+
+input TankUpdateInput {
+  title: String
+  profile: ProfileUpdateOneRequiredWithoutTanksInput
+  equipement: EquipmentUpdateOneWithoutTankInput
+  parameters: WaterParametersUpdateOneWithoutTankInput
+  posts: TankPostUpdateManyWithoutTankInput
+  images: TankImageUpdateManyWithoutTankInput
+  likes: LikeTankUpdateManyWithoutTankInput
+}
+
+input TankUpdateManyMutationInput {
+  title: String
+}
+
+input TankUpdateManyWithoutProfileInput {
+  create: [TankCreateWithoutProfileInput!]
+  connect: [TankWhereUniqueInput!]
+  disconnect: [TankWhereUniqueInput!]
+  delete: [TankWhereUniqueInput!]
+  update: [TankUpdateWithWhereUniqueWithoutProfileInput!]
+  upsert: [TankUpsertWithWhereUniqueWithoutProfileInput!]
+}
+
+input TankUpdateOneRequiredWithoutEquipementInput {
+  create: TankCreateWithoutEquipementInput
+  connect: TankWhereUniqueInput
+  update: TankUpdateWithoutEquipementDataInput
+  upsert: TankUpsertWithoutEquipementInput
+}
+
+input TankUpdateOneRequiredWithoutImagesInput {
+  create: TankCreateWithoutImagesInput
+  connect: TankWhereUniqueInput
+  update: TankUpdateWithoutImagesDataInput
+  upsert: TankUpsertWithoutImagesInput
+}
+
+input TankUpdateOneRequiredWithoutLikesInput {
+  create: TankCreateWithoutLikesInput
+  connect: TankWhereUniqueInput
+  update: TankUpdateWithoutLikesDataInput
+  upsert: TankUpsertWithoutLikesInput
+}
+
+input TankUpdateOneRequiredWithoutParametersInput {
+  create: TankCreateWithoutParametersInput
+  connect: TankWhereUniqueInput
+  update: TankUpdateWithoutParametersDataInput
+  upsert: TankUpsertWithoutParametersInput
+}
+
+input TankUpdateOneRequiredWithoutPostsInput {
+  create: TankCreateWithoutPostsInput
+  connect: TankWhereUniqueInput
+  update: TankUpdateWithoutPostsDataInput
+  upsert: TankUpsertWithoutPostsInput
+}
+
+input TankUpdateWithoutEquipementDataInput {
+  title: String
+  profile: ProfileUpdateOneRequiredWithoutTanksInput
+  parameters: WaterParametersUpdateOneWithoutTankInput
+  posts: TankPostUpdateManyWithoutTankInput
+  images: TankImageUpdateManyWithoutTankInput
+  likes: LikeTankUpdateManyWithoutTankInput
+}
+
+input TankUpdateWithoutImagesDataInput {
+  title: String
+  profile: ProfileUpdateOneRequiredWithoutTanksInput
+  equipement: EquipmentUpdateOneWithoutTankInput
+  parameters: WaterParametersUpdateOneWithoutTankInput
+  posts: TankPostUpdateManyWithoutTankInput
+  likes: LikeTankUpdateManyWithoutTankInput
+}
+
+input TankUpdateWithoutLikesDataInput {
+  title: String
+  profile: ProfileUpdateOneRequiredWithoutTanksInput
+  equipement: EquipmentUpdateOneWithoutTankInput
+  parameters: WaterParametersUpdateOneWithoutTankInput
+  posts: TankPostUpdateManyWithoutTankInput
+  images: TankImageUpdateManyWithoutTankInput
+}
+
+input TankUpdateWithoutParametersDataInput {
+  title: String
+  profile: ProfileUpdateOneRequiredWithoutTanksInput
+  equipement: EquipmentUpdateOneWithoutTankInput
+  posts: TankPostUpdateManyWithoutTankInput
+  images: TankImageUpdateManyWithoutTankInput
+  likes: LikeTankUpdateManyWithoutTankInput
+}
+
+input TankUpdateWithoutPostsDataInput {
+  title: String
+  profile: ProfileUpdateOneRequiredWithoutTanksInput
+  equipement: EquipmentUpdateOneWithoutTankInput
+  parameters: WaterParametersUpdateOneWithoutTankInput
+  images: TankImageUpdateManyWithoutTankInput
+  likes: LikeTankUpdateManyWithoutTankInput
+}
+
+input TankUpdateWithoutProfileDataInput {
+  title: String
+  equipement: EquipmentUpdateOneWithoutTankInput
+  parameters: WaterParametersUpdateOneWithoutTankInput
+  posts: TankPostUpdateManyWithoutTankInput
+  images: TankImageUpdateManyWithoutTankInput
+  likes: LikeTankUpdateManyWithoutTankInput
+}
+
+input TankUpdateWithWhereUniqueWithoutProfileInput {
+  where: TankWhereUniqueInput!
+  data: TankUpdateWithoutProfileDataInput!
+}
+
+input TankUpsertWithoutEquipementInput {
+  update: TankUpdateWithoutEquipementDataInput!
+  create: TankCreateWithoutEquipementInput!
+}
+
+input TankUpsertWithoutImagesInput {
+  update: TankUpdateWithoutImagesDataInput!
+  create: TankCreateWithoutImagesInput!
+}
+
+input TankUpsertWithoutLikesInput {
+  update: TankUpdateWithoutLikesDataInput!
+  create: TankCreateWithoutLikesInput!
+}
+
+input TankUpsertWithoutParametersInput {
+  update: TankUpdateWithoutParametersDataInput!
+  create: TankCreateWithoutParametersInput!
+}
+
+input TankUpsertWithoutPostsInput {
+  update: TankUpdateWithoutPostsDataInput!
+  create: TankCreateWithoutPostsInput!
+}
+
+input TankUpsertWithWhereUniqueWithoutProfileInput {
+  where: TankWhereUniqueInput!
+  update: TankUpdateWithoutProfileDataInput!
+  create: TankCreateWithoutProfileInput!
+}
+
+input TankWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  profile: ProfileWhereInput
+  equipement: EquipmentWhereInput
+  parameters: WaterParametersWhereInput
+  posts_every: TankPostWhereInput
+  posts_some: TankPostWhereInput
+  posts_none: TankPostWhereInput
+  images_every: TankImageWhereInput
+  images_some: TankImageWhereInput
+  images_none: TankImageWhereInput
+  likes_every: LikeTankWhereInput
+  likes_some: LikeTankWhereInput
+  likes_none: LikeTankWhereInput
+}
+
+input TankWhereUniqueInput {
+  id: ID
 }
 
 type User implements Node {
@@ -83,8 +4299,17 @@ type User implements Node {
   name: String!
   email: String!
   password: String!
-  updatedAt: DateTime!
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings(where: FollowingWhereInput, orderBy: FollowingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Following!]
+  followers(where: FollowerWhereInput, orderBy: FollowerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Follower!]
+  profile: Profile
+  tankPosts(where: TankPostWhereInput, orderBy: TankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankPost!]
+  tankReplies(where: TankReplyWhereInput, orderBy: TankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankReply!]
   createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -101,6 +4326,115 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingCreateManyWithoutUserInput
+  followers: FollowerCreateManyWithoutUserInput
+  profile: ProfileCreateOneWithoutAuthorInput
+  tankPosts: TankPostCreateManyWithoutAuthorInput
+  tankReplies: TankReplyCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutFollowersInput {
+  create: UserCreateWithoutFollowersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutFollowingsInput {
+  create: UserCreateWithoutFollowingsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutProfileInput {
+  create: UserCreateWithoutProfileInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutTankPostsInput {
+  create: UserCreateWithoutTankPostsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutTankRepliesInput {
+  create: UserCreateWithoutTankRepliesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutFollowersInput {
+  name: String!
+  email: String!
+  password: String!
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingCreateManyWithoutUserInput
+  profile: ProfileCreateOneWithoutAuthorInput
+  tankPosts: TankPostCreateManyWithoutAuthorInput
+  tankReplies: TankReplyCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutFollowingsInput {
+  name: String!
+  email: String!
+  password: String!
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followers: FollowerCreateManyWithoutUserInput
+  profile: ProfileCreateOneWithoutAuthorInput
+  tankPosts: TankPostCreateManyWithoutAuthorInput
+  tankReplies: TankReplyCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutProfileInput {
+  name: String!
+  email: String!
+  password: String!
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingCreateManyWithoutUserInput
+  followers: FollowerCreateManyWithoutUserInput
+  tankPosts: TankPostCreateManyWithoutAuthorInput
+  tankReplies: TankReplyCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutTankPostsInput {
+  name: String!
+  email: String!
+  password: String!
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingCreateManyWithoutUserInput
+  followers: FollowerCreateManyWithoutUserInput
+  profile: ProfileCreateOneWithoutAuthorInput
+  tankReplies: TankReplyCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutTankRepliesInput {
+  name: String!
+  email: String!
+  password: String!
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingCreateManyWithoutUserInput
+  followers: FollowerCreateManyWithoutUserInput
+  profile: ProfileCreateOneWithoutAuthorInput
+  tankPosts: TankPostCreateManyWithoutAuthorInput
 }
 
 """An edge in a connection."""
@@ -121,10 +4455,18 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+  profilePicture_ASC
+  profilePicture_DESC
+  resetToken_ASC
+  resetToken_DESC
+  resetTokenExpiry_ASC
+  resetTokenExpiry_DESC
+  permission_ASC
+  permission_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
@@ -132,8 +4474,12 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
-  updatedAt: DateTime!
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
   createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -175,16 +4521,186 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingUpdateManyWithoutUserInput
+  followers: FollowerUpdateManyWithoutUserInput
+  profile: ProfileUpdateOneWithoutAuthorInput
+  tankPosts: TankPostUpdateManyWithoutAuthorInput
+  tankReplies: TankReplyUpdateManyWithoutAuthorInput
+}
+
 input UserUpdateInput {
   name: String
   email: String
   password: String
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingUpdateManyWithoutUserInput
+  followers: FollowerUpdateManyWithoutUserInput
+  profile: ProfileUpdateOneWithoutAuthorInput
+  tankPosts: TankPostUpdateManyWithoutAuthorInput
+  tankReplies: TankReplyUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
+input UserUpdateOneRequiredWithoutFollowersInput {
+  create: UserCreateWithoutFollowersInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutFollowersDataInput
+  upsert: UserUpsertWithoutFollowersInput
+}
+
+input UserUpdateOneRequiredWithoutFollowingsInput {
+  create: UserCreateWithoutFollowingsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutFollowingsDataInput
+  upsert: UserUpsertWithoutFollowingsInput
+}
+
+input UserUpdateOneRequiredWithoutProfileInput {
+  create: UserCreateWithoutProfileInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutProfileDataInput
+  upsert: UserUpsertWithoutProfileInput
+}
+
+input UserUpdateOneRequiredWithoutTankPostsInput {
+  create: UserCreateWithoutTankPostsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutTankPostsDataInput
+  upsert: UserUpsertWithoutTankPostsInput
+}
+
+input UserUpdateOneRequiredWithoutTankRepliesInput {
+  create: UserCreateWithoutTankRepliesInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutTankRepliesDataInput
+  upsert: UserUpsertWithoutTankRepliesInput
+}
+
+input UserUpdateWithoutFollowersDataInput {
+  name: String
+  email: String
+  password: String
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingUpdateManyWithoutUserInput
+  profile: ProfileUpdateOneWithoutAuthorInput
+  tankPosts: TankPostUpdateManyWithoutAuthorInput
+  tankReplies: TankReplyUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutFollowingsDataInput {
+  name: String
+  email: String
+  password: String
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followers: FollowerUpdateManyWithoutUserInput
+  profile: ProfileUpdateOneWithoutAuthorInput
+  tankPosts: TankPostUpdateManyWithoutAuthorInput
+  tankReplies: TankReplyUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutProfileDataInput {
+  name: String
+  email: String
+  password: String
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingUpdateManyWithoutUserInput
+  followers: FollowerUpdateManyWithoutUserInput
+  tankPosts: TankPostUpdateManyWithoutAuthorInput
+  tankReplies: TankReplyUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutTankPostsDataInput {
+  name: String
+  email: String
+  password: String
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingUpdateManyWithoutUserInput
+  followers: FollowerUpdateManyWithoutUserInput
+  profile: ProfileUpdateOneWithoutAuthorInput
+  tankReplies: TankReplyUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutTankRepliesDataInput {
+  name: String
+  email: String
+  password: String
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingUpdateManyWithoutUserInput
+  followers: FollowerUpdateManyWithoutUserInput
+  profile: ProfileUpdateOneWithoutAuthorInput
+  tankPosts: TankPostUpdateManyWithoutAuthorInput
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutFollowersInput {
+  update: UserUpdateWithoutFollowersDataInput!
+  create: UserCreateWithoutFollowersInput!
+}
+
+input UserUpsertWithoutFollowingsInput {
+  update: UserUpdateWithoutFollowingsDataInput!
+  create: UserCreateWithoutFollowingsInput!
+}
+
+input UserUpsertWithoutProfileInput {
+  update: UserUpdateWithoutProfileDataInput!
+  create: UserCreateWithoutProfileInput!
+}
+
+input UserUpsertWithoutTankPostsInput {
+  update: UserUpdateWithoutTankPostsDataInput!
+  create: UserCreateWithoutTankPostsInput!
+}
+
+input UserUpsertWithoutTankRepliesInput {
+  update: UserUpdateWithoutTankRepliesDataInput!
+  create: UserCreateWithoutTankRepliesInput!
 }
 
 input UserWhereInput {
@@ -356,6 +4872,757 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  profilePicture: String
+
+  """All values that are not equal to given value."""
+  profilePicture_not: String
+
+  """All values that are contained in given list."""
+  profilePicture_in: [String!]
+
+  """All values that are not contained in given list."""
+  profilePicture_not_in: [String!]
+
+  """All values less than the given value."""
+  profilePicture_lt: String
+
+  """All values less than or equal the given value."""
+  profilePicture_lte: String
+
+  """All values greater than the given value."""
+  profilePicture_gt: String
+
+  """All values greater than or equal the given value."""
+  profilePicture_gte: String
+
+  """All values containing the given string."""
+  profilePicture_contains: String
+
+  """All values not containing the given string."""
+  profilePicture_not_contains: String
+
+  """All values starting with the given string."""
+  profilePicture_starts_with: String
+
+  """All values not starting with the given string."""
+  profilePicture_not_starts_with: String
+
+  """All values ending with the given string."""
+  profilePicture_ends_with: String
+
+  """All values not ending with the given string."""
+  profilePicture_not_ends_with: String
+  resetToken: String
+
+  """All values that are not equal to given value."""
+  resetToken_not: String
+
+  """All values that are contained in given list."""
+  resetToken_in: [String!]
+
+  """All values that are not contained in given list."""
+  resetToken_not_in: [String!]
+
+  """All values less than the given value."""
+  resetToken_lt: String
+
+  """All values less than or equal the given value."""
+  resetToken_lte: String
+
+  """All values greater than the given value."""
+  resetToken_gt: String
+
+  """All values greater than or equal the given value."""
+  resetToken_gte: String
+
+  """All values containing the given string."""
+  resetToken_contains: String
+
+  """All values not containing the given string."""
+  resetToken_not_contains: String
+
+  """All values starting with the given string."""
+  resetToken_starts_with: String
+
+  """All values not starting with the given string."""
+  resetToken_not_starts_with: String
+
+  """All values ending with the given string."""
+  resetToken_ends_with: String
+
+  """All values not ending with the given string."""
+  resetToken_not_ends_with: String
+  resetTokenExpiry: String
+
+  """All values that are not equal to given value."""
+  resetTokenExpiry_not: String
+
+  """All values that are contained in given list."""
+  resetTokenExpiry_in: [String!]
+
+  """All values that are not contained in given list."""
+  resetTokenExpiry_not_in: [String!]
+
+  """All values less than the given value."""
+  resetTokenExpiry_lt: String
+
+  """All values less than or equal the given value."""
+  resetTokenExpiry_lte: String
+
+  """All values greater than the given value."""
+  resetTokenExpiry_gt: String
+
+  """All values greater than or equal the given value."""
+  resetTokenExpiry_gte: String
+
+  """All values containing the given string."""
+  resetTokenExpiry_contains: String
+
+  """All values not containing the given string."""
+  resetTokenExpiry_not_contains: String
+
+  """All values starting with the given string."""
+  resetTokenExpiry_starts_with: String
+
+  """All values not starting with the given string."""
+  resetTokenExpiry_not_starts_with: String
+
+  """All values ending with the given string."""
+  resetTokenExpiry_ends_with: String
+
+  """All values not ending with the given string."""
+  resetTokenExpiry_not_ends_with: String
+  permission: Permission
+
+  """All values that are not equal to given value."""
+  permission_not: Permission
+
+  """All values that are contained in given list."""
+  permission_in: [Permission!]
+
+  """All values that are not contained in given list."""
+  permission_not_in: [Permission!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  followings_every: FollowingWhereInput
+  followings_some: FollowingWhereInput
+  followings_none: FollowingWhereInput
+  followers_every: FollowerWhereInput
+  followers_some: FollowerWhereInput
+  followers_none: FollowerWhereInput
+  profile: ProfileWhereInput
+  tankPosts_every: TankPostWhereInput
+  tankPosts_some: TankPostWhereInput
+  tankPosts_none: TankPostWhereInput
+  tankReplies_every: TankReplyWhereInput
+  tankReplies_some: TankReplyWhereInput
+  tankReplies_none: TankReplyWhereInput
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  email: String
+}
+
+type WaterParameters implements Node {
+  id: ID!
+  tank: Tank!
+  temp: String!
+  ph: String!
+  kh: String!
+  sal: String!
+  cal: String!
+  iodine: String!
+  nitrate: String!
+  phosphate: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type WaterParametersConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [WaterParametersEdge]!
+  aggregate: AggregateWaterParameters!
+}
+
+input WaterParametersCreateInput {
+  temp: String!
+  ph: String!
+  kh: String!
+  sal: String!
+  cal: String!
+  iodine: String!
+  nitrate: String!
+  phosphate: String!
+  tank: TankCreateOneWithoutParametersInput!
+}
+
+input WaterParametersCreateOneWithoutTankInput {
+  create: WaterParametersCreateWithoutTankInput
+  connect: WaterParametersWhereUniqueInput
+}
+
+input WaterParametersCreateWithoutTankInput {
+  temp: String!
+  ph: String!
+  kh: String!
+  sal: String!
+  cal: String!
+  iodine: String!
+  nitrate: String!
+  phosphate: String!
+}
+
+"""An edge in a connection."""
+type WaterParametersEdge {
+  """The item at the end of the edge."""
+  node: WaterParameters!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum WaterParametersOrderByInput {
+  id_ASC
+  id_DESC
+  temp_ASC
+  temp_DESC
+  ph_ASC
+  ph_DESC
+  kh_ASC
+  kh_DESC
+  sal_ASC
+  sal_DESC
+  cal_ASC
+  cal_DESC
+  iodine_ASC
+  iodine_DESC
+  nitrate_ASC
+  nitrate_DESC
+  phosphate_ASC
+  phosphate_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type WaterParametersPreviousValues {
+  id: ID!
+  temp: String!
+  ph: String!
+  kh: String!
+  sal: String!
+  cal: String!
+  iodine: String!
+  nitrate: String!
+  phosphate: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type WaterParametersSubscriptionPayload {
+  mutation: MutationType!
+  node: WaterParameters
+  updatedFields: [String!]
+  previousValues: WaterParametersPreviousValues
+}
+
+input WaterParametersSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WaterParametersSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WaterParametersSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WaterParametersSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: WaterParametersWhereInput
+}
+
+input WaterParametersUpdateInput {
+  temp: String
+  ph: String
+  kh: String
+  sal: String
+  cal: String
+  iodine: String
+  nitrate: String
+  phosphate: String
+  tank: TankUpdateOneRequiredWithoutParametersInput
+}
+
+input WaterParametersUpdateManyMutationInput {
+  temp: String
+  ph: String
+  kh: String
+  sal: String
+  cal: String
+  iodine: String
+  nitrate: String
+  phosphate: String
+}
+
+input WaterParametersUpdateOneWithoutTankInput {
+  create: WaterParametersCreateWithoutTankInput
+  connect: WaterParametersWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: WaterParametersUpdateWithoutTankDataInput
+  upsert: WaterParametersUpsertWithoutTankInput
+}
+
+input WaterParametersUpdateWithoutTankDataInput {
+  temp: String
+  ph: String
+  kh: String
+  sal: String
+  cal: String
+  iodine: String
+  nitrate: String
+  phosphate: String
+}
+
+input WaterParametersUpsertWithoutTankInput {
+  update: WaterParametersUpdateWithoutTankDataInput!
+  create: WaterParametersCreateWithoutTankInput!
+}
+
+input WaterParametersWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WaterParametersWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WaterParametersWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WaterParametersWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  temp: String
+
+  """All values that are not equal to given value."""
+  temp_not: String
+
+  """All values that are contained in given list."""
+  temp_in: [String!]
+
+  """All values that are not contained in given list."""
+  temp_not_in: [String!]
+
+  """All values less than the given value."""
+  temp_lt: String
+
+  """All values less than or equal the given value."""
+  temp_lte: String
+
+  """All values greater than the given value."""
+  temp_gt: String
+
+  """All values greater than or equal the given value."""
+  temp_gte: String
+
+  """All values containing the given string."""
+  temp_contains: String
+
+  """All values not containing the given string."""
+  temp_not_contains: String
+
+  """All values starting with the given string."""
+  temp_starts_with: String
+
+  """All values not starting with the given string."""
+  temp_not_starts_with: String
+
+  """All values ending with the given string."""
+  temp_ends_with: String
+
+  """All values not ending with the given string."""
+  temp_not_ends_with: String
+  ph: String
+
+  """All values that are not equal to given value."""
+  ph_not: String
+
+  """All values that are contained in given list."""
+  ph_in: [String!]
+
+  """All values that are not contained in given list."""
+  ph_not_in: [String!]
+
+  """All values less than the given value."""
+  ph_lt: String
+
+  """All values less than or equal the given value."""
+  ph_lte: String
+
+  """All values greater than the given value."""
+  ph_gt: String
+
+  """All values greater than or equal the given value."""
+  ph_gte: String
+
+  """All values containing the given string."""
+  ph_contains: String
+
+  """All values not containing the given string."""
+  ph_not_contains: String
+
+  """All values starting with the given string."""
+  ph_starts_with: String
+
+  """All values not starting with the given string."""
+  ph_not_starts_with: String
+
+  """All values ending with the given string."""
+  ph_ends_with: String
+
+  """All values not ending with the given string."""
+  ph_not_ends_with: String
+  kh: String
+
+  """All values that are not equal to given value."""
+  kh_not: String
+
+  """All values that are contained in given list."""
+  kh_in: [String!]
+
+  """All values that are not contained in given list."""
+  kh_not_in: [String!]
+
+  """All values less than the given value."""
+  kh_lt: String
+
+  """All values less than or equal the given value."""
+  kh_lte: String
+
+  """All values greater than the given value."""
+  kh_gt: String
+
+  """All values greater than or equal the given value."""
+  kh_gte: String
+
+  """All values containing the given string."""
+  kh_contains: String
+
+  """All values not containing the given string."""
+  kh_not_contains: String
+
+  """All values starting with the given string."""
+  kh_starts_with: String
+
+  """All values not starting with the given string."""
+  kh_not_starts_with: String
+
+  """All values ending with the given string."""
+  kh_ends_with: String
+
+  """All values not ending with the given string."""
+  kh_not_ends_with: String
+  sal: String
+
+  """All values that are not equal to given value."""
+  sal_not: String
+
+  """All values that are contained in given list."""
+  sal_in: [String!]
+
+  """All values that are not contained in given list."""
+  sal_not_in: [String!]
+
+  """All values less than the given value."""
+  sal_lt: String
+
+  """All values less than or equal the given value."""
+  sal_lte: String
+
+  """All values greater than the given value."""
+  sal_gt: String
+
+  """All values greater than or equal the given value."""
+  sal_gte: String
+
+  """All values containing the given string."""
+  sal_contains: String
+
+  """All values not containing the given string."""
+  sal_not_contains: String
+
+  """All values starting with the given string."""
+  sal_starts_with: String
+
+  """All values not starting with the given string."""
+  sal_not_starts_with: String
+
+  """All values ending with the given string."""
+  sal_ends_with: String
+
+  """All values not ending with the given string."""
+  sal_not_ends_with: String
+  cal: String
+
+  """All values that are not equal to given value."""
+  cal_not: String
+
+  """All values that are contained in given list."""
+  cal_in: [String!]
+
+  """All values that are not contained in given list."""
+  cal_not_in: [String!]
+
+  """All values less than the given value."""
+  cal_lt: String
+
+  """All values less than or equal the given value."""
+  cal_lte: String
+
+  """All values greater than the given value."""
+  cal_gt: String
+
+  """All values greater than or equal the given value."""
+  cal_gte: String
+
+  """All values containing the given string."""
+  cal_contains: String
+
+  """All values not containing the given string."""
+  cal_not_contains: String
+
+  """All values starting with the given string."""
+  cal_starts_with: String
+
+  """All values not starting with the given string."""
+  cal_not_starts_with: String
+
+  """All values ending with the given string."""
+  cal_ends_with: String
+
+  """All values not ending with the given string."""
+  cal_not_ends_with: String
+  iodine: String
+
+  """All values that are not equal to given value."""
+  iodine_not: String
+
+  """All values that are contained in given list."""
+  iodine_in: [String!]
+
+  """All values that are not contained in given list."""
+  iodine_not_in: [String!]
+
+  """All values less than the given value."""
+  iodine_lt: String
+
+  """All values less than or equal the given value."""
+  iodine_lte: String
+
+  """All values greater than the given value."""
+  iodine_gt: String
+
+  """All values greater than or equal the given value."""
+  iodine_gte: String
+
+  """All values containing the given string."""
+  iodine_contains: String
+
+  """All values not containing the given string."""
+  iodine_not_contains: String
+
+  """All values starting with the given string."""
+  iodine_starts_with: String
+
+  """All values not starting with the given string."""
+  iodine_not_starts_with: String
+
+  """All values ending with the given string."""
+  iodine_ends_with: String
+
+  """All values not ending with the given string."""
+  iodine_not_ends_with: String
+  nitrate: String
+
+  """All values that are not equal to given value."""
+  nitrate_not: String
+
+  """All values that are contained in given list."""
+  nitrate_in: [String!]
+
+  """All values that are not contained in given list."""
+  nitrate_not_in: [String!]
+
+  """All values less than the given value."""
+  nitrate_lt: String
+
+  """All values less than or equal the given value."""
+  nitrate_lte: String
+
+  """All values greater than the given value."""
+  nitrate_gt: String
+
+  """All values greater than or equal the given value."""
+  nitrate_gte: String
+
+  """All values containing the given string."""
+  nitrate_contains: String
+
+  """All values not containing the given string."""
+  nitrate_not_contains: String
+
+  """All values starting with the given string."""
+  nitrate_starts_with: String
+
+  """All values not starting with the given string."""
+  nitrate_not_starts_with: String
+
+  """All values ending with the given string."""
+  nitrate_ends_with: String
+
+  """All values not ending with the given string."""
+  nitrate_not_ends_with: String
+  phosphate: String
+
+  """All values that are not equal to given value."""
+  phosphate_not: String
+
+  """All values that are contained in given list."""
+  phosphate_in: [String!]
+
+  """All values that are not contained in given list."""
+  phosphate_not_in: [String!]
+
+  """All values less than the given value."""
+  phosphate_lt: String
+
+  """All values less than or equal the given value."""
+  phosphate_lte: String
+
+  """All values greater than the given value."""
+  phosphate_gt: String
+
+  """All values greater than or equal the given value."""
+  phosphate_gte: String
+
+  """All values containing the given string."""
+  phosphate_contains: String
+
+  """All values not containing the given string."""
+  phosphate_not_contains: String
+
+  """All values starting with the given string."""
+  phosphate_starts_with: String
+
+  """All values not starting with the given string."""
+  phosphate_not_starts_with: String
+
+  """All values ending with the given string."""
+  phosphate_ends_with: String
+
+  """All values not ending with the given string."""
+  phosphate_not_ends_with: String
   updatedAt: DateTime
 
   """All values that are not equal to given value."""
@@ -400,9 +5667,9 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  tank: TankWhereInput
 }
 
-input UserWhereUniqueInput {
+input WaterParametersWhereUniqueInput {
   id: ID
-  email: String
 }

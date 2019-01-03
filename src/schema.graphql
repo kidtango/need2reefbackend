@@ -1,54 +1,52 @@
 # import UserOrderByInput from './generated/prisma.graphql'
 
 type Query {
-    users(query: String, first: Int, skip: Int, after: String, orderBy: UserOrderByInput): [User!]!
-    me: User!
+  users(
+    query: String
+    first: Int
+    skip: Int
+    after: String
+    orderBy: UserOrderByInput
+  ): [User!]!
+  me: User!
+  profile(id: ID!): Profile
+  tankPosts(
+    where: TankPostWhereInput
+    orderBy: TankPostOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [TankPost]!
 }
 
 type Mutation {
-    createUser(data: CreateUserInput!): AuthPayload!
-    login(data: LoginUserInput!): AuthPayload!
-    deleteUser: User!
-    updateUser(data: UpdateUserInput!): User!
+  createUser(data: UserCreateInput!): AuthPayload!
+  login(data: UserLoginInput!): AuthPayload!
+  createTank(data: CreateTankInput!): Tank!
+  deleteTank(id: ID!): Tank!
+  createTankPost(data: TankPostCreateInput!): TankPost!
+  createTankReply(data: TankReplyCreateInput!): TankReply!
 }
 
-# type Subscription {
+input CreateTankInput {
+  title: String!
+  profileId: String!
+}
 
-# }
+input UserLoginInput {
+  email: String!
+  password: String!
+}
 
 type AuthPayload {
-    token: String!
-    user: User!
-}
-
-input CreateUserInput {
-    name: String!
-    email: String!
-    password: String!
-}
-
-input LoginUserInput {
-    email: String!
-    password: String!
-}
-
-input UpdateUserInput {
-    name: String
-    email: String
-    password: String
-}
-
-type User {
-    id: ID!
-    name: String!
-    email: String
-    password: String!
-    updatedAt: String!
-    createdAt: String!
+  token: String!
+  user: User!
 }
 
 enum MutationType {
-    CREATED
-    UPDATED
-    DELETED
+  CREATED
+  UPDATED
+  DELETED
 }

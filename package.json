@@ -38,7 +38,8 @@
     "graphql-yoga": "^1.14.10",
     "jsonwebtoken": "^8.3.0",
     "prisma-binding": "^2.1.1",
-    "subscriptions-transport-ws": "^0.9.15"
+    "subscriptions-transport-ws": "^0.9.15",
+    "cookie-parser": "^1.4.3"
   },
   "devDependencies": {
     "jest": "^23.5.0",

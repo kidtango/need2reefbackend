@@ -1,8 +1,155 @@
+enum Permission {
+  ADMIN
+  USER
+}
+
 type User {
   id: ID! @unique
   name: String!
   email: String! @unique
   password: String!
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: [Following!]!
+  followers: [Follower!]!
+  profile: Profile @relation(name: "UserToProfile", onDelete: CASCADE)
+  tankPosts: [TankPost!]! @relation(name: "UserToPost", onDelete: CASCADE)
+  tankReplies: [TankReply!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Profile {
+  id: ID! @unique
+  author: User! @relation(name: "UserToProfile", onDelete: SET_NULL)
+  corals: [Coral!]! @relation(name: "ProfileToCoral", onDelete: CASCADE)
+  tanks: [Tank!]!
   updatedAt: DateTime!
   createdAt: DateTime!
+}
+
+type Tank {
+  id: ID! @unique
+  profile: Profile!
+  title: String!
+  equipement: Equipment @relation(name: "TankToEquipment", onDelete: CASCADE)
+  parameters: WaterParameters
+    @relation(name: "TankToWaterParameters", onDelete: CASCADE)
+  posts: [TankPost!]! @relation(name: "TankToPost", onDelete: CASCADE)
+  images: [TankImage!]!
+  likes: [LikeTank!]!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type Equipment {
+  id: ID! @unique
+  tank: Tank! @relation(name: "TankToEquipment", onDelete: CASCADE)
+  tankDimensions: String!
+  glassType: String!
+  calrx: String!
+  salt: String!
+  lighting: String!
+  skimmer: String!
+  algaeScrubber: String!
+  powerhead: String!
+  liverock: String!
+  sand: String!
+  heater: String!
+  testKits: String!
+  addictives: String!
+  dosingPumps: String!
+  others: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type WaterParameters {
+  id: ID! @unique
+  tank: Tank! @relation(name: "TankToWaterParameters", onDelete: CASCADE)
+  temp: String!
+  ph: String!
+  kh: String!
+  sal: String!
+  cal: String!
+  iodine: String!
+  nitrate: String!
+  phosphate: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type TankPost {
+  id: ID! @unique
+  body: String!
+  replies: [TankReply!]! @relation(name: "TankPostToReplies", onDelete: CASCADE)
+  author: User! @relation(name: "UserToPost", onDelete: SET_NULL)
+  tank: Tank! @relation(name: "TankToPost", onDelete: CASCADE)
+  likes: [LikeTankPost!]!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type TankReply {
+  id: ID! @unique
+  body: String!
+  author: User!
+  post: TankPost! @relation(name: "TankPostToReplies", onDelete: CASCADE)
+  likes: [LikeTankReply!]!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type Coral {
+  id: ID! @unique
+  profile: Profile! @relation(name: "ProfileToCoral", onDelete: CASCADE)
+  price: Float!
+  user: User!
+  images: [String!]!
+  largeImages: [String!]!
+  likes: [LikeCoral!]!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type LikeTankReply {
+  id: ID! @unique
+  author: User!
+  reply: TankReply!
+}
+
+type LikeTankPost {
+  id: ID! @unique
+  post: TankPost!
+  author: User!
+}
+
+type LikeCoral {
+  id: ID! @unique
+  coral: Coral!
+  author: User!
+}
+
+type LikeTank {
+  id: ID! @unique
+  tank: Tank!
+  author: User!
+}
+
+type TankImage {
+  id: ID! @unique
+  image: String!
+  tank: Tank!
+}
+
+type Follower {
+  id: ID! @unique
+  user: User!
+}
+
+type Following {
+  id: ID! @unique
+  user: User!
 }

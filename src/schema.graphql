@@ -24,17 +24,26 @@ type Query {
 type Mutation {
   createUser(data: UserCreateInput!): AuthPayload!
   login(data: UserLoginInput!): AuthPayload!
-  createTank(data: CreateTankInput!): Tank!
+  createTank(data: TankInput!): Tank!
   deleteTank(id: ID!): Tank!
-  createTankPost(data: TankPostCreateInput!): TankPost!
-  createTankReply(data: TankReplyCreateInput!): TankReply!
+  createTankPost(data: TankPostInput): TankPost!
+  createTankReply(data: TankReplyInput!): TankReply!
 }
 
-input CreateTankInput {
+input TankInput {
   title: String!
   profileId: String!
 }
 
+input TankReplyInput {
+  postId: ID!
+  body: String!
+}
+
+input TankPostInput {
+  body: String!
+  tankId: ID!
+}
 input UserLoginInput {
   email: String!
   password: String!

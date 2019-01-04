@@ -25,28 +25,28 @@ type Profile {
   id: ID! @unique
   author: User! @relation(name: "UserToProfile", onDelete: SET_NULL)
   corals: [Coral!]! @relation(name: "ProfileToCoral", onDelete: CASCADE)
-  tanks: [Tank!]!
+  tanks: [Tank!]! @relation(name: "ProfileToTank", onDelete: CASCADE)
   updatedAt: DateTime!
   createdAt: DateTime!
 }
 
 type Tank {
   id: ID! @unique
-  profile: Profile!
+  profile: Profile! @relation(name: "ProfileToTank", onDelete: SET_NULL)
   title: String!
   equipement: Equipment @relation(name: "TankToEquipment", onDelete: CASCADE)
   parameters: WaterParameters
     @relation(name: "TankToWaterParameters", onDelete: CASCADE)
   posts: [TankPost!]! @relation(name: "TankToPost", onDelete: CASCADE)
-  images: [TankImage!]!
-  likes: [LikeTank!]!
+  images: [TankImage!]! @relation(name: "TankToImage", onDelete: CASCADE)
+  likes: [LikeTank!]! @relation(name: "TankToLike", onDelete: CASCADE)
   updatedAt: DateTime!
   createdAt: DateTime!
 }
 
 type Equipment {
   id: ID! @unique
-  tank: Tank! @relation(name: "TankToEquipment", onDelete: CASCADE)
+  tank: Tank! @relation(name: "TankToEquipment", onDelete: SET_NULL)
   tankDimensions: String!
   glassType: String!
   calrx: String!
@@ -68,7 +68,7 @@ type Equipment {
 
 type WaterParameters {
   id: ID! @unique
-  tank: Tank! @relation(name: "TankToWaterParameters", onDelete: CASCADE)
+  tank: Tank! @relation(name: "TankToWaterParameters", onDelete: SET_NULL)
   temp: String!
   ph: String!
   kh: String!
@@ -86,8 +86,8 @@ type TankPost {
   body: String!
   replies: [TankReply!]! @relation(name: "TankPostToReplies", onDelete: CASCADE)
   author: User! @relation(name: "UserToPost", onDelete: SET_NULL)
-  tank: Tank! @relation(name: "TankToPost", onDelete: CASCADE)
-  likes: [LikeTankPost!]!
+  tank: Tank! @relation(name: "TankToPost", onDelete: SET_NULL)
+  likes: [LikeTankPost!]! @relation(name: "TankPostToLike", onDelete: CASCADE)
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -96,7 +96,7 @@ type TankReply {
   id: ID! @unique
   body: String!
   author: User!
-  post: TankPost! @relation(name: "TankPostToReplies", onDelete: CASCADE)
+  post: TankPost! @relation(name: "TankPostToReplies", onDelete: SET_NULL)
   likes: [LikeTankReply!]!
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -104,7 +104,7 @@ type TankReply {
 
 type Coral {
   id: ID! @unique
-  profile: Profile! @relation(name: "ProfileToCoral", onDelete: CASCADE)
+  profile: Profile! @relation(name: "ProfileToCoral", onDelete: SET_NULL)
   price: Float!
   user: User!
   images: [String!]!
@@ -122,7 +122,7 @@ type LikeTankReply {
 
 type LikeTankPost {
   id: ID! @unique
-  post: TankPost!
+  post: TankPost! @relation(name: "TankPostToLike", onDelete: SET_NULL)
   author: User!
 }
 
@@ -134,14 +134,14 @@ type LikeCoral {
 
 type LikeTank {
   id: ID! @unique
-  tank: Tank!
+  tank: Tank! @relation(name: "TankToLike", onDelete: SET_NULL)
   author: User!
 }
 
 type TankImage {
   id: ID! @unique
   image: String!
-  tank: Tank!
+  tank: Tank! @relation(name: "TankToImage", onDelete: SET_NULL)
 }
 
 type Follower {

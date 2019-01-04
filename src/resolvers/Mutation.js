@@ -90,14 +90,24 @@ const Mutation = {
 
     return prisma.mutation.deleteTank({ where }, info);
   },
-  async createTankPost(parent, args, { prisma, request }, info) {
+  async createTankPost(parent, { data }, { prisma, request }, info) {
     //Authorize user
     const userId = getUserId(request);
     // Create post
     const tankPost = await prisma.mutation.createTankPost(
       {
         data: {
-          ...args.data
+          body: data.body,
+          tank: {
+            connect: {
+              id: data.tankId
+            }
+          },
+          author: {
+            connect: {
+              id: userId
+            }
+          }
         }
       },
       info
@@ -105,14 +115,24 @@ const Mutation = {
 
     return tankPost;
   },
-  async createTankReply(parent, args, { prisma, request }, info) {
+  async createTankReply(parent, { data }, { prisma, request }, info) {
     //Authorize user
     const userId = getUserId(request);
     // Create post
     const tankReply = await prisma.mutation.createTankReply(
       {
         data: {
-          ...args.data
+          body: data.body,
+          author: {
+            connect: {
+              id: userId
+            }
+          },
+          post: {
+            connect: {
+              id: data.postId
+            }
+          }
         }
       },
       info

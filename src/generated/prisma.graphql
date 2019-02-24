@@ -1,11 +1,27 @@
 # source: http://localhost:4466/tweef1/dev
-# timestamp: Tue Jan 01 2019 21:22:38 GMT-0600 (Central Standard Time)
+# timestamp: Sat Feb 23 2019 15:11:56 GMT-0600 (Central Standard Time)
 
 type AggregateCoral {
   count: Int!
 }
 
 type AggregateEquipment {
+  count: Int!
+}
+
+type AggregateFeed {
+  count: Int!
+}
+
+type AggregateFeedComment {
+  count: Int!
+}
+
+type AggregateFeedImage {
+  count: Int!
+}
+
+type AggregateFeedReply {
   count: Int!
 }
 
@@ -17,19 +33,31 @@ type AggregateFollowing {
   count: Int!
 }
 
-type AggregateLikeCoral {
+type AggregateLikesCoral {
   count: Int!
 }
 
-type AggregateLikeTank {
+type AggregateLikesFeed {
   count: Int!
 }
 
-type AggregateLikeTankPost {
+type AggregateLikesFeedComment {
   count: Int!
 }
 
-type AggregateLikeTankReply {
+type AggregateLikesFeedReply {
+  count: Int!
+}
+
+type AggregateLikesTank {
+  count: Int!
+}
+
+type AggregateLikesTankPost {
+  count: Int!
+}
+
+type AggregateLikesTankReply {
   count: Int!
 }
 
@@ -73,7 +101,7 @@ type Coral implements Node {
   user: User!
   images: [String!]!
   largeImages: [String!]!
-  likes(where: LikeCoralWhereInput, orderBy: LikeCoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeCoral!]
+  likes(where: LikesCoralWhereInput, orderBy: LikesCoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesCoral!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -98,7 +126,7 @@ input CoralCreateInput {
   largeImages: CoralCreatelargeImagesInput
   profile: ProfileCreateOneWithoutCoralsInput!
   user: UserCreateOneInput!
-  likes: LikeCoralCreateManyWithoutCoralInput
+  likes: LikesCoralCreateManyWithoutCoralInput
 }
 
 input CoralCreatelargeImagesInput {
@@ -128,7 +156,7 @@ input CoralCreateWithoutProfileInput {
   images: CoralCreateimagesInput
   largeImages: CoralCreatelargeImagesInput
   user: UserCreateOneInput!
-  likes: LikeCoralCreateManyWithoutCoralInput
+  likes: LikesCoralCreateManyWithoutCoralInput
 }
 
 """An edge in a connection."""
@@ -209,7 +237,7 @@ input CoralUpdateInput {
   largeImages: CoralUpdatelargeImagesInput
   profile: ProfileUpdateOneRequiredWithoutCoralsInput
   user: UserUpdateOneRequiredInput
-  likes: LikeCoralUpdateManyWithoutCoralInput
+  likes: LikesCoralUpdateManyWithoutCoralInput
 }
 
 input CoralUpdatelargeImagesInput {
@@ -251,7 +279,7 @@ input CoralUpdateWithoutProfileDataInput {
   images: CoralUpdateimagesInput
   largeImages: CoralUpdatelargeImagesInput
   user: UserUpdateOneRequiredInput
-  likes: LikeCoralUpdateManyWithoutCoralInput
+  likes: LikesCoralUpdateManyWithoutCoralInput
 }
 
 input CoralUpdateWithWhereUniqueWithoutProfileInput {
@@ -387,9 +415,9 @@ input CoralWhereInput {
   createdAt_gte: DateTime
   profile: ProfileWhereInput
   user: UserWhereInput
-  likes_every: LikeCoralWhereInput
-  likes_some: LikeCoralWhereInput
-  likes_none: LikeCoralWhereInput
+  likes_every: LikesCoralWhereInput
+  likes_some: LikesCoralWhereInput
+  likes_none: LikesCoralWhereInput
 }
 
 input CoralWhereUniqueInput {
@@ -1349,6 +1377,1291 @@ input EquipmentWhereUniqueInput {
   id: ID
 }
 
+type Feed implements Node {
+  id: ID!
+  author: User!
+  images(where: FeedImageWhereInput, orderBy: FeedImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedImage!]
+  message: String!
+  comments(where: FeedCommentWhereInput, orderBy: FeedCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedComment!]
+  likes(where: LikesFeedWhereInput, orderBy: LikesFeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeed!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type FeedComment implements Node {
+  id: ID!
+  feed: Feed!
+  author: User!
+  body: String!
+  reply(where: FeedReplyWhereInput, orderBy: FeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedReply!]
+  likes(where: LikesFeedCommentWhereInput, orderBy: LikesFeedCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeedComment!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type FeedCommentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FeedCommentEdge]!
+  aggregate: AggregateFeedComment!
+}
+
+input FeedCommentCreateInput {
+  body: String!
+  feed: FeedCreateOneWithoutCommentsInput!
+  author: UserCreateOneInput!
+  reply: FeedReplyCreateManyInput
+  likes: LikesFeedCommentCreateManyWithoutCommentInput
+}
+
+input FeedCommentCreateManyWithoutFeedInput {
+  create: [FeedCommentCreateWithoutFeedInput!]
+  connect: [FeedCommentWhereUniqueInput!]
+}
+
+input FeedCommentCreateOneWithoutLikesInput {
+  create: FeedCommentCreateWithoutLikesInput
+  connect: FeedCommentWhereUniqueInput
+}
+
+input FeedCommentCreateWithoutFeedInput {
+  body: String!
+  author: UserCreateOneInput!
+  reply: FeedReplyCreateManyInput
+  likes: LikesFeedCommentCreateManyWithoutCommentInput
+}
+
+input FeedCommentCreateWithoutLikesInput {
+  body: String!
+  feed: FeedCreateOneWithoutCommentsInput!
+  author: UserCreateOneInput!
+  reply: FeedReplyCreateManyInput
+}
+
+"""An edge in a connection."""
+type FeedCommentEdge {
+  """The item at the end of the edge."""
+  node: FeedComment!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FeedCommentOrderByInput {
+  id_ASC
+  id_DESC
+  body_ASC
+  body_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FeedCommentPreviousValues {
+  id: ID!
+  body: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type FeedCommentSubscriptionPayload {
+  mutation: MutationType!
+  node: FeedComment
+  updatedFields: [String!]
+  previousValues: FeedCommentPreviousValues
+}
+
+input FeedCommentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedCommentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedCommentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedCommentSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FeedCommentWhereInput
+}
+
+input FeedCommentUpdateInput {
+  body: String
+  feed: FeedUpdateOneRequiredWithoutCommentsInput
+  author: UserUpdateOneRequiredInput
+  reply: FeedReplyUpdateManyInput
+  likes: LikesFeedCommentUpdateManyWithoutCommentInput
+}
+
+input FeedCommentUpdateManyMutationInput {
+  body: String
+}
+
+input FeedCommentUpdateManyWithoutFeedInput {
+  create: [FeedCommentCreateWithoutFeedInput!]
+  connect: [FeedCommentWhereUniqueInput!]
+  disconnect: [FeedCommentWhereUniqueInput!]
+  delete: [FeedCommentWhereUniqueInput!]
+  update: [FeedCommentUpdateWithWhereUniqueWithoutFeedInput!]
+  upsert: [FeedCommentUpsertWithWhereUniqueWithoutFeedInput!]
+}
+
+input FeedCommentUpdateOneRequiredWithoutLikesInput {
+  create: FeedCommentCreateWithoutLikesInput
+  connect: FeedCommentWhereUniqueInput
+  update: FeedCommentUpdateWithoutLikesDataInput
+  upsert: FeedCommentUpsertWithoutLikesInput
+}
+
+input FeedCommentUpdateWithoutFeedDataInput {
+  body: String
+  author: UserUpdateOneRequiredInput
+  reply: FeedReplyUpdateManyInput
+  likes: LikesFeedCommentUpdateManyWithoutCommentInput
+}
+
+input FeedCommentUpdateWithoutLikesDataInput {
+  body: String
+  feed: FeedUpdateOneRequiredWithoutCommentsInput
+  author: UserUpdateOneRequiredInput
+  reply: FeedReplyUpdateManyInput
+}
+
+input FeedCommentUpdateWithWhereUniqueWithoutFeedInput {
+  where: FeedCommentWhereUniqueInput!
+  data: FeedCommentUpdateWithoutFeedDataInput!
+}
+
+input FeedCommentUpsertWithoutLikesInput {
+  update: FeedCommentUpdateWithoutLikesDataInput!
+  create: FeedCommentCreateWithoutLikesInput!
+}
+
+input FeedCommentUpsertWithWhereUniqueWithoutFeedInput {
+  where: FeedCommentWhereUniqueInput!
+  update: FeedCommentUpdateWithoutFeedDataInput!
+  create: FeedCommentCreateWithoutFeedInput!
+}
+
+input FeedCommentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedCommentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedCommentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedCommentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  body: String
+
+  """All values that are not equal to given value."""
+  body_not: String
+
+  """All values that are contained in given list."""
+  body_in: [String!]
+
+  """All values that are not contained in given list."""
+  body_not_in: [String!]
+
+  """All values less than the given value."""
+  body_lt: String
+
+  """All values less than or equal the given value."""
+  body_lte: String
+
+  """All values greater than the given value."""
+  body_gt: String
+
+  """All values greater than or equal the given value."""
+  body_gte: String
+
+  """All values containing the given string."""
+  body_contains: String
+
+  """All values not containing the given string."""
+  body_not_contains: String
+
+  """All values starting with the given string."""
+  body_starts_with: String
+
+  """All values not starting with the given string."""
+  body_not_starts_with: String
+
+  """All values ending with the given string."""
+  body_ends_with: String
+
+  """All values not ending with the given string."""
+  body_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  feed: FeedWhereInput
+  author: UserWhereInput
+  reply_every: FeedReplyWhereInput
+  reply_some: FeedReplyWhereInput
+  reply_none: FeedReplyWhereInput
+  likes_every: LikesFeedCommentWhereInput
+  likes_some: LikesFeedCommentWhereInput
+  likes_none: LikesFeedCommentWhereInput
+}
+
+input FeedCommentWhereUniqueInput {
+  id: ID
+}
+
+"""A connection to a list of items."""
+type FeedConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FeedEdge]!
+  aggregate: AggregateFeed!
+}
+
+input FeedCreateInput {
+  message: String!
+  author: UserCreateOneWithoutFeedInput!
+  images: FeedImageCreateManyWithoutFeedInput
+  comments: FeedCommentCreateManyWithoutFeedInput
+  likes: LikesFeedCreateManyWithoutFeedInput
+}
+
+input FeedCreateManyWithoutAuthorInput {
+  create: [FeedCreateWithoutAuthorInput!]
+  connect: [FeedWhereUniqueInput!]
+}
+
+input FeedCreateOneWithoutCommentsInput {
+  create: FeedCreateWithoutCommentsInput
+  connect: FeedWhereUniqueInput
+}
+
+input FeedCreateOneWithoutImagesInput {
+  create: FeedCreateWithoutImagesInput
+  connect: FeedWhereUniqueInput
+}
+
+input FeedCreateOneWithoutLikesInput {
+  create: FeedCreateWithoutLikesInput
+  connect: FeedWhereUniqueInput
+}
+
+input FeedCreateWithoutAuthorInput {
+  message: String!
+  images: FeedImageCreateManyWithoutFeedInput
+  comments: FeedCommentCreateManyWithoutFeedInput
+  likes: LikesFeedCreateManyWithoutFeedInput
+}
+
+input FeedCreateWithoutCommentsInput {
+  message: String!
+  author: UserCreateOneWithoutFeedInput!
+  images: FeedImageCreateManyWithoutFeedInput
+  likes: LikesFeedCreateManyWithoutFeedInput
+}
+
+input FeedCreateWithoutImagesInput {
+  message: String!
+  author: UserCreateOneWithoutFeedInput!
+  comments: FeedCommentCreateManyWithoutFeedInput
+  likes: LikesFeedCreateManyWithoutFeedInput
+}
+
+input FeedCreateWithoutLikesInput {
+  message: String!
+  author: UserCreateOneWithoutFeedInput!
+  images: FeedImageCreateManyWithoutFeedInput
+  comments: FeedCommentCreateManyWithoutFeedInput
+}
+
+"""An edge in a connection."""
+type FeedEdge {
+  """The item at the end of the edge."""
+  node: Feed!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+type FeedImage implements Node {
+  id: ID!
+  url: String!
+  feed: Feed!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type FeedImageConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FeedImageEdge]!
+  aggregate: AggregateFeedImage!
+}
+
+input FeedImageCreateInput {
+  url: String!
+  feed: FeedCreateOneWithoutImagesInput!
+}
+
+input FeedImageCreateManyWithoutFeedInput {
+  create: [FeedImageCreateWithoutFeedInput!]
+  connect: [FeedImageWhereUniqueInput!]
+}
+
+input FeedImageCreateWithoutFeedInput {
+  url: String!
+}
+
+"""An edge in a connection."""
+type FeedImageEdge {
+  """The item at the end of the edge."""
+  node: FeedImage!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FeedImageOrderByInput {
+  id_ASC
+  id_DESC
+  url_ASC
+  url_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FeedImagePreviousValues {
+  id: ID!
+  url: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type FeedImageSubscriptionPayload {
+  mutation: MutationType!
+  node: FeedImage
+  updatedFields: [String!]
+  previousValues: FeedImagePreviousValues
+}
+
+input FeedImageSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedImageSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedImageSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedImageSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FeedImageWhereInput
+}
+
+input FeedImageUpdateInput {
+  url: String
+  feed: FeedUpdateOneRequiredWithoutImagesInput
+}
+
+input FeedImageUpdateManyMutationInput {
+  url: String
+}
+
+input FeedImageUpdateManyWithoutFeedInput {
+  create: [FeedImageCreateWithoutFeedInput!]
+  connect: [FeedImageWhereUniqueInput!]
+  disconnect: [FeedImageWhereUniqueInput!]
+  delete: [FeedImageWhereUniqueInput!]
+  update: [FeedImageUpdateWithWhereUniqueWithoutFeedInput!]
+  upsert: [FeedImageUpsertWithWhereUniqueWithoutFeedInput!]
+}
+
+input FeedImageUpdateWithoutFeedDataInput {
+  url: String
+}
+
+input FeedImageUpdateWithWhereUniqueWithoutFeedInput {
+  where: FeedImageWhereUniqueInput!
+  data: FeedImageUpdateWithoutFeedDataInput!
+}
+
+input FeedImageUpsertWithWhereUniqueWithoutFeedInput {
+  where: FeedImageWhereUniqueInput!
+  update: FeedImageUpdateWithoutFeedDataInput!
+  create: FeedImageCreateWithoutFeedInput!
+}
+
+input FeedImageWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedImageWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedImageWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedImageWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  feed: FeedWhereInput
+}
+
+input FeedImageWhereUniqueInput {
+  id: ID
+}
+
+enum FeedOrderByInput {
+  id_ASC
+  id_DESC
+  message_ASC
+  message_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FeedPreviousValues {
+  id: ID!
+  message: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type FeedReply implements Node {
+  id: ID!
+  author: User!
+  body: String!
+  likes(where: LikesFeedReplyWhereInput, orderBy: LikesFeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeedReply!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type FeedReplyConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FeedReplyEdge]!
+  aggregate: AggregateFeedReply!
+}
+
+input FeedReplyCreateInput {
+  body: String!
+  author: UserCreateOneInput!
+  likes: LikesFeedReplyCreateManyWithoutReplyInput
+}
+
+input FeedReplyCreateManyInput {
+  create: [FeedReplyCreateInput!]
+  connect: [FeedReplyWhereUniqueInput!]
+}
+
+input FeedReplyCreateOneWithoutLikesInput {
+  create: FeedReplyCreateWithoutLikesInput
+  connect: FeedReplyWhereUniqueInput
+}
+
+input FeedReplyCreateWithoutLikesInput {
+  body: String!
+  author: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type FeedReplyEdge {
+  """The item at the end of the edge."""
+  node: FeedReply!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FeedReplyOrderByInput {
+  id_ASC
+  id_DESC
+  body_ASC
+  body_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FeedReplyPreviousValues {
+  id: ID!
+  body: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type FeedReplySubscriptionPayload {
+  mutation: MutationType!
+  node: FeedReply
+  updatedFields: [String!]
+  previousValues: FeedReplyPreviousValues
+}
+
+input FeedReplySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedReplySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedReplySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedReplySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FeedReplyWhereInput
+}
+
+input FeedReplyUpdateDataInput {
+  body: String
+  author: UserUpdateOneRequiredInput
+  likes: LikesFeedReplyUpdateManyWithoutReplyInput
+}
+
+input FeedReplyUpdateInput {
+  body: String
+  author: UserUpdateOneRequiredInput
+  likes: LikesFeedReplyUpdateManyWithoutReplyInput
+}
+
+input FeedReplyUpdateManyInput {
+  create: [FeedReplyCreateInput!]
+  connect: [FeedReplyWhereUniqueInput!]
+  disconnect: [FeedReplyWhereUniqueInput!]
+  delete: [FeedReplyWhereUniqueInput!]
+  update: [FeedReplyUpdateWithWhereUniqueNestedInput!]
+  upsert: [FeedReplyUpsertWithWhereUniqueNestedInput!]
+}
+
+input FeedReplyUpdateManyMutationInput {
+  body: String
+}
+
+input FeedReplyUpdateOneRequiredWithoutLikesInput {
+  create: FeedReplyCreateWithoutLikesInput
+  connect: FeedReplyWhereUniqueInput
+  update: FeedReplyUpdateWithoutLikesDataInput
+  upsert: FeedReplyUpsertWithoutLikesInput
+}
+
+input FeedReplyUpdateWithoutLikesDataInput {
+  body: String
+  author: UserUpdateOneRequiredInput
+}
+
+input FeedReplyUpdateWithWhereUniqueNestedInput {
+  where: FeedReplyWhereUniqueInput!
+  data: FeedReplyUpdateDataInput!
+}
+
+input FeedReplyUpsertWithoutLikesInput {
+  update: FeedReplyUpdateWithoutLikesDataInput!
+  create: FeedReplyCreateWithoutLikesInput!
+}
+
+input FeedReplyUpsertWithWhereUniqueNestedInput {
+  where: FeedReplyWhereUniqueInput!
+  update: FeedReplyUpdateDataInput!
+  create: FeedReplyCreateInput!
+}
+
+input FeedReplyWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedReplyWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedReplyWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedReplyWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  body: String
+
+  """All values that are not equal to given value."""
+  body_not: String
+
+  """All values that are contained in given list."""
+  body_in: [String!]
+
+  """All values that are not contained in given list."""
+  body_not_in: [String!]
+
+  """All values less than the given value."""
+  body_lt: String
+
+  """All values less than or equal the given value."""
+  body_lte: String
+
+  """All values greater than the given value."""
+  body_gt: String
+
+  """All values greater than or equal the given value."""
+  body_gte: String
+
+  """All values containing the given string."""
+  body_contains: String
+
+  """All values not containing the given string."""
+  body_not_contains: String
+
+  """All values starting with the given string."""
+  body_starts_with: String
+
+  """All values not starting with the given string."""
+  body_not_starts_with: String
+
+  """All values ending with the given string."""
+  body_ends_with: String
+
+  """All values not ending with the given string."""
+  body_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  author: UserWhereInput
+  likes_every: LikesFeedReplyWhereInput
+  likes_some: LikesFeedReplyWhereInput
+  likes_none: LikesFeedReplyWhereInput
+}
+
+input FeedReplyWhereUniqueInput {
+  id: ID
+}
+
+type FeedSubscriptionPayload {
+  mutation: MutationType!
+  node: Feed
+  updatedFields: [String!]
+  previousValues: FeedPreviousValues
+}
+
+input FeedSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FeedWhereInput
+}
+
+input FeedUpdateInput {
+  message: String
+  author: UserUpdateOneRequiredWithoutFeedInput
+  images: FeedImageUpdateManyWithoutFeedInput
+  comments: FeedCommentUpdateManyWithoutFeedInput
+  likes: LikesFeedUpdateManyWithoutFeedInput
+}
+
+input FeedUpdateManyMutationInput {
+  message: String
+}
+
+input FeedUpdateManyWithoutAuthorInput {
+  create: [FeedCreateWithoutAuthorInput!]
+  connect: [FeedWhereUniqueInput!]
+  disconnect: [FeedWhereUniqueInput!]
+  delete: [FeedWhereUniqueInput!]
+  update: [FeedUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [FeedUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input FeedUpdateOneRequiredWithoutCommentsInput {
+  create: FeedCreateWithoutCommentsInput
+  connect: FeedWhereUniqueInput
+  update: FeedUpdateWithoutCommentsDataInput
+  upsert: FeedUpsertWithoutCommentsInput
+}
+
+input FeedUpdateOneRequiredWithoutImagesInput {
+  create: FeedCreateWithoutImagesInput
+  connect: FeedWhereUniqueInput
+  update: FeedUpdateWithoutImagesDataInput
+  upsert: FeedUpsertWithoutImagesInput
+}
+
+input FeedUpdateOneRequiredWithoutLikesInput {
+  create: FeedCreateWithoutLikesInput
+  connect: FeedWhereUniqueInput
+  update: FeedUpdateWithoutLikesDataInput
+  upsert: FeedUpsertWithoutLikesInput
+}
+
+input FeedUpdateWithoutAuthorDataInput {
+  message: String
+  images: FeedImageUpdateManyWithoutFeedInput
+  comments: FeedCommentUpdateManyWithoutFeedInput
+  likes: LikesFeedUpdateManyWithoutFeedInput
+}
+
+input FeedUpdateWithoutCommentsDataInput {
+  message: String
+  author: UserUpdateOneRequiredWithoutFeedInput
+  images: FeedImageUpdateManyWithoutFeedInput
+  likes: LikesFeedUpdateManyWithoutFeedInput
+}
+
+input FeedUpdateWithoutImagesDataInput {
+  message: String
+  author: UserUpdateOneRequiredWithoutFeedInput
+  comments: FeedCommentUpdateManyWithoutFeedInput
+  likes: LikesFeedUpdateManyWithoutFeedInput
+}
+
+input FeedUpdateWithoutLikesDataInput {
+  message: String
+  author: UserUpdateOneRequiredWithoutFeedInput
+  images: FeedImageUpdateManyWithoutFeedInput
+  comments: FeedCommentUpdateManyWithoutFeedInput
+}
+
+input FeedUpdateWithWhereUniqueWithoutAuthorInput {
+  where: FeedWhereUniqueInput!
+  data: FeedUpdateWithoutAuthorDataInput!
+}
+
+input FeedUpsertWithoutCommentsInput {
+  update: FeedUpdateWithoutCommentsDataInput!
+  create: FeedCreateWithoutCommentsInput!
+}
+
+input FeedUpsertWithoutImagesInput {
+  update: FeedUpdateWithoutImagesDataInput!
+  create: FeedCreateWithoutImagesInput!
+}
+
+input FeedUpsertWithoutLikesInput {
+  update: FeedUpdateWithoutLikesDataInput!
+  create: FeedCreateWithoutLikesInput!
+}
+
+input FeedUpsertWithWhereUniqueWithoutAuthorInput {
+  where: FeedWhereUniqueInput!
+  update: FeedUpdateWithoutAuthorDataInput!
+  create: FeedCreateWithoutAuthorInput!
+}
+
+input FeedWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  message: String
+
+  """All values that are not equal to given value."""
+  message_not: String
+
+  """All values that are contained in given list."""
+  message_in: [String!]
+
+  """All values that are not contained in given list."""
+  message_not_in: [String!]
+
+  """All values less than the given value."""
+  message_lt: String
+
+  """All values less than or equal the given value."""
+  message_lte: String
+
+  """All values greater than the given value."""
+  message_gt: String
+
+  """All values greater than or equal the given value."""
+  message_gte: String
+
+  """All values containing the given string."""
+  message_contains: String
+
+  """All values not containing the given string."""
+  message_not_contains: String
+
+  """All values starting with the given string."""
+  message_starts_with: String
+
+  """All values not starting with the given string."""
+  message_not_starts_with: String
+
+  """All values ending with the given string."""
+  message_ends_with: String
+
+  """All values not ending with the given string."""
+  message_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  author: UserWhereInput
+  images_every: FeedImageWhereInput
+  images_some: FeedImageWhereInput
+  images_none: FeedImageWhereInput
+  comments_every: FeedCommentWhereInput
+  comments_some: FeedCommentWhereInput
+  comments_none: FeedCommentWhereInput
+  likes_every: LikesFeedWhereInput
+  likes_some: LikesFeedWhereInput
+  likes_none: LikesFeedWhereInput
+}
+
+input FeedWhereUniqueInput {
+  id: ID
+}
+
 type Follower implements Node {
   id: ID!
   user: User!
@@ -1652,46 +2965,46 @@ input FollowingWhereUniqueInput {
 """Raw JSON value"""
 scalar Json
 
-type LikeCoral implements Node {
+type LikesCoral implements Node {
   id: ID!
   coral: Coral!
   author: User!
 }
 
 """A connection to a list of items."""
-type LikeCoralConnection {
+type LikesCoralConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [LikeCoralEdge]!
-  aggregate: AggregateLikeCoral!
+  edges: [LikesCoralEdge]!
+  aggregate: AggregateLikesCoral!
 }
 
-input LikeCoralCreateInput {
+input LikesCoralCreateInput {
   coral: CoralCreateOneWithoutLikesInput!
   author: UserCreateOneInput!
 }
 
-input LikeCoralCreateManyWithoutCoralInput {
-  create: [LikeCoralCreateWithoutCoralInput!]
-  connect: [LikeCoralWhereUniqueInput!]
+input LikesCoralCreateManyWithoutCoralInput {
+  create: [LikesCoralCreateWithoutCoralInput!]
+  connect: [LikesCoralWhereUniqueInput!]
 }
 
-input LikeCoralCreateWithoutCoralInput {
+input LikesCoralCreateWithoutCoralInput {
   author: UserCreateOneInput!
 }
 
 """An edge in a connection."""
-type LikeCoralEdge {
+type LikesCoralEdge {
   """The item at the end of the edge."""
-  node: LikeCoral!
+  node: LikesCoral!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum LikeCoralOrderByInput {
+enum LikesCoralOrderByInput {
   id_ASC
   id_DESC
   updatedAt_ASC
@@ -1700,26 +3013,26 @@ enum LikeCoralOrderByInput {
   createdAt_DESC
 }
 
-type LikeCoralPreviousValues {
+type LikesCoralPreviousValues {
   id: ID!
 }
 
-type LikeCoralSubscriptionPayload {
+type LikesCoralSubscriptionPayload {
   mutation: MutationType!
-  node: LikeCoral
+  node: LikesCoral
   updatedFields: [String!]
-  previousValues: LikeCoralPreviousValues
+  previousValues: LikesCoralPreviousValues
 }
 
-input LikeCoralSubscriptionWhereInput {
+input LikesCoralSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [LikeCoralSubscriptionWhereInput!]
+  AND: [LikesCoralSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [LikeCoralSubscriptionWhereInput!]
+  OR: [LikesCoralSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [LikeCoralSubscriptionWhereInput!]
+  NOT: [LikesCoralSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -1740,47 +3053,47 @@ input LikeCoralSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: LikeCoralWhereInput
+  node: LikesCoralWhereInput
 }
 
-input LikeCoralUpdateInput {
+input LikesCoralUpdateInput {
   coral: CoralUpdateOneRequiredWithoutLikesInput
   author: UserUpdateOneRequiredInput
 }
 
-input LikeCoralUpdateManyWithoutCoralInput {
-  create: [LikeCoralCreateWithoutCoralInput!]
-  connect: [LikeCoralWhereUniqueInput!]
-  disconnect: [LikeCoralWhereUniqueInput!]
-  delete: [LikeCoralWhereUniqueInput!]
-  update: [LikeCoralUpdateWithWhereUniqueWithoutCoralInput!]
-  upsert: [LikeCoralUpsertWithWhereUniqueWithoutCoralInput!]
+input LikesCoralUpdateManyWithoutCoralInput {
+  create: [LikesCoralCreateWithoutCoralInput!]
+  connect: [LikesCoralWhereUniqueInput!]
+  disconnect: [LikesCoralWhereUniqueInput!]
+  delete: [LikesCoralWhereUniqueInput!]
+  update: [LikesCoralUpdateWithWhereUniqueWithoutCoralInput!]
+  upsert: [LikesCoralUpsertWithWhereUniqueWithoutCoralInput!]
 }
 
-input LikeCoralUpdateWithoutCoralDataInput {
+input LikesCoralUpdateWithoutCoralDataInput {
   author: UserUpdateOneRequiredInput
 }
 
-input LikeCoralUpdateWithWhereUniqueWithoutCoralInput {
-  where: LikeCoralWhereUniqueInput!
-  data: LikeCoralUpdateWithoutCoralDataInput!
+input LikesCoralUpdateWithWhereUniqueWithoutCoralInput {
+  where: LikesCoralWhereUniqueInput!
+  data: LikesCoralUpdateWithoutCoralDataInput!
 }
 
-input LikeCoralUpsertWithWhereUniqueWithoutCoralInput {
-  where: LikeCoralWhereUniqueInput!
-  update: LikeCoralUpdateWithoutCoralDataInput!
-  create: LikeCoralCreateWithoutCoralInput!
+input LikesCoralUpsertWithWhereUniqueWithoutCoralInput {
+  where: LikesCoralWhereUniqueInput!
+  update: LikesCoralUpdateWithoutCoralDataInput!
+  create: LikesCoralCreateWithoutCoralInput!
 }
 
-input LikeCoralWhereInput {
+input LikesCoralWhereInput {
   """Logical AND on all given filters."""
-  AND: [LikeCoralWhereInput!]
+  AND: [LikesCoralWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [LikeCoralWhereInput!]
+  OR: [LikesCoralWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [LikeCoralWhereInput!]
+  NOT: [LikesCoralWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -1825,50 +3138,60 @@ input LikeCoralWhereInput {
   author: UserWhereInput
 }
 
-input LikeCoralWhereUniqueInput {
+input LikesCoralWhereUniqueInput {
   id: ID
 }
 
-type LikeTank implements Node {
+type LikesFeed implements Node {
   id: ID!
-  tank: Tank!
-  author: User!
+  user: User!
+  feed: Feed!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type LikesFeedComment implements Node {
+  id: ID!
+  user: User!
+  Comment: FeedComment!
+  updatedAt: DateTime!
+  createdAt: DateTime!
 }
 
 """A connection to a list of items."""
-type LikeTankConnection {
+type LikesFeedCommentConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [LikeTankEdge]!
-  aggregate: AggregateLikeTank!
+  edges: [LikesFeedCommentEdge]!
+  aggregate: AggregateLikesFeedComment!
 }
 
-input LikeTankCreateInput {
-  tank: TankCreateOneWithoutLikesInput!
-  author: UserCreateOneInput!
+input LikesFeedCommentCreateInput {
+  user: UserCreateOneInput!
+  Comment: FeedCommentCreateOneWithoutLikesInput!
 }
 
-input LikeTankCreateManyWithoutTankInput {
-  create: [LikeTankCreateWithoutTankInput!]
-  connect: [LikeTankWhereUniqueInput!]
+input LikesFeedCommentCreateManyWithoutCommentInput {
+  create: [LikesFeedCommentCreateWithoutCommentInput!]
+  connect: [LikesFeedCommentWhereUniqueInput!]
 }
 
-input LikeTankCreateWithoutTankInput {
-  author: UserCreateOneInput!
+input LikesFeedCommentCreateWithoutCommentInput {
+  user: UserCreateOneInput!
 }
 
 """An edge in a connection."""
-type LikeTankEdge {
+type LikesFeedCommentEdge {
   """The item at the end of the edge."""
-  node: LikeTank!
+  node: LikesFeedComment!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum LikeTankOrderByInput {
+enum LikesFeedCommentOrderByInput {
   id_ASC
   id_DESC
   updatedAt_ASC
@@ -1877,74 +3200,28 @@ enum LikeTankOrderByInput {
   createdAt_DESC
 }
 
-type LikeTankPost implements Node {
+type LikesFeedCommentPreviousValues {
   id: ID!
-  post: TankPost!
-  author: User!
+  updatedAt: DateTime!
+  createdAt: DateTime!
 }
 
-"""A connection to a list of items."""
-type LikeTankPostConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [LikeTankPostEdge]!
-  aggregate: AggregateLikeTankPost!
-}
-
-input LikeTankPostCreateInput {
-  post: TankPostCreateOneWithoutLikesInput!
-  author: UserCreateOneInput!
-}
-
-input LikeTankPostCreateManyWithoutPostInput {
-  create: [LikeTankPostCreateWithoutPostInput!]
-  connect: [LikeTankPostWhereUniqueInput!]
-}
-
-input LikeTankPostCreateWithoutPostInput {
-  author: UserCreateOneInput!
-}
-
-"""An edge in a connection."""
-type LikeTankPostEdge {
-  """The item at the end of the edge."""
-  node: LikeTankPost!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum LikeTankPostOrderByInput {
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type LikeTankPostPreviousValues {
-  id: ID!
-}
-
-type LikeTankPostSubscriptionPayload {
+type LikesFeedCommentSubscriptionPayload {
   mutation: MutationType!
-  node: LikeTankPost
+  node: LikesFeedComment
   updatedFields: [String!]
-  previousValues: LikeTankPostPreviousValues
+  previousValues: LikesFeedCommentPreviousValues
 }
 
-input LikeTankPostSubscriptionWhereInput {
+input LikesFeedCommentSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [LikeTankPostSubscriptionWhereInput!]
+  AND: [LikesFeedCommentSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [LikeTankPostSubscriptionWhereInput!]
+  OR: [LikesFeedCommentSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [LikeTankPostSubscriptionWhereInput!]
+  NOT: [LikesFeedCommentSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -1965,47 +3242,758 @@ input LikeTankPostSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: LikeTankPostWhereInput
+  node: LikesFeedCommentWhereInput
 }
 
-input LikeTankPostUpdateInput {
+input LikesFeedCommentUpdateInput {
+  user: UserUpdateOneRequiredInput
+  Comment: FeedCommentUpdateOneRequiredWithoutLikesInput
+}
+
+input LikesFeedCommentUpdateManyWithoutCommentInput {
+  create: [LikesFeedCommentCreateWithoutCommentInput!]
+  connect: [LikesFeedCommentWhereUniqueInput!]
+  disconnect: [LikesFeedCommentWhereUniqueInput!]
+  delete: [LikesFeedCommentWhereUniqueInput!]
+  update: [LikesFeedCommentUpdateWithWhereUniqueWithoutCommentInput!]
+  upsert: [LikesFeedCommentUpsertWithWhereUniqueWithoutCommentInput!]
+}
+
+input LikesFeedCommentUpdateWithoutCommentDataInput {
+  user: UserUpdateOneRequiredInput
+}
+
+input LikesFeedCommentUpdateWithWhereUniqueWithoutCommentInput {
+  where: LikesFeedCommentWhereUniqueInput!
+  data: LikesFeedCommentUpdateWithoutCommentDataInput!
+}
+
+input LikesFeedCommentUpsertWithWhereUniqueWithoutCommentInput {
+  where: LikesFeedCommentWhereUniqueInput!
+  update: LikesFeedCommentUpdateWithoutCommentDataInput!
+  create: LikesFeedCommentCreateWithoutCommentInput!
+}
+
+input LikesFeedCommentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesFeedCommentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesFeedCommentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesFeedCommentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  user: UserWhereInput
+  Comment: FeedCommentWhereInput
+}
+
+input LikesFeedCommentWhereUniqueInput {
+  id: ID
+}
+
+"""A connection to a list of items."""
+type LikesFeedConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LikesFeedEdge]!
+  aggregate: AggregateLikesFeed!
+}
+
+input LikesFeedCreateInput {
+  user: UserCreateOneInput!
+  feed: FeedCreateOneWithoutLikesInput!
+}
+
+input LikesFeedCreateManyWithoutFeedInput {
+  create: [LikesFeedCreateWithoutFeedInput!]
+  connect: [LikesFeedWhereUniqueInput!]
+}
+
+input LikesFeedCreateWithoutFeedInput {
+  user: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LikesFeedEdge {
+  """The item at the end of the edge."""
+  node: LikesFeed!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LikesFeedOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LikesFeedPreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type LikesFeedReply implements Node {
+  id: ID!
+  user: User!
+  reply: FeedReply!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type LikesFeedReplyConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LikesFeedReplyEdge]!
+  aggregate: AggregateLikesFeedReply!
+}
+
+input LikesFeedReplyCreateInput {
+  user: UserCreateOneInput!
+  reply: FeedReplyCreateOneWithoutLikesInput!
+}
+
+input LikesFeedReplyCreateManyWithoutReplyInput {
+  create: [LikesFeedReplyCreateWithoutReplyInput!]
+  connect: [LikesFeedReplyWhereUniqueInput!]
+}
+
+input LikesFeedReplyCreateWithoutReplyInput {
+  user: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LikesFeedReplyEdge {
+  """The item at the end of the edge."""
+  node: LikesFeedReply!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LikesFeedReplyOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LikesFeedReplyPreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type LikesFeedReplySubscriptionPayload {
+  mutation: MutationType!
+  node: LikesFeedReply
+  updatedFields: [String!]
+  previousValues: LikesFeedReplyPreviousValues
+}
+
+input LikesFeedReplySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesFeedReplySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesFeedReplySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesFeedReplySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LikesFeedReplyWhereInput
+}
+
+input LikesFeedReplyUpdateInput {
+  user: UserUpdateOneRequiredInput
+  reply: FeedReplyUpdateOneRequiredWithoutLikesInput
+}
+
+input LikesFeedReplyUpdateManyWithoutReplyInput {
+  create: [LikesFeedReplyCreateWithoutReplyInput!]
+  connect: [LikesFeedReplyWhereUniqueInput!]
+  disconnect: [LikesFeedReplyWhereUniqueInput!]
+  delete: [LikesFeedReplyWhereUniqueInput!]
+  update: [LikesFeedReplyUpdateWithWhereUniqueWithoutReplyInput!]
+  upsert: [LikesFeedReplyUpsertWithWhereUniqueWithoutReplyInput!]
+}
+
+input LikesFeedReplyUpdateWithoutReplyDataInput {
+  user: UserUpdateOneRequiredInput
+}
+
+input LikesFeedReplyUpdateWithWhereUniqueWithoutReplyInput {
+  where: LikesFeedReplyWhereUniqueInput!
+  data: LikesFeedReplyUpdateWithoutReplyDataInput!
+}
+
+input LikesFeedReplyUpsertWithWhereUniqueWithoutReplyInput {
+  where: LikesFeedReplyWhereUniqueInput!
+  update: LikesFeedReplyUpdateWithoutReplyDataInput!
+  create: LikesFeedReplyCreateWithoutReplyInput!
+}
+
+input LikesFeedReplyWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesFeedReplyWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesFeedReplyWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesFeedReplyWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  user: UserWhereInput
+  reply: FeedReplyWhereInput
+}
+
+input LikesFeedReplyWhereUniqueInput {
+  id: ID
+}
+
+type LikesFeedSubscriptionPayload {
+  mutation: MutationType!
+  node: LikesFeed
+  updatedFields: [String!]
+  previousValues: LikesFeedPreviousValues
+}
+
+input LikesFeedSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesFeedSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesFeedSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesFeedSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LikesFeedWhereInput
+}
+
+input LikesFeedUpdateInput {
+  user: UserUpdateOneRequiredInput
+  feed: FeedUpdateOneRequiredWithoutLikesInput
+}
+
+input LikesFeedUpdateManyWithoutFeedInput {
+  create: [LikesFeedCreateWithoutFeedInput!]
+  connect: [LikesFeedWhereUniqueInput!]
+  disconnect: [LikesFeedWhereUniqueInput!]
+  delete: [LikesFeedWhereUniqueInput!]
+  update: [LikesFeedUpdateWithWhereUniqueWithoutFeedInput!]
+  upsert: [LikesFeedUpsertWithWhereUniqueWithoutFeedInput!]
+}
+
+input LikesFeedUpdateWithoutFeedDataInput {
+  user: UserUpdateOneRequiredInput
+}
+
+input LikesFeedUpdateWithWhereUniqueWithoutFeedInput {
+  where: LikesFeedWhereUniqueInput!
+  data: LikesFeedUpdateWithoutFeedDataInput!
+}
+
+input LikesFeedUpsertWithWhereUniqueWithoutFeedInput {
+  where: LikesFeedWhereUniqueInput!
+  update: LikesFeedUpdateWithoutFeedDataInput!
+  create: LikesFeedCreateWithoutFeedInput!
+}
+
+input LikesFeedWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesFeedWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesFeedWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesFeedWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  user: UserWhereInput
+  feed: FeedWhereInput
+}
+
+input LikesFeedWhereUniqueInput {
+  id: ID
+}
+
+type LikesTank implements Node {
+  id: ID!
+  tank: Tank!
+  author: User!
+}
+
+"""A connection to a list of items."""
+type LikesTankConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LikesTankEdge]!
+  aggregate: AggregateLikesTank!
+}
+
+input LikesTankCreateInput {
+  tank: TankCreateOneWithoutLikesInput!
+  author: UserCreateOneInput!
+}
+
+input LikesTankCreateManyWithoutTankInput {
+  create: [LikesTankCreateWithoutTankInput!]
+  connect: [LikesTankWhereUniqueInput!]
+}
+
+input LikesTankCreateWithoutTankInput {
+  author: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LikesTankEdge {
+  """The item at the end of the edge."""
+  node: LikesTank!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LikesTankOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LikesTankPost implements Node {
+  id: ID!
+  post: TankPost!
+  author: User!
+}
+
+"""A connection to a list of items."""
+type LikesTankPostConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LikesTankPostEdge]!
+  aggregate: AggregateLikesTankPost!
+}
+
+input LikesTankPostCreateInput {
+  post: TankPostCreateOneWithoutLikesInput!
+  author: UserCreateOneInput!
+}
+
+input LikesTankPostCreateManyWithoutPostInput {
+  create: [LikesTankPostCreateWithoutPostInput!]
+  connect: [LikesTankPostWhereUniqueInput!]
+}
+
+input LikesTankPostCreateWithoutPostInput {
+  author: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LikesTankPostEdge {
+  """The item at the end of the edge."""
+  node: LikesTankPost!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LikesTankPostOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LikesTankPostPreviousValues {
+  id: ID!
+}
+
+type LikesTankPostSubscriptionPayload {
+  mutation: MutationType!
+  node: LikesTankPost
+  updatedFields: [String!]
+  previousValues: LikesTankPostPreviousValues
+}
+
+input LikesTankPostSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesTankPostSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesTankPostSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesTankPostSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LikesTankPostWhereInput
+}
+
+input LikesTankPostUpdateInput {
   post: TankPostUpdateOneRequiredWithoutLikesInput
   author: UserUpdateOneRequiredInput
 }
 
-input LikeTankPostUpdateManyWithoutPostInput {
-  create: [LikeTankPostCreateWithoutPostInput!]
-  connect: [LikeTankPostWhereUniqueInput!]
-  disconnect: [LikeTankPostWhereUniqueInput!]
-  delete: [LikeTankPostWhereUniqueInput!]
-  update: [LikeTankPostUpdateWithWhereUniqueWithoutPostInput!]
-  upsert: [LikeTankPostUpsertWithWhereUniqueWithoutPostInput!]
+input LikesTankPostUpdateManyWithoutPostInput {
+  create: [LikesTankPostCreateWithoutPostInput!]
+  connect: [LikesTankPostWhereUniqueInput!]
+  disconnect: [LikesTankPostWhereUniqueInput!]
+  delete: [LikesTankPostWhereUniqueInput!]
+  update: [LikesTankPostUpdateWithWhereUniqueWithoutPostInput!]
+  upsert: [LikesTankPostUpsertWithWhereUniqueWithoutPostInput!]
 }
 
-input LikeTankPostUpdateWithoutPostDataInput {
+input LikesTankPostUpdateWithoutPostDataInput {
   author: UserUpdateOneRequiredInput
 }
 
-input LikeTankPostUpdateWithWhereUniqueWithoutPostInput {
-  where: LikeTankPostWhereUniqueInput!
-  data: LikeTankPostUpdateWithoutPostDataInput!
+input LikesTankPostUpdateWithWhereUniqueWithoutPostInput {
+  where: LikesTankPostWhereUniqueInput!
+  data: LikesTankPostUpdateWithoutPostDataInput!
 }
 
-input LikeTankPostUpsertWithWhereUniqueWithoutPostInput {
-  where: LikeTankPostWhereUniqueInput!
-  update: LikeTankPostUpdateWithoutPostDataInput!
-  create: LikeTankPostCreateWithoutPostInput!
+input LikesTankPostUpsertWithWhereUniqueWithoutPostInput {
+  where: LikesTankPostWhereUniqueInput!
+  update: LikesTankPostUpdateWithoutPostDataInput!
+  create: LikesTankPostCreateWithoutPostInput!
 }
 
-input LikeTankPostWhereInput {
+input LikesTankPostWhereInput {
   """Logical AND on all given filters."""
-  AND: [LikeTankPostWhereInput!]
+  AND: [LikesTankPostWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [LikeTankPostWhereInput!]
+  OR: [LikesTankPostWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [LikeTankPostWhereInput!]
+  NOT: [LikesTankPostWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -2050,54 +4038,54 @@ input LikeTankPostWhereInput {
   author: UserWhereInput
 }
 
-input LikeTankPostWhereUniqueInput {
+input LikesTankPostWhereUniqueInput {
   id: ID
 }
 
-type LikeTankPreviousValues {
+type LikesTankPreviousValues {
   id: ID!
 }
 
-type LikeTankReply implements Node {
+type LikesTankReply implements Node {
   id: ID!
   author: User!
   reply: TankReply!
 }
 
 """A connection to a list of items."""
-type LikeTankReplyConnection {
+type LikesTankReplyConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [LikeTankReplyEdge]!
-  aggregate: AggregateLikeTankReply!
+  edges: [LikesTankReplyEdge]!
+  aggregate: AggregateLikesTankReply!
 }
 
-input LikeTankReplyCreateInput {
+input LikesTankReplyCreateInput {
   author: UserCreateOneInput!
   reply: TankReplyCreateOneWithoutLikesInput!
 }
 
-input LikeTankReplyCreateManyWithoutReplyInput {
-  create: [LikeTankReplyCreateWithoutReplyInput!]
-  connect: [LikeTankReplyWhereUniqueInput!]
+input LikesTankReplyCreateManyWithoutReplyInput {
+  create: [LikesTankReplyCreateWithoutReplyInput!]
+  connect: [LikesTankReplyWhereUniqueInput!]
 }
 
-input LikeTankReplyCreateWithoutReplyInput {
+input LikesTankReplyCreateWithoutReplyInput {
   author: UserCreateOneInput!
 }
 
 """An edge in a connection."""
-type LikeTankReplyEdge {
+type LikesTankReplyEdge {
   """The item at the end of the edge."""
-  node: LikeTankReply!
+  node: LikesTankReply!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum LikeTankReplyOrderByInput {
+enum LikesTankReplyOrderByInput {
   id_ASC
   id_DESC
   updatedAt_ASC
@@ -2106,26 +4094,26 @@ enum LikeTankReplyOrderByInput {
   createdAt_DESC
 }
 
-type LikeTankReplyPreviousValues {
+type LikesTankReplyPreviousValues {
   id: ID!
 }
 
-type LikeTankReplySubscriptionPayload {
+type LikesTankReplySubscriptionPayload {
   mutation: MutationType!
-  node: LikeTankReply
+  node: LikesTankReply
   updatedFields: [String!]
-  previousValues: LikeTankReplyPreviousValues
+  previousValues: LikesTankReplyPreviousValues
 }
 
-input LikeTankReplySubscriptionWhereInput {
+input LikesTankReplySubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [LikeTankReplySubscriptionWhereInput!]
+  AND: [LikesTankReplySubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [LikeTankReplySubscriptionWhereInput!]
+  OR: [LikesTankReplySubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [LikeTankReplySubscriptionWhereInput!]
+  NOT: [LikesTankReplySubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -2146,47 +4134,47 @@ input LikeTankReplySubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: LikeTankReplyWhereInput
+  node: LikesTankReplyWhereInput
 }
 
-input LikeTankReplyUpdateInput {
+input LikesTankReplyUpdateInput {
   author: UserUpdateOneRequiredInput
   reply: TankReplyUpdateOneRequiredWithoutLikesInput
 }
 
-input LikeTankReplyUpdateManyWithoutReplyInput {
-  create: [LikeTankReplyCreateWithoutReplyInput!]
-  connect: [LikeTankReplyWhereUniqueInput!]
-  disconnect: [LikeTankReplyWhereUniqueInput!]
-  delete: [LikeTankReplyWhereUniqueInput!]
-  update: [LikeTankReplyUpdateWithWhereUniqueWithoutReplyInput!]
-  upsert: [LikeTankReplyUpsertWithWhereUniqueWithoutReplyInput!]
+input LikesTankReplyUpdateManyWithoutReplyInput {
+  create: [LikesTankReplyCreateWithoutReplyInput!]
+  connect: [LikesTankReplyWhereUniqueInput!]
+  disconnect: [LikesTankReplyWhereUniqueInput!]
+  delete: [LikesTankReplyWhereUniqueInput!]
+  update: [LikesTankReplyUpdateWithWhereUniqueWithoutReplyInput!]
+  upsert: [LikesTankReplyUpsertWithWhereUniqueWithoutReplyInput!]
 }
 
-input LikeTankReplyUpdateWithoutReplyDataInput {
+input LikesTankReplyUpdateWithoutReplyDataInput {
   author: UserUpdateOneRequiredInput
 }
 
-input LikeTankReplyUpdateWithWhereUniqueWithoutReplyInput {
-  where: LikeTankReplyWhereUniqueInput!
-  data: LikeTankReplyUpdateWithoutReplyDataInput!
+input LikesTankReplyUpdateWithWhereUniqueWithoutReplyInput {
+  where: LikesTankReplyWhereUniqueInput!
+  data: LikesTankReplyUpdateWithoutReplyDataInput!
 }
 
-input LikeTankReplyUpsertWithWhereUniqueWithoutReplyInput {
-  where: LikeTankReplyWhereUniqueInput!
-  update: LikeTankReplyUpdateWithoutReplyDataInput!
-  create: LikeTankReplyCreateWithoutReplyInput!
+input LikesTankReplyUpsertWithWhereUniqueWithoutReplyInput {
+  where: LikesTankReplyWhereUniqueInput!
+  update: LikesTankReplyUpdateWithoutReplyDataInput!
+  create: LikesTankReplyCreateWithoutReplyInput!
 }
 
-input LikeTankReplyWhereInput {
+input LikesTankReplyWhereInput {
   """Logical AND on all given filters."""
-  AND: [LikeTankReplyWhereInput!]
+  AND: [LikesTankReplyWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [LikeTankReplyWhereInput!]
+  OR: [LikesTankReplyWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [LikeTankReplyWhereInput!]
+  NOT: [LikesTankReplyWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -2231,26 +4219,26 @@ input LikeTankReplyWhereInput {
   reply: TankReplyWhereInput
 }
 
-input LikeTankReplyWhereUniqueInput {
+input LikesTankReplyWhereUniqueInput {
   id: ID
 }
 
-type LikeTankSubscriptionPayload {
+type LikesTankSubscriptionPayload {
   mutation: MutationType!
-  node: LikeTank
+  node: LikesTank
   updatedFields: [String!]
-  previousValues: LikeTankPreviousValues
+  previousValues: LikesTankPreviousValues
 }
 
-input LikeTankSubscriptionWhereInput {
+input LikesTankSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [LikeTankSubscriptionWhereInput!]
+  AND: [LikesTankSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [LikeTankSubscriptionWhereInput!]
+  OR: [LikesTankSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [LikeTankSubscriptionWhereInput!]
+  NOT: [LikesTankSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -2271,47 +4259,47 @@ input LikeTankSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: LikeTankWhereInput
+  node: LikesTankWhereInput
 }
 
-input LikeTankUpdateInput {
+input LikesTankUpdateInput {
   tank: TankUpdateOneRequiredWithoutLikesInput
   author: UserUpdateOneRequiredInput
 }
 
-input LikeTankUpdateManyWithoutTankInput {
-  create: [LikeTankCreateWithoutTankInput!]
-  connect: [LikeTankWhereUniqueInput!]
-  disconnect: [LikeTankWhereUniqueInput!]
-  delete: [LikeTankWhereUniqueInput!]
-  update: [LikeTankUpdateWithWhereUniqueWithoutTankInput!]
-  upsert: [LikeTankUpsertWithWhereUniqueWithoutTankInput!]
+input LikesTankUpdateManyWithoutTankInput {
+  create: [LikesTankCreateWithoutTankInput!]
+  connect: [LikesTankWhereUniqueInput!]
+  disconnect: [LikesTankWhereUniqueInput!]
+  delete: [LikesTankWhereUniqueInput!]
+  update: [LikesTankUpdateWithWhereUniqueWithoutTankInput!]
+  upsert: [LikesTankUpsertWithWhereUniqueWithoutTankInput!]
 }
 
-input LikeTankUpdateWithoutTankDataInput {
+input LikesTankUpdateWithoutTankDataInput {
   author: UserUpdateOneRequiredInput
 }
 
-input LikeTankUpdateWithWhereUniqueWithoutTankInput {
-  where: LikeTankWhereUniqueInput!
-  data: LikeTankUpdateWithoutTankDataInput!
+input LikesTankUpdateWithWhereUniqueWithoutTankInput {
+  where: LikesTankWhereUniqueInput!
+  data: LikesTankUpdateWithoutTankDataInput!
 }
 
-input LikeTankUpsertWithWhereUniqueWithoutTankInput {
-  where: LikeTankWhereUniqueInput!
-  update: LikeTankUpdateWithoutTankDataInput!
-  create: LikeTankCreateWithoutTankInput!
+input LikesTankUpsertWithWhereUniqueWithoutTankInput {
+  where: LikesTankWhereUniqueInput!
+  update: LikesTankUpdateWithoutTankDataInput!
+  create: LikesTankCreateWithoutTankInput!
 }
 
-input LikeTankWhereInput {
+input LikesTankWhereInput {
   """Logical AND on all given filters."""
-  AND: [LikeTankWhereInput!]
+  AND: [LikesTankWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [LikeTankWhereInput!]
+  OR: [LikesTankWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [LikeTankWhereInput!]
+  NOT: [LikesTankWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -2356,7 +4344,7 @@ input LikeTankWhereInput {
   author: UserWhereInput
 }
 
-input LikeTankWhereUniqueInput {
+input LikesTankWhereUniqueInput {
   id: ID
 }
 
@@ -2374,13 +4362,20 @@ type Mutation {
   createTankPost(data: TankPostCreateInput!): TankPost!
   createTankReply(data: TankReplyCreateInput!): TankReply!
   createCoral(data: CoralCreateInput!): Coral!
-  createLikeTankReply(data: LikeTankReplyCreateInput!): LikeTankReply!
-  createLikeTankPost(data: LikeTankPostCreateInput!): LikeTankPost!
-  createLikeCoral(data: LikeCoralCreateInput!): LikeCoral!
-  createLikeTank(data: LikeTankCreateInput!): LikeTank!
+  createLikesTankReply(data: LikesTankReplyCreateInput!): LikesTankReply!
+  createLikesTankPost(data: LikesTankPostCreateInput!): LikesTankPost!
+  createLikesCoral(data: LikesCoralCreateInput!): LikesCoral!
+  createLikesTank(data: LikesTankCreateInput!): LikesTank!
   createTankImage(data: TankImageCreateInput!): TankImage!
   createFollower(data: FollowerCreateInput!): Follower!
   createFollowing(data: FollowingCreateInput!): Following!
+  createFeed(data: FeedCreateInput!): Feed!
+  createLikesFeed(data: LikesFeedCreateInput!): LikesFeed!
+  createFeedComment(data: FeedCommentCreateInput!): FeedComment!
+  createLikesFeedComment(data: LikesFeedCommentCreateInput!): LikesFeedComment!
+  createLikesFeedReply(data: LikesFeedReplyCreateInput!): LikesFeedReply!
+  createFeedImage(data: FeedImageCreateInput!): FeedImage!
+  createFeedReply(data: FeedReplyCreateInput!): FeedReply!
   createUser(data: UserCreateInput!): User!
   updateProfile(data: ProfileUpdateInput!, where: ProfileWhereUniqueInput!): Profile
   updateTank(data: TankUpdateInput!, where: TankWhereUniqueInput!): Tank
@@ -2389,13 +4384,20 @@ type Mutation {
   updateTankPost(data: TankPostUpdateInput!, where: TankPostWhereUniqueInput!): TankPost
   updateTankReply(data: TankReplyUpdateInput!, where: TankReplyWhereUniqueInput!): TankReply
   updateCoral(data: CoralUpdateInput!, where: CoralWhereUniqueInput!): Coral
-  updateLikeTankReply(data: LikeTankReplyUpdateInput!, where: LikeTankReplyWhereUniqueInput!): LikeTankReply
-  updateLikeTankPost(data: LikeTankPostUpdateInput!, where: LikeTankPostWhereUniqueInput!): LikeTankPost
-  updateLikeCoral(data: LikeCoralUpdateInput!, where: LikeCoralWhereUniqueInput!): LikeCoral
-  updateLikeTank(data: LikeTankUpdateInput!, where: LikeTankWhereUniqueInput!): LikeTank
+  updateLikesTankReply(data: LikesTankReplyUpdateInput!, where: LikesTankReplyWhereUniqueInput!): LikesTankReply
+  updateLikesTankPost(data: LikesTankPostUpdateInput!, where: LikesTankPostWhereUniqueInput!): LikesTankPost
+  updateLikesCoral(data: LikesCoralUpdateInput!, where: LikesCoralWhereUniqueInput!): LikesCoral
+  updateLikesTank(data: LikesTankUpdateInput!, where: LikesTankWhereUniqueInput!): LikesTank
   updateTankImage(data: TankImageUpdateInput!, where: TankImageWhereUniqueInput!): TankImage
   updateFollower(data: FollowerUpdateInput!, where: FollowerWhereUniqueInput!): Follower
   updateFollowing(data: FollowingUpdateInput!, where: FollowingWhereUniqueInput!): Following
+  updateFeed(data: FeedUpdateInput!, where: FeedWhereUniqueInput!): Feed
+  updateLikesFeed(data: LikesFeedUpdateInput!, where: LikesFeedWhereUniqueInput!): LikesFeed
+  updateFeedComment(data: FeedCommentUpdateInput!, where: FeedCommentWhereUniqueInput!): FeedComment
+  updateLikesFeedComment(data: LikesFeedCommentUpdateInput!, where: LikesFeedCommentWhereUniqueInput!): LikesFeedComment
+  updateLikesFeedReply(data: LikesFeedReplyUpdateInput!, where: LikesFeedReplyWhereUniqueInput!): LikesFeedReply
+  updateFeedImage(data: FeedImageUpdateInput!, where: FeedImageWhereUniqueInput!): FeedImage
+  updateFeedReply(data: FeedReplyUpdateInput!, where: FeedReplyWhereUniqueInput!): FeedReply
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteProfile(where: ProfileWhereUniqueInput!): Profile
   deleteTank(where: TankWhereUniqueInput!): Tank
@@ -2404,13 +4406,20 @@ type Mutation {
   deleteTankPost(where: TankPostWhereUniqueInput!): TankPost
   deleteTankReply(where: TankReplyWhereUniqueInput!): TankReply
   deleteCoral(where: CoralWhereUniqueInput!): Coral
-  deleteLikeTankReply(where: LikeTankReplyWhereUniqueInput!): LikeTankReply
-  deleteLikeTankPost(where: LikeTankPostWhereUniqueInput!): LikeTankPost
-  deleteLikeCoral(where: LikeCoralWhereUniqueInput!): LikeCoral
-  deleteLikeTank(where: LikeTankWhereUniqueInput!): LikeTank
+  deleteLikesTankReply(where: LikesTankReplyWhereUniqueInput!): LikesTankReply
+  deleteLikesTankPost(where: LikesTankPostWhereUniqueInput!): LikesTankPost
+  deleteLikesCoral(where: LikesCoralWhereUniqueInput!): LikesCoral
+  deleteLikesTank(where: LikesTankWhereUniqueInput!): LikesTank
   deleteTankImage(where: TankImageWhereUniqueInput!): TankImage
   deleteFollower(where: FollowerWhereUniqueInput!): Follower
   deleteFollowing(where: FollowingWhereUniqueInput!): Following
+  deleteFeed(where: FeedWhereUniqueInput!): Feed
+  deleteLikesFeed(where: LikesFeedWhereUniqueInput!): LikesFeed
+  deleteFeedComment(where: FeedCommentWhereUniqueInput!): FeedComment
+  deleteLikesFeedComment(where: LikesFeedCommentWhereUniqueInput!): LikesFeedComment
+  deleteLikesFeedReply(where: LikesFeedReplyWhereUniqueInput!): LikesFeedReply
+  deleteFeedImage(where: FeedImageWhereUniqueInput!): FeedImage
+  deleteFeedReply(where: FeedReplyWhereUniqueInput!): FeedReply
   deleteUser(where: UserWhereUniqueInput!): User
   upsertProfile(where: ProfileWhereUniqueInput!, create: ProfileCreateInput!, update: ProfileUpdateInput!): Profile!
   upsertTank(where: TankWhereUniqueInput!, create: TankCreateInput!, update: TankUpdateInput!): Tank!
@@ -2419,13 +4428,20 @@ type Mutation {
   upsertTankPost(where: TankPostWhereUniqueInput!, create: TankPostCreateInput!, update: TankPostUpdateInput!): TankPost!
   upsertTankReply(where: TankReplyWhereUniqueInput!, create: TankReplyCreateInput!, update: TankReplyUpdateInput!): TankReply!
   upsertCoral(where: CoralWhereUniqueInput!, create: CoralCreateInput!, update: CoralUpdateInput!): Coral!
-  upsertLikeTankReply(where: LikeTankReplyWhereUniqueInput!, create: LikeTankReplyCreateInput!, update: LikeTankReplyUpdateInput!): LikeTankReply!
-  upsertLikeTankPost(where: LikeTankPostWhereUniqueInput!, create: LikeTankPostCreateInput!, update: LikeTankPostUpdateInput!): LikeTankPost!
-  upsertLikeCoral(where: LikeCoralWhereUniqueInput!, create: LikeCoralCreateInput!, update: LikeCoralUpdateInput!): LikeCoral!
-  upsertLikeTank(where: LikeTankWhereUniqueInput!, create: LikeTankCreateInput!, update: LikeTankUpdateInput!): LikeTank!
+  upsertLikesTankReply(where: LikesTankReplyWhereUniqueInput!, create: LikesTankReplyCreateInput!, update: LikesTankReplyUpdateInput!): LikesTankReply!
+  upsertLikesTankPost(where: LikesTankPostWhereUniqueInput!, create: LikesTankPostCreateInput!, update: LikesTankPostUpdateInput!): LikesTankPost!
+  upsertLikesCoral(where: LikesCoralWhereUniqueInput!, create: LikesCoralCreateInput!, update: LikesCoralUpdateInput!): LikesCoral!
+  upsertLikesTank(where: LikesTankWhereUniqueInput!, create: LikesTankCreateInput!, update: LikesTankUpdateInput!): LikesTank!
   upsertTankImage(where: TankImageWhereUniqueInput!, create: TankImageCreateInput!, update: TankImageUpdateInput!): TankImage!
   upsertFollower(where: FollowerWhereUniqueInput!, create: FollowerCreateInput!, update: FollowerUpdateInput!): Follower!
   upsertFollowing(where: FollowingWhereUniqueInput!, create: FollowingCreateInput!, update: FollowingUpdateInput!): Following!
+  upsertFeed(where: FeedWhereUniqueInput!, create: FeedCreateInput!, update: FeedUpdateInput!): Feed!
+  upsertLikesFeed(where: LikesFeedWhereUniqueInput!, create: LikesFeedCreateInput!, update: LikesFeedUpdateInput!): LikesFeed!
+  upsertFeedComment(where: FeedCommentWhereUniqueInput!, create: FeedCommentCreateInput!, update: FeedCommentUpdateInput!): FeedComment!
+  upsertLikesFeedComment(where: LikesFeedCommentWhereUniqueInput!, create: LikesFeedCommentCreateInput!, update: LikesFeedCommentUpdateInput!): LikesFeedComment!
+  upsertLikesFeedReply(where: LikesFeedReplyWhereUniqueInput!, create: LikesFeedReplyCreateInput!, update: LikesFeedReplyUpdateInput!): LikesFeedReply!
+  upsertFeedImage(where: FeedImageWhereUniqueInput!, create: FeedImageCreateInput!, update: FeedImageUpdateInput!): FeedImage!
+  upsertFeedReply(where: FeedReplyWhereUniqueInput!, create: FeedReplyCreateInput!, update: FeedReplyUpdateInput!): FeedReply!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyTanks(data: TankUpdateManyMutationInput!, where: TankWhereInput): BatchPayload!
   updateManyEquipments(data: EquipmentUpdateManyMutationInput!, where: EquipmentWhereInput): BatchPayload!
@@ -2434,6 +4450,10 @@ type Mutation {
   updateManyTankReplies(data: TankReplyUpdateManyMutationInput!, where: TankReplyWhereInput): BatchPayload!
   updateManyCorals(data: CoralUpdateManyMutationInput!, where: CoralWhereInput): BatchPayload!
   updateManyTankImages(data: TankImageUpdateManyMutationInput!, where: TankImageWhereInput): BatchPayload!
+  updateManyFeeds(data: FeedUpdateManyMutationInput!, where: FeedWhereInput): BatchPayload!
+  updateManyFeedComments(data: FeedCommentUpdateManyMutationInput!, where: FeedCommentWhereInput): BatchPayload!
+  updateManyFeedImages(data: FeedImageUpdateManyMutationInput!, where: FeedImageWhereInput): BatchPayload!
+  updateManyFeedReplies(data: FeedReplyUpdateManyMutationInput!, where: FeedReplyWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyProfiles(where: ProfileWhereInput): BatchPayload!
   deleteManyTanks(where: TankWhereInput): BatchPayload!
@@ -2442,13 +4462,20 @@ type Mutation {
   deleteManyTankPosts(where: TankPostWhereInput): BatchPayload!
   deleteManyTankReplies(where: TankReplyWhereInput): BatchPayload!
   deleteManyCorals(where: CoralWhereInput): BatchPayload!
-  deleteManyLikeTankReplies(where: LikeTankReplyWhereInput): BatchPayload!
-  deleteManyLikeTankPosts(where: LikeTankPostWhereInput): BatchPayload!
-  deleteManyLikeCorals(where: LikeCoralWhereInput): BatchPayload!
-  deleteManyLikeTanks(where: LikeTankWhereInput): BatchPayload!
+  deleteManyLikesTankReplies(where: LikesTankReplyWhereInput): BatchPayload!
+  deleteManyLikesTankPosts(where: LikesTankPostWhereInput): BatchPayload!
+  deleteManyLikesCorals(where: LikesCoralWhereInput): BatchPayload!
+  deleteManyLikesTanks(where: LikesTankWhereInput): BatchPayload!
   deleteManyTankImages(where: TankImageWhereInput): BatchPayload!
   deleteManyFollowers(where: FollowerWhereInput): BatchPayload!
   deleteManyFollowings(where: FollowingWhereInput): BatchPayload!
+  deleteManyFeeds(where: FeedWhereInput): BatchPayload!
+  deleteManyLikesFeeds(where: LikesFeedWhereInput): BatchPayload!
+  deleteManyFeedComments(where: FeedCommentWhereInput): BatchPayload!
+  deleteManyLikesFeedComments(where: LikesFeedCommentWhereInput): BatchPayload!
+  deleteManyLikesFeedReplies(where: LikesFeedReplyWhereInput): BatchPayload!
+  deleteManyFeedImages(where: FeedImageWhereInput): BatchPayload!
+  deleteManyFeedReplies(where: FeedReplyWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
@@ -2780,13 +4807,20 @@ type Query {
   tankPosts(where: TankPostWhereInput, orderBy: TankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankPost]!
   tankReplies(where: TankReplyWhereInput, orderBy: TankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankReply]!
   corals(where: CoralWhereInput, orderBy: CoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Coral]!
-  likeTankReplies(where: LikeTankReplyWhereInput, orderBy: LikeTankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTankReply]!
-  likeTankPosts(where: LikeTankPostWhereInput, orderBy: LikeTankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTankPost]!
-  likeCorals(where: LikeCoralWhereInput, orderBy: LikeCoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeCoral]!
-  likeTanks(where: LikeTankWhereInput, orderBy: LikeTankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTank]!
+  likesTankReplies(where: LikesTankReplyWhereInput, orderBy: LikesTankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesTankReply]!
+  likesTankPosts(where: LikesTankPostWhereInput, orderBy: LikesTankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesTankPost]!
+  likesCorals(where: LikesCoralWhereInput, orderBy: LikesCoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesCoral]!
+  likesTanks(where: LikesTankWhereInput, orderBy: LikesTankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesTank]!
   tankImages(where: TankImageWhereInput, orderBy: TankImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankImage]!
   followers(where: FollowerWhereInput, orderBy: FollowerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Follower]!
   followings(where: FollowingWhereInput, orderBy: FollowingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Following]!
+  feeds(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feed]!
+  likesFeeds(where: LikesFeedWhereInput, orderBy: LikesFeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeed]!
+  feedComments(where: FeedCommentWhereInput, orderBy: FeedCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedComment]!
+  likesFeedComments(where: LikesFeedCommentWhereInput, orderBy: LikesFeedCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeedComment]!
+  likesFeedReplies(where: LikesFeedReplyWhereInput, orderBy: LikesFeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeedReply]!
+  feedImages(where: FeedImageWhereInput, orderBy: FeedImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedImage]!
+  feedReplies(where: FeedReplyWhereInput, orderBy: FeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedReply]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   profile(where: ProfileWhereUniqueInput!): Profile
   tank(where: TankWhereUniqueInput!): Tank
@@ -2795,13 +4829,20 @@ type Query {
   tankPost(where: TankPostWhereUniqueInput!): TankPost
   tankReply(where: TankReplyWhereUniqueInput!): TankReply
   coral(where: CoralWhereUniqueInput!): Coral
-  likeTankReply(where: LikeTankReplyWhereUniqueInput!): LikeTankReply
-  likeTankPost(where: LikeTankPostWhereUniqueInput!): LikeTankPost
-  likeCoral(where: LikeCoralWhereUniqueInput!): LikeCoral
-  likeTank(where: LikeTankWhereUniqueInput!): LikeTank
+  likesTankReply(where: LikesTankReplyWhereUniqueInput!): LikesTankReply
+  likesTankPost(where: LikesTankPostWhereUniqueInput!): LikesTankPost
+  likesCoral(where: LikesCoralWhereUniqueInput!): LikesCoral
+  likesTank(where: LikesTankWhereUniqueInput!): LikesTank
   tankImage(where: TankImageWhereUniqueInput!): TankImage
   follower(where: FollowerWhereUniqueInput!): Follower
   following(where: FollowingWhereUniqueInput!): Following
+  feed(where: FeedWhereUniqueInput!): Feed
+  likesFeed(where: LikesFeedWhereUniqueInput!): LikesFeed
+  feedComment(where: FeedCommentWhereUniqueInput!): FeedComment
+  likesFeedComment(where: LikesFeedCommentWhereUniqueInput!): LikesFeedComment
+  likesFeedReply(where: LikesFeedReplyWhereUniqueInput!): LikesFeedReply
+  feedImage(where: FeedImageWhereUniqueInput!): FeedImage
+  feedReply(where: FeedReplyWhereUniqueInput!): FeedReply
   user(where: UserWhereUniqueInput!): User
   profilesConnection(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProfileConnection!
   tanksConnection(where: TankWhereInput, orderBy: TankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TankConnection!
@@ -2810,13 +4851,20 @@ type Query {
   tankPostsConnection(where: TankPostWhereInput, orderBy: TankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TankPostConnection!
   tankRepliesConnection(where: TankReplyWhereInput, orderBy: TankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TankReplyConnection!
   coralsConnection(where: CoralWhereInput, orderBy: CoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CoralConnection!
-  likeTankRepliesConnection(where: LikeTankReplyWhereInput, orderBy: LikeTankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeTankReplyConnection!
-  likeTankPostsConnection(where: LikeTankPostWhereInput, orderBy: LikeTankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeTankPostConnection!
-  likeCoralsConnection(where: LikeCoralWhereInput, orderBy: LikeCoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeCoralConnection!
-  likeTanksConnection(where: LikeTankWhereInput, orderBy: LikeTankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeTankConnection!
+  likesTankRepliesConnection(where: LikesTankReplyWhereInput, orderBy: LikesTankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikesTankReplyConnection!
+  likesTankPostsConnection(where: LikesTankPostWhereInput, orderBy: LikesTankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikesTankPostConnection!
+  likesCoralsConnection(where: LikesCoralWhereInput, orderBy: LikesCoralOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikesCoralConnection!
+  likesTanksConnection(where: LikesTankWhereInput, orderBy: LikesTankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikesTankConnection!
   tankImagesConnection(where: TankImageWhereInput, orderBy: TankImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TankImageConnection!
   followersConnection(where: FollowerWhereInput, orderBy: FollowerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FollowerConnection!
   followingsConnection(where: FollowingWhereInput, orderBy: FollowingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FollowingConnection!
+  feedsConnection(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedConnection!
+  likesFeedsConnection(where: LikesFeedWhereInput, orderBy: LikesFeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikesFeedConnection!
+  feedCommentsConnection(where: FeedCommentWhereInput, orderBy: FeedCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedCommentConnection!
+  likesFeedCommentsConnection(where: LikesFeedCommentWhereInput, orderBy: LikesFeedCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikesFeedCommentConnection!
+  likesFeedRepliesConnection(where: LikesFeedReplyWhereInput, orderBy: LikesFeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikesFeedReplyConnection!
+  feedImagesConnection(where: FeedImageWhereInput, orderBy: FeedImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedImageConnection!
+  feedRepliesConnection(where: FeedReplyWhereInput, orderBy: FeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedReplyConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -2834,13 +4882,20 @@ type Subscription {
   tankPost(where: TankPostSubscriptionWhereInput): TankPostSubscriptionPayload
   tankReply(where: TankReplySubscriptionWhereInput): TankReplySubscriptionPayload
   coral(where: CoralSubscriptionWhereInput): CoralSubscriptionPayload
-  likeTankReply(where: LikeTankReplySubscriptionWhereInput): LikeTankReplySubscriptionPayload
-  likeTankPost(where: LikeTankPostSubscriptionWhereInput): LikeTankPostSubscriptionPayload
-  likeCoral(where: LikeCoralSubscriptionWhereInput): LikeCoralSubscriptionPayload
-  likeTank(where: LikeTankSubscriptionWhereInput): LikeTankSubscriptionPayload
+  likesTankReply(where: LikesTankReplySubscriptionWhereInput): LikesTankReplySubscriptionPayload
+  likesTankPost(where: LikesTankPostSubscriptionWhereInput): LikesTankPostSubscriptionPayload
+  likesCoral(where: LikesCoralSubscriptionWhereInput): LikesCoralSubscriptionPayload
+  likesTank(where: LikesTankSubscriptionWhereInput): LikesTankSubscriptionPayload
   tankImage(where: TankImageSubscriptionWhereInput): TankImageSubscriptionPayload
   follower(where: FollowerSubscriptionWhereInput): FollowerSubscriptionPayload
   following(where: FollowingSubscriptionWhereInput): FollowingSubscriptionPayload
+  feed(where: FeedSubscriptionWhereInput): FeedSubscriptionPayload
+  likesFeed(where: LikesFeedSubscriptionWhereInput): LikesFeedSubscriptionPayload
+  feedComment(where: FeedCommentSubscriptionWhereInput): FeedCommentSubscriptionPayload
+  likesFeedComment(where: LikesFeedCommentSubscriptionWhereInput): LikesFeedCommentSubscriptionPayload
+  likesFeedReply(where: LikesFeedReplySubscriptionWhereInput): LikesFeedReplySubscriptionPayload
+  feedImage(where: FeedImageSubscriptionWhereInput): FeedImageSubscriptionPayload
+  feedReply(where: FeedReplySubscriptionWhereInput): FeedReplySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -2852,7 +4907,7 @@ type Tank implements Node {
   parameters: WaterParameters
   posts(where: TankPostWhereInput, orderBy: TankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankPost!]
   images(where: TankImageWhereInput, orderBy: TankImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankImage!]
-  likes(where: LikeTankWhereInput, orderBy: LikeTankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTank!]
+  likes(where: LikesTankWhereInput, orderBy: LikesTankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesTank!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -2874,7 +4929,7 @@ input TankCreateInput {
   parameters: WaterParametersCreateOneWithoutTankInput
   posts: TankPostCreateManyWithoutTankInput
   images: TankImageCreateManyWithoutTankInput
-  likes: LikeTankCreateManyWithoutTankInput
+  likes: LikesTankCreateManyWithoutTankInput
 }
 
 input TankCreateManyWithoutProfileInput {
@@ -2913,7 +4968,7 @@ input TankCreateWithoutEquipementInput {
   parameters: WaterParametersCreateOneWithoutTankInput
   posts: TankPostCreateManyWithoutTankInput
   images: TankImageCreateManyWithoutTankInput
-  likes: LikeTankCreateManyWithoutTankInput
+  likes: LikesTankCreateManyWithoutTankInput
 }
 
 input TankCreateWithoutImagesInput {
@@ -2922,7 +4977,7 @@ input TankCreateWithoutImagesInput {
   equipement: EquipmentCreateOneWithoutTankInput
   parameters: WaterParametersCreateOneWithoutTankInput
   posts: TankPostCreateManyWithoutTankInput
-  likes: LikeTankCreateManyWithoutTankInput
+  likes: LikesTankCreateManyWithoutTankInput
 }
 
 input TankCreateWithoutLikesInput {
@@ -2940,7 +4995,7 @@ input TankCreateWithoutParametersInput {
   equipement: EquipmentCreateOneWithoutTankInput
   posts: TankPostCreateManyWithoutTankInput
   images: TankImageCreateManyWithoutTankInput
-  likes: LikeTankCreateManyWithoutTankInput
+  likes: LikesTankCreateManyWithoutTankInput
 }
 
 input TankCreateWithoutPostsInput {
@@ -2949,7 +5004,7 @@ input TankCreateWithoutPostsInput {
   equipement: EquipmentCreateOneWithoutTankInput
   parameters: WaterParametersCreateOneWithoutTankInput
   images: TankImageCreateManyWithoutTankInput
-  likes: LikeTankCreateManyWithoutTankInput
+  likes: LikesTankCreateManyWithoutTankInput
 }
 
 input TankCreateWithoutProfileInput {
@@ -2958,7 +5013,7 @@ input TankCreateWithoutProfileInput {
   parameters: WaterParametersCreateOneWithoutTankInput
   posts: TankPostCreateManyWithoutTankInput
   images: TankImageCreateManyWithoutTankInput
-  likes: LikeTankCreateManyWithoutTankInput
+  likes: LikesTankCreateManyWithoutTankInput
 }
 
 """An edge in a connection."""
@@ -2972,7 +5027,7 @@ type TankEdge {
 
 type TankImage implements Node {
   id: ID!
-  image: String!
+  url: String!
   tank: Tank!
 }
 
@@ -2987,7 +5042,7 @@ type TankImageConnection {
 }
 
 input TankImageCreateInput {
-  image: String!
+  url: String!
   tank: TankCreateOneWithoutImagesInput!
 }
 
@@ -2997,7 +5052,7 @@ input TankImageCreateManyWithoutTankInput {
 }
 
 input TankImageCreateWithoutTankInput {
-  image: String!
+  url: String!
 }
 
 """An edge in a connection."""
@@ -3012,8 +5067,8 @@ type TankImageEdge {
 enum TankImageOrderByInput {
   id_ASC
   id_DESC
-  image_ASC
-  image_DESC
+  url_ASC
+  url_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -3022,7 +5077,7 @@ enum TankImageOrderByInput {
 
 type TankImagePreviousValues {
   id: ID!
-  image: String!
+  url: String!
 }
 
 type TankImageSubscriptionPayload {
@@ -3065,12 +5120,12 @@ input TankImageSubscriptionWhereInput {
 }
 
 input TankImageUpdateInput {
-  image: String
+  url: String
   tank: TankUpdateOneRequiredWithoutImagesInput
 }
 
 input TankImageUpdateManyMutationInput {
-  image: String
+  url: String
 }
 
 input TankImageUpdateManyWithoutTankInput {
@@ -3083,7 +5138,7 @@ input TankImageUpdateManyWithoutTankInput {
 }
 
 input TankImageUpdateWithoutTankDataInput {
-  image: String
+  url: String
 }
 
 input TankImageUpdateWithWhereUniqueWithoutTankInput {
@@ -3146,46 +5201,46 @@ input TankImageWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  image: String
+  url: String
 
   """All values that are not equal to given value."""
-  image_not: String
+  url_not: String
 
   """All values that are contained in given list."""
-  image_in: [String!]
+  url_in: [String!]
 
   """All values that are not contained in given list."""
-  image_not_in: [String!]
+  url_not_in: [String!]
 
   """All values less than the given value."""
-  image_lt: String
+  url_lt: String
 
   """All values less than or equal the given value."""
-  image_lte: String
+  url_lte: String
 
   """All values greater than the given value."""
-  image_gt: String
+  url_gt: String
 
   """All values greater than or equal the given value."""
-  image_gte: String
+  url_gte: String
 
   """All values containing the given string."""
-  image_contains: String
+  url_contains: String
 
   """All values not containing the given string."""
-  image_not_contains: String
+  url_not_contains: String
 
   """All values starting with the given string."""
-  image_starts_with: String
+  url_starts_with: String
 
   """All values not starting with the given string."""
-  image_not_starts_with: String
+  url_not_starts_with: String
 
   """All values ending with the given string."""
-  image_ends_with: String
+  url_ends_with: String
 
   """All values not ending with the given string."""
-  image_not_ends_with: String
+  url_not_ends_with: String
   tank: TankWhereInput
 }
 
@@ -3210,7 +5265,7 @@ type TankPost implements Node {
   replies(where: TankReplyWhereInput, orderBy: TankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankReply!]
   author: User!
   tank: Tank!
-  likes(where: LikeTankPostWhereInput, orderBy: LikeTankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTankPost!]
+  likes(where: LikesTankPostWhereInput, orderBy: LikesTankPostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesTankPost!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -3230,7 +5285,7 @@ input TankPostCreateInput {
   replies: TankReplyCreateManyWithoutPostInput
   author: UserCreateOneWithoutTankPostsInput!
   tank: TankCreateOneWithoutPostsInput!
-  likes: LikeTankPostCreateManyWithoutPostInput
+  likes: LikesTankPostCreateManyWithoutPostInput
 }
 
 input TankPostCreateManyWithoutAuthorInput {
@@ -3257,7 +5312,7 @@ input TankPostCreateWithoutAuthorInput {
   body: String!
   replies: TankReplyCreateManyWithoutPostInput
   tank: TankCreateOneWithoutPostsInput!
-  likes: LikeTankPostCreateManyWithoutPostInput
+  likes: LikesTankPostCreateManyWithoutPostInput
 }
 
 input TankPostCreateWithoutLikesInput {
@@ -3271,14 +5326,14 @@ input TankPostCreateWithoutRepliesInput {
   body: String!
   author: UserCreateOneWithoutTankPostsInput!
   tank: TankCreateOneWithoutPostsInput!
-  likes: LikeTankPostCreateManyWithoutPostInput
+  likes: LikesTankPostCreateManyWithoutPostInput
 }
 
 input TankPostCreateWithoutTankInput {
   body: String!
   replies: TankReplyCreateManyWithoutPostInput
   author: UserCreateOneWithoutTankPostsInput!
-  likes: LikeTankPostCreateManyWithoutPostInput
+  likes: LikesTankPostCreateManyWithoutPostInput
 }
 
 """An edge in a connection."""
@@ -3352,7 +5407,7 @@ input TankPostUpdateInput {
   replies: TankReplyUpdateManyWithoutPostInput
   author: UserUpdateOneRequiredWithoutTankPostsInput
   tank: TankUpdateOneRequiredWithoutPostsInput
-  likes: LikeTankPostUpdateManyWithoutPostInput
+  likes: LikesTankPostUpdateManyWithoutPostInput
 }
 
 input TankPostUpdateManyMutationInput {
@@ -3395,7 +5450,7 @@ input TankPostUpdateWithoutAuthorDataInput {
   body: String
   replies: TankReplyUpdateManyWithoutPostInput
   tank: TankUpdateOneRequiredWithoutPostsInput
-  likes: LikeTankPostUpdateManyWithoutPostInput
+  likes: LikesTankPostUpdateManyWithoutPostInput
 }
 
 input TankPostUpdateWithoutLikesDataInput {
@@ -3409,14 +5464,14 @@ input TankPostUpdateWithoutRepliesDataInput {
   body: String
   author: UserUpdateOneRequiredWithoutTankPostsInput
   tank: TankUpdateOneRequiredWithoutPostsInput
-  likes: LikeTankPostUpdateManyWithoutPostInput
+  likes: LikesTankPostUpdateManyWithoutPostInput
 }
 
 input TankPostUpdateWithoutTankDataInput {
   body: String
   replies: TankReplyUpdateManyWithoutPostInput
   author: UserUpdateOneRequiredWithoutTankPostsInput
-  likes: LikeTankPostUpdateManyWithoutPostInput
+  likes: LikesTankPostUpdateManyWithoutPostInput
 }
 
 input TankPostUpdateWithWhereUniqueWithoutAuthorInput {
@@ -3589,9 +5644,9 @@ input TankPostWhereInput {
   replies_none: TankReplyWhereInput
   author: UserWhereInput
   tank: TankWhereInput
-  likes_every: LikeTankPostWhereInput
-  likes_some: LikeTankPostWhereInput
-  likes_none: LikeTankPostWhereInput
+  likes_every: LikesTankPostWhereInput
+  likes_some: LikesTankPostWhereInput
+  likes_none: LikesTankPostWhereInput
 }
 
 input TankPostWhereUniqueInput {
@@ -3610,7 +5665,7 @@ type TankReply implements Node {
   body: String!
   author: User!
   post: TankPost!
-  likes(where: LikeTankReplyWhereInput, orderBy: LikeTankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikeTankReply!]
+  likes(where: LikesTankReplyWhereInput, orderBy: LikesTankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesTankReply!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -3629,7 +5684,7 @@ input TankReplyCreateInput {
   body: String!
   author: UserCreateOneWithoutTankRepliesInput!
   post: TankPostCreateOneWithoutRepliesInput!
-  likes: LikeTankReplyCreateManyWithoutReplyInput
+  likes: LikesTankReplyCreateManyWithoutReplyInput
 }
 
 input TankReplyCreateManyWithoutAuthorInput {
@@ -3650,7 +5705,7 @@ input TankReplyCreateOneWithoutLikesInput {
 input TankReplyCreateWithoutAuthorInput {
   body: String!
   post: TankPostCreateOneWithoutRepliesInput!
-  likes: LikeTankReplyCreateManyWithoutReplyInput
+  likes: LikesTankReplyCreateManyWithoutReplyInput
 }
 
 input TankReplyCreateWithoutLikesInput {
@@ -3662,7 +5717,7 @@ input TankReplyCreateWithoutLikesInput {
 input TankReplyCreateWithoutPostInput {
   body: String!
   author: UserCreateOneWithoutTankRepliesInput!
-  likes: LikeTankReplyCreateManyWithoutReplyInput
+  likes: LikesTankReplyCreateManyWithoutReplyInput
 }
 
 """An edge in a connection."""
@@ -3735,7 +5790,7 @@ input TankReplyUpdateInput {
   body: String
   author: UserUpdateOneRequiredWithoutTankRepliesInput
   post: TankPostUpdateOneRequiredWithoutRepliesInput
-  likes: LikeTankReplyUpdateManyWithoutReplyInput
+  likes: LikesTankReplyUpdateManyWithoutReplyInput
 }
 
 input TankReplyUpdateManyMutationInput {
@@ -3770,7 +5825,7 @@ input TankReplyUpdateOneRequiredWithoutLikesInput {
 input TankReplyUpdateWithoutAuthorDataInput {
   body: String
   post: TankPostUpdateOneRequiredWithoutRepliesInput
-  likes: LikeTankReplyUpdateManyWithoutReplyInput
+  likes: LikesTankReplyUpdateManyWithoutReplyInput
 }
 
 input TankReplyUpdateWithoutLikesDataInput {
@@ -3782,7 +5837,7 @@ input TankReplyUpdateWithoutLikesDataInput {
 input TankReplyUpdateWithoutPostDataInput {
   body: String
   author: UserUpdateOneRequiredWithoutTankRepliesInput
-  likes: LikeTankReplyUpdateManyWithoutReplyInput
+  likes: LikesTankReplyUpdateManyWithoutReplyInput
 }
 
 input TankReplyUpdateWithWhereUniqueWithoutAuthorInput {
@@ -3947,9 +6002,9 @@ input TankReplyWhereInput {
   createdAt_gte: DateTime
   author: UserWhereInput
   post: TankPostWhereInput
-  likes_every: LikeTankReplyWhereInput
-  likes_some: LikeTankReplyWhereInput
-  likes_none: LikeTankReplyWhereInput
+  likes_every: LikesTankReplyWhereInput
+  likes_some: LikesTankReplyWhereInput
+  likes_none: LikesTankReplyWhereInput
 }
 
 input TankReplyWhereUniqueInput {
@@ -4002,7 +6057,7 @@ input TankUpdateInput {
   parameters: WaterParametersUpdateOneWithoutTankInput
   posts: TankPostUpdateManyWithoutTankInput
   images: TankImageUpdateManyWithoutTankInput
-  likes: LikeTankUpdateManyWithoutTankInput
+  likes: LikesTankUpdateManyWithoutTankInput
 }
 
 input TankUpdateManyMutationInput {
@@ -4059,7 +6114,7 @@ input TankUpdateWithoutEquipementDataInput {
   parameters: WaterParametersUpdateOneWithoutTankInput
   posts: TankPostUpdateManyWithoutTankInput
   images: TankImageUpdateManyWithoutTankInput
-  likes: LikeTankUpdateManyWithoutTankInput
+  likes: LikesTankUpdateManyWithoutTankInput
 }
 
 input TankUpdateWithoutImagesDataInput {
@@ -4068,7 +6123,7 @@ input TankUpdateWithoutImagesDataInput {
   equipement: EquipmentUpdateOneWithoutTankInput
   parameters: WaterParametersUpdateOneWithoutTankInput
   posts: TankPostUpdateManyWithoutTankInput
-  likes: LikeTankUpdateManyWithoutTankInput
+  likes: LikesTankUpdateManyWithoutTankInput
 }
 
 input TankUpdateWithoutLikesDataInput {
@@ -4086,7 +6141,7 @@ input TankUpdateWithoutParametersDataInput {
   equipement: EquipmentUpdateOneWithoutTankInput
   posts: TankPostUpdateManyWithoutTankInput
   images: TankImageUpdateManyWithoutTankInput
-  likes: LikeTankUpdateManyWithoutTankInput
+  likes: LikesTankUpdateManyWithoutTankInput
 }
 
 input TankUpdateWithoutPostsDataInput {
@@ -4095,7 +6150,7 @@ input TankUpdateWithoutPostsDataInput {
   equipement: EquipmentUpdateOneWithoutTankInput
   parameters: WaterParametersUpdateOneWithoutTankInput
   images: TankImageUpdateManyWithoutTankInput
-  likes: LikeTankUpdateManyWithoutTankInput
+  likes: LikesTankUpdateManyWithoutTankInput
 }
 
 input TankUpdateWithoutProfileDataInput {
@@ -4104,7 +6159,7 @@ input TankUpdateWithoutProfileDataInput {
   parameters: WaterParametersUpdateOneWithoutTankInput
   posts: TankPostUpdateManyWithoutTankInput
   images: TankImageUpdateManyWithoutTankInput
-  likes: LikeTankUpdateManyWithoutTankInput
+  likes: LikesTankUpdateManyWithoutTankInput
 }
 
 input TankUpdateWithWhereUniqueWithoutProfileInput {
@@ -4285,9 +6340,9 @@ input TankWhereInput {
   images_every: TankImageWhereInput
   images_some: TankImageWhereInput
   images_none: TankImageWhereInput
-  likes_every: LikeTankWhereInput
-  likes_some: LikeTankWhereInput
-  likes_none: LikeTankWhereInput
+  likes_every: LikesTankWhereInput
+  likes_some: LikesTankWhereInput
+  likes_none: LikesTankWhereInput
 }
 
 input TankWhereUniqueInput {
@@ -4310,6 +6365,7 @@ type User implements Node {
   tankReplies(where: TankReplyWhereInput, orderBy: TankReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TankReply!]
   createdAt: DateTime!
   updatedAt: DateTime!
+  feed(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feed!]
 }
 
 """A connection to a list of items."""
@@ -4335,10 +6391,16 @@ input UserCreateInput {
   profile: ProfileCreateOneWithoutAuthorInput
   tankPosts: TankPostCreateManyWithoutAuthorInput
   tankReplies: TankReplyCreateManyWithoutAuthorInput
+  feed: FeedCreateManyWithoutAuthorInput
 }
 
 input UserCreateOneInput {
   create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutFeedInput {
+  create: UserCreateWithoutFeedInput
   connect: UserWhereUniqueInput
 }
 
@@ -4367,6 +6429,21 @@ input UserCreateOneWithoutTankRepliesInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateWithoutFeedInput {
+  name: String!
+  email: String!
+  password: String!
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingCreateManyWithoutUserInput
+  followers: FollowerCreateManyWithoutUserInput
+  profile: ProfileCreateOneWithoutAuthorInput
+  tankPosts: TankPostCreateManyWithoutAuthorInput
+  tankReplies: TankReplyCreateManyWithoutAuthorInput
+}
+
 input UserCreateWithoutFollowersInput {
   name: String!
   email: String!
@@ -4379,6 +6456,7 @@ input UserCreateWithoutFollowersInput {
   profile: ProfileCreateOneWithoutAuthorInput
   tankPosts: TankPostCreateManyWithoutAuthorInput
   tankReplies: TankReplyCreateManyWithoutAuthorInput
+  feed: FeedCreateManyWithoutAuthorInput
 }
 
 input UserCreateWithoutFollowingsInput {
@@ -4393,6 +6471,7 @@ input UserCreateWithoutFollowingsInput {
   profile: ProfileCreateOneWithoutAuthorInput
   tankPosts: TankPostCreateManyWithoutAuthorInput
   tankReplies: TankReplyCreateManyWithoutAuthorInput
+  feed: FeedCreateManyWithoutAuthorInput
 }
 
 input UserCreateWithoutProfileInput {
@@ -4407,6 +6486,7 @@ input UserCreateWithoutProfileInput {
   followers: FollowerCreateManyWithoutUserInput
   tankPosts: TankPostCreateManyWithoutAuthorInput
   tankReplies: TankReplyCreateManyWithoutAuthorInput
+  feed: FeedCreateManyWithoutAuthorInput
 }
 
 input UserCreateWithoutTankPostsInput {
@@ -4421,6 +6501,7 @@ input UserCreateWithoutTankPostsInput {
   followers: FollowerCreateManyWithoutUserInput
   profile: ProfileCreateOneWithoutAuthorInput
   tankReplies: TankReplyCreateManyWithoutAuthorInput
+  feed: FeedCreateManyWithoutAuthorInput
 }
 
 input UserCreateWithoutTankRepliesInput {
@@ -4435,6 +6516,7 @@ input UserCreateWithoutTankRepliesInput {
   followers: FollowerCreateManyWithoutUserInput
   profile: ProfileCreateOneWithoutAuthorInput
   tankPosts: TankPostCreateManyWithoutAuthorInput
+  feed: FeedCreateManyWithoutAuthorInput
 }
 
 """An edge in a connection."""
@@ -4534,6 +6616,7 @@ input UserUpdateDataInput {
   profile: ProfileUpdateOneWithoutAuthorInput
   tankPosts: TankPostUpdateManyWithoutAuthorInput
   tankReplies: TankReplyUpdateManyWithoutAuthorInput
+  feed: FeedUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateInput {
@@ -4549,6 +6632,7 @@ input UserUpdateInput {
   profile: ProfileUpdateOneWithoutAuthorInput
   tankPosts: TankPostUpdateManyWithoutAuthorInput
   tankReplies: TankReplyUpdateManyWithoutAuthorInput
+  feed: FeedUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateManyMutationInput {
@@ -4566,6 +6650,13 @@ input UserUpdateOneRequiredInput {
   connect: UserWhereUniqueInput
   update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
+}
+
+input UserUpdateOneRequiredWithoutFeedInput {
+  create: UserCreateWithoutFeedInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutFeedDataInput
+  upsert: UserUpsertWithoutFeedInput
 }
 
 input UserUpdateOneRequiredWithoutFollowersInput {
@@ -4603,6 +6694,21 @@ input UserUpdateOneRequiredWithoutTankRepliesInput {
   upsert: UserUpsertWithoutTankRepliesInput
 }
 
+input UserUpdateWithoutFeedDataInput {
+  name: String
+  email: String
+  password: String
+  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  followings: FollowingUpdateManyWithoutUserInput
+  followers: FollowerUpdateManyWithoutUserInput
+  profile: ProfileUpdateOneWithoutAuthorInput
+  tankPosts: TankPostUpdateManyWithoutAuthorInput
+  tankReplies: TankReplyUpdateManyWithoutAuthorInput
+}
+
 input UserUpdateWithoutFollowersDataInput {
   name: String
   email: String
@@ -4615,6 +6721,7 @@ input UserUpdateWithoutFollowersDataInput {
   profile: ProfileUpdateOneWithoutAuthorInput
   tankPosts: TankPostUpdateManyWithoutAuthorInput
   tankReplies: TankReplyUpdateManyWithoutAuthorInput
+  feed: FeedUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateWithoutFollowingsDataInput {
@@ -4629,6 +6736,7 @@ input UserUpdateWithoutFollowingsDataInput {
   profile: ProfileUpdateOneWithoutAuthorInput
   tankPosts: TankPostUpdateManyWithoutAuthorInput
   tankReplies: TankReplyUpdateManyWithoutAuthorInput
+  feed: FeedUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateWithoutProfileDataInput {
@@ -4643,6 +6751,7 @@ input UserUpdateWithoutProfileDataInput {
   followers: FollowerUpdateManyWithoutUserInput
   tankPosts: TankPostUpdateManyWithoutAuthorInput
   tankReplies: TankReplyUpdateManyWithoutAuthorInput
+  feed: FeedUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateWithoutTankPostsDataInput {
@@ -4657,6 +6766,7 @@ input UserUpdateWithoutTankPostsDataInput {
   followers: FollowerUpdateManyWithoutUserInput
   profile: ProfileUpdateOneWithoutAuthorInput
   tankReplies: TankReplyUpdateManyWithoutAuthorInput
+  feed: FeedUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateWithoutTankRepliesDataInput {
@@ -4671,11 +6781,17 @@ input UserUpdateWithoutTankRepliesDataInput {
   followers: FollowerUpdateManyWithoutUserInput
   profile: ProfileUpdateOneWithoutAuthorInput
   tankPosts: TankPostUpdateManyWithoutAuthorInput
+  feed: FeedUpdateManyWithoutAuthorInput
 }
 
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithoutFeedInput {
+  update: UserUpdateWithoutFeedDataInput!
+  create: UserCreateWithoutFeedInput!
 }
 
 input UserUpsertWithoutFollowersInput {
@@ -5059,6 +7175,9 @@ input UserWhereInput {
   tankReplies_every: TankReplyWhereInput
   tankReplies_some: TankReplyWhereInput
   tankReplies_none: TankReplyWhereInput
+  feed_every: FeedWhereInput
+  feed_some: FeedWhereInput
+  feed_none: FeedWhereInput
 }
 
 input UserWhereUniqueInput {

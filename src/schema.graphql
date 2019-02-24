@@ -19,6 +19,33 @@ type Query {
     first: Int
     last: Int
   ): [TankPost]!
+  tankPostsConnection(
+    where: TankPostWhereInput
+    orderBy: TankPostOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): TankPostConnection!
+  tanksConnection(
+    where: TankWhereInput
+    orderBy: TankOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): TankConnection!
+  feedsConnection(
+    where: FeedWhereInput
+    orderBy: FeedOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): FeedConnection!
 }
 
 type Mutation {
@@ -26,10 +53,19 @@ type Mutation {
   login(data: UserLoginInput!): AuthPayload!
   createTank(data: TankInput!): Tank!
   deleteTank(id: ID!): Tank!
-  createTankPost(data: TankPostInput): TankPost!
+  createTankPost(data: TankPostInput!): TankPost!
+  deleteTankPost(id: ID!): TankPost!
+  updateTankPost(data: UpdateTankPostInput): TankPost!
   createTankReply(data: TankReplyInput!): TankReply!
+  deleteTankReply(id: ID!): TankReply!
+  updateTankReply(data: UpdateTankReplyInput!): TankReply!
+  createTankImage(data: TankImageInput!): TankImage!
 }
 
+input TankImageInput {
+  tankId: ID!
+  url: String!
+}
 input TankInput {
   title: String!
   profileId: String!
@@ -37,6 +73,16 @@ input TankInput {
 
 input TankReplyInput {
   postId: ID!
+  body: String!
+}
+
+input UpdateTankPostInput {
+  postId: ID!
+  body: String!
+}
+
+input UpdateTankReplyInput {
+  replyId: ID!
   body: String!
 }
 

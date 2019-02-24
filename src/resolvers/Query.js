@@ -50,7 +50,10 @@ const Query = {
 
     return profile;
   },
-  tankPosts: forwardTo('prisma')
+  tankPosts: forwardTo('prisma'),
+  tanksConnection: forwardTo('prisma'),
+  tankPostsConnection: forwardTo('prisma'),
+  feedsConnection: forwardTo('prisma')
 };
 
 export { Query as default };

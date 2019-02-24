@@ -8,7 +8,8 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  profilePicture: String
+  profilePicture: [ProfilePicture!]!
+    @relation(name: "UserToProfilePicture", onDelete: CASCADE)
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
@@ -17,6 +18,15 @@ type User {
   profile: Profile @relation(name: "UserToProfile", onDelete: CASCADE)
   tankPosts: [TankPost!]! @relation(name: "UserToPost", onDelete: CASCADE)
   tankReplies: [TankReply!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  feed: [Feed!]! @relation(name: "UserToFeed", onDelete: CASCADE)
+}
+
+type ProfilePicture {
+  id: ID! @unique
+  user: User! @relation(name: "UserToProfilePicture", onDelete: SET_NULL)
+  picture: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -39,7 +49,7 @@ type Tank {
     @relation(name: "TankToWaterParameters", onDelete: CASCADE)
   posts: [TankPost!]! @relation(name: "TankToPost", onDelete: CASCADE)
   images: [TankImage!]! @relation(name: "TankToImage", onDelete: CASCADE)
-  likes: [LikeTank!]! @relation(name: "TankToLike", onDelete: CASCADE)
+  likes: [LikesTank!]! @relation(name: "TankToLike", onDelete: CASCADE)
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -87,7 +97,7 @@ type TankPost {
   replies: [TankReply!]! @relation(name: "TankPostToReplies", onDelete: CASCADE)
   author: User! @relation(name: "UserToPost", onDelete: SET_NULL)
   tank: Tank! @relation(name: "TankToPost", onDelete: SET_NULL)
-  likes: [LikeTankPost!]! @relation(name: "TankPostToLike", onDelete: CASCADE)
+  likes: [LikesTankPost!]! @relation(name: "TankPostToLike", onDelete: CASCADE)
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -97,7 +107,7 @@ type TankReply {
   body: String!
   author: User!
   post: TankPost! @relation(name: "TankPostToReplies", onDelete: SET_NULL)
-  likes: [LikeTankReply!]!
+  likes: [LikesTankReply!]!
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -109,30 +119,30 @@ type Coral {
   user: User!
   images: [String!]!
   largeImages: [String!]!
-  likes: [LikeCoral!]!
+  likes: [LikesCoral!]!
   updatedAt: DateTime!
   createdAt: DateTime!
 }
 
-type LikeTankReply {
+type LikesTankReply {
   id: ID! @unique
   author: User!
   reply: TankReply!
 }
 
-type LikeTankPost {
+type LikesTankPost {
   id: ID! @unique
   post: TankPost! @relation(name: "TankPostToLike", onDelete: SET_NULL)
   author: User!
 }
 
-type LikeCoral {
+type LikesCoral {
   id: ID! @unique
   coral: Coral!
   author: User!
 }
 
-type LikeTank {
+type LikesTank {
   id: ID! @unique
   tank: Tank! @relation(name: "TankToLike", onDelete: SET_NULL)
   author: User!
@@ -140,7 +150,7 @@ type LikeTank {
 
 type TankImage {
   id: ID! @unique
-  image: String!
+  url: String!
   tank: Tank! @relation(name: "TankToImage", onDelete: SET_NULL)
 }
 
@@ -152,4 +162,72 @@ type Follower {
 type Following {
   id: ID! @unique
   user: User!
+}
+
+type Feed {
+  id: ID! @unique
+  author: User! @relation(name: "UserToFeed", onDelete: SET_NULL)
+  images: [FeedImage!]! @relation(name: "FeedToFeedImage", onDelete: CASCADE)
+  message: String!
+  comments: [FeedComment!]!
+    @relation(name: "FeedToFeedComment", onDelete: CASCADE)
+  likes: [LikesFeed!]! @relation(name: "FeedToLikes", onDelete: CASCADE)
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type LikesFeed {
+  id: ID! @unique
+  user: User!
+  feed: Feed! @relation(name: "FeedToLikes", onDelete: SET_NULL)
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type FeedComment {
+  id: ID! @unique
+  feed: Feed! @relation(name: "FeedToFeedComment", onDelete: SET_NULL)
+  author: User!
+  body: String!
+  reply: [FeedReply!]!
+    @relation(name: "FeedCommentToFeedReply", onDelete: CASCADE)
+  likes: [LikesFeedComment!]!
+    @relation(name: "FeedCommentToLikes", onDelete: CASCADE)
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type LikesFeedComment {
+  id: ID! @unique
+  user: User!
+  Comment: FeedComment!
+    @relation(name: "FeedCommentToLikes", onDelete: SET_NULL)
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type FeedReply {
+  id: ID! @unique
+  author: User! @relation(name: "UsertoFeedPost", onDelete: SET_NULL)
+  body: String!
+  likes: [LikesFeedReply!]!
+    @relation(name: "FeedReplyToLikes", onDelete: SET_NULL)
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type LikesFeedReply {
+  id: ID! @unique
+  user: User!
+  reply: FeedReply! @relation(name: "FeedReplyToLikes", onDelete: SET_NULL)
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type FeedImage {
+  id: ID! @unique
+  url: String!
+  feed: Feed! @relation(name: "FeedToFeedImage", onDelete: SET_NULL)
+  updatedAt: DateTime!
+  createdAt: DateTime!
 }

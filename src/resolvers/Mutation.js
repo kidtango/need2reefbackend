@@ -262,6 +262,75 @@ const Mutation = {
       },
       info
     );
+  },
+  async createFeed(parent, { data }, { prisma, request }, info) {
+    //Authenticate user
+    const userId = getUserId(request);
+
+    const feed = await prisma.mutation.createFeed(
+      {
+        data: {
+          author: {
+            connect: {
+              id: userId
+            }
+          },
+          message: data.message,
+          images: {
+            create: {
+              url: data.url
+            }
+          }
+        }
+      },
+      info
+    );
+
+    return feed;
+  },
+  async deleteFeed(parent, { id }, { prisma, request }, info) {
+    const userId = getUserId(request);
+
+    const where = { id };
+    const feed = await prisma.query.feed(
+      {
+        where
+      },
+      `{ author { id }}`
+    );
+
+    const ownsFeed = feed.author.id === userId;
+    if (!ownsFeed) {
+      throw new Error("You don't have permission to delete this feed!");
+    }
+
+    return prisma.mutation.deleteFeed({ where }, info);
+  },
+  async createFeedComment(parent, { data }, { prisma, request }, info) {
+    //authenticate the user
+
+    //need: AuthorID, FeedID,
+
+    const comment = await prisma.mutation.createFeedComment(
+      {
+        data: {
+          body: data.body,
+          author: {
+            connect: {
+              id: userId
+            }
+          },
+          feed: {
+            connect: {
+              id: data.feedId
+            }
+          }
+        }
+      },
+      info
+    );
+
+    return comment;
   }
 };
 

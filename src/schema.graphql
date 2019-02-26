@@ -46,6 +46,15 @@ type Query {
     first: Int
     last: Int
   ): FeedConnection!
+  feedCommentsConnection(
+    where: FeedCommentWhereInput
+    orderBy: FeedCommentOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): FeedCommentConnection!
 }
 
 type Mutation {
@@ -60,6 +69,19 @@ type Mutation {
   deleteTankReply(id: ID!): TankReply!
   updateTankReply(data: UpdateTankReplyInput!): TankReply!
   createTankImage(data: TankImageInput!): TankImage!
+  createFeed(data: FeedInput!): Feed!
+  deleteFeed(id: ID!): Feed!
+  createFeedComment(data: FeedCommentCreateInput!): FeedComment!
+}
+
+input FeedInput {
+  message: String!
+  url: String!
+}
+
+input FeedCommentCreateInput {
+  body: String!
+  feedId: ID!
 }
 
 input TankImageInput {

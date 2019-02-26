@@ -54,7 +54,9 @@ const Query = {
   tanksConnection: forwardTo('prisma'),
   tankPostsConnection: forwardTo('prisma'),
   feedsConnection: forwardTo('prisma'),
-  feedCommentsConnection: forwardTo('prisma')
+  feedCommentsConnection: forwardTo('prisma'),
+  feedCommentReplies: forwardTo('prisma'),
+  feedCommentRepliesConnection: forwardTo('prisma')
 };
 
 export { Query as default };

@@ -55,6 +55,24 @@ type Query {
     first: Int
     last: Int
   ): FeedCommentConnection!
+  feedCommentReplies(
+    where: FeedCommentReplyWhereInput
+    orderBy: FeedCommentReplyOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [FeedCommentReply]!
+  feedCommentRepliesConnection(
+    where: FeedCommentReplyWhereInput
+    orderBy: FeedCommentReplyOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): FeedCommentReplyConnection!
 }
 
 type Mutation {
@@ -74,6 +92,7 @@ type Mutation {
   createFeedComment(data: FeedCommentCreateInput!): FeedComment!
   deleteFeedComment(id: ID!): FeedComment!
   createFeedCommentReply(data: FeedCommentReplyCreateInput!): FeedCommentReply!
+  deleteFeedCommentReply(id: ID!): FeedCommentReply
 }
 
 input FeedCommentReplyCreateInput {

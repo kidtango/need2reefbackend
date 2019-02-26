@@ -308,7 +308,7 @@ const Mutation = {
   },
   async createFeedComment(parent, { data }, { prisma, request }, info) {
     //authenticate the user
-
+    const userId = getUserId(request);
     //need: AuthorID, FeedID,
 
     const comment = await prisma.mutation.createFeedComment(
@@ -331,6 +331,46 @@ const Mutation = {
     );
 
     return comment;
+  },
+
+  async deleteFeedComment(parent, { id }, { prisma, request }, info) {
+    const userId = getUserId(request);
+
+    //Get author of the feed
+    const where = { id };
+    const feed = await prisma.query.feedComment({ where }, `{author { id }}`);
+    // Check if user owns feed comment
+    const ownsFeedComment = feed.author.id === userId;
+
+    if (!ownsFeedComment) {
+      throw new Error("You don't have permission to delete this comment!");
+    }
+
+    return prisma.mutation.deleteFeedComment({ where }, info);
+  },
+
+  async createFeedCommentReply(parent, { data }, { prisma, request }, info) {
+    const userId = getUserId(request);
+
+    console.log(data);
+
+    const reply = await prisma.mutation.createFeedCommentReply({
+      data: {
+        author: {
+          connect: {
+            id: userId
+          }
+        },
+        comment: {
+          connect: {
+            id: data.commentId
+          }
+        },
+        body: data.body
+      }
+    });
+
+    return reply;
   }
 };
 

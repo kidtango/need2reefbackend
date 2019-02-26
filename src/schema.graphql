@@ -72,6 +72,13 @@ type Mutation {
   createFeed(data: FeedInput!): Feed!
   deleteFeed(id: ID!): Feed!
   createFeedComment(data: FeedCommentCreateInput!): FeedComment!
+  deleteFeedComment(id: ID!): FeedComment!
+  createFeedCommentReply(data: FeedCommentReplyCreateInput!): FeedCommentReply!
+}
+
+input FeedCommentReplyCreateInput {
+  body: String!
+  commentId: ID!
 }
 
 input FeedInput {

@@ -1,5 +1,5 @@
 # source: http://localhost:4466/tweef1/dev
-# timestamp: Sat Feb 23 2019 15:11:56 GMT-0600 (Central Standard Time)
+# timestamp: Mon Feb 25 2019 23:18:15 GMT-0600 (Central Standard Time)
 
 type AggregateCoral {
   count: Int!
@@ -17,11 +17,11 @@ type AggregateFeedComment {
   count: Int!
 }
 
-type AggregateFeedImage {
+type AggregateFeedCommentReply {
   count: Int!
 }
 
-type AggregateFeedReply {
+type AggregateFeedImage {
   count: Int!
 }
 
@@ -45,7 +45,7 @@ type AggregateLikesFeedComment {
   count: Int!
 }
 
-type AggregateLikesFeedReply {
+type AggregateLikesFeedCommentReply {
   count: Int!
 }
 
@@ -62,6 +62,10 @@ type AggregateLikesTankReply {
 }
 
 type AggregateProfile {
+  count: Int!
+}
+
+type AggregateProfilePicture {
   count: Int!
 }
 
@@ -1393,7 +1397,7 @@ type FeedComment implements Node {
   feed: Feed!
   author: User!
   body: String!
-  reply(where: FeedReplyWhereInput, orderBy: FeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedReply!]
+  reply(where: FeedCommentReplyWhereInput, orderBy: FeedCommentReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedCommentReply!]
   likes(where: LikesFeedCommentWhereInput, orderBy: LikesFeedCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeedComment!]
   updatedAt: DateTime!
   createdAt: DateTime!
@@ -1413,7 +1417,7 @@ input FeedCommentCreateInput {
   body: String!
   feed: FeedCreateOneWithoutCommentsInput!
   author: UserCreateOneInput!
-  reply: FeedReplyCreateManyInput
+  reply: FeedCommentReplyCreateManyWithoutCommentInput
   likes: LikesFeedCommentCreateManyWithoutCommentInput
 }
 
@@ -1427,10 +1431,15 @@ input FeedCommentCreateOneWithoutLikesInput {
   connect: FeedCommentWhereUniqueInput
 }
 
+input FeedCommentCreateOneWithoutReplyInput {
+  create: FeedCommentCreateWithoutReplyInput
+  connect: FeedCommentWhereUniqueInput
+}
+
 input FeedCommentCreateWithoutFeedInput {
   body: String!
   author: UserCreateOneInput!
-  reply: FeedReplyCreateManyInput
+  reply: FeedCommentReplyCreateManyWithoutCommentInput
   likes: LikesFeedCommentCreateManyWithoutCommentInput
 }
 
@@ -1438,7 +1447,14 @@ input FeedCommentCreateWithoutLikesInput {
   body: String!
   feed: FeedCreateOneWithoutCommentsInput!
   author: UserCreateOneInput!
-  reply: FeedReplyCreateManyInput
+  reply: FeedCommentReplyCreateManyWithoutCommentInput
+}
+
+input FeedCommentCreateWithoutReplyInput {
+  body: String!
+  feed: FeedCreateOneWithoutCommentsInput!
+  author: UserCreateOneInput!
+  likes: LikesFeedCommentCreateManyWithoutCommentInput
 }
 
 """An edge in a connection."""
@@ -1466,6 +1482,320 @@ type FeedCommentPreviousValues {
   body: String!
   updatedAt: DateTime!
   createdAt: DateTime!
+}
+
+type FeedCommentReply implements Node {
+  id: ID!
+  author: User!
+  comment: FeedComment!
+  body: String!
+  likes(where: LikesFeedCommentReplyWhereInput, orderBy: LikesFeedCommentReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeedCommentReply!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type FeedCommentReplyConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FeedCommentReplyEdge]!
+  aggregate: AggregateFeedCommentReply!
+}
+
+input FeedCommentReplyCreateInput {
+  body: String!
+  author: UserCreateOneInput!
+  comment: FeedCommentCreateOneWithoutReplyInput!
+  likes: LikesFeedCommentReplyCreateManyWithoutReplyInput
+}
+
+input FeedCommentReplyCreateManyWithoutCommentInput {
+  create: [FeedCommentReplyCreateWithoutCommentInput!]
+  connect: [FeedCommentReplyWhereUniqueInput!]
+}
+
+input FeedCommentReplyCreateOneWithoutLikesInput {
+  create: FeedCommentReplyCreateWithoutLikesInput
+  connect: FeedCommentReplyWhereUniqueInput
+}
+
+input FeedCommentReplyCreateWithoutCommentInput {
+  body: String!
+  author: UserCreateOneInput!
+  likes: LikesFeedCommentReplyCreateManyWithoutReplyInput
+}
+
+input FeedCommentReplyCreateWithoutLikesInput {
+  body: String!
+  author: UserCreateOneInput!
+  comment: FeedCommentCreateOneWithoutReplyInput!
+}
+
+"""An edge in a connection."""
+type FeedCommentReplyEdge {
+  """The item at the end of the edge."""
+  node: FeedCommentReply!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FeedCommentReplyOrderByInput {
+  id_ASC
+  id_DESC
+  body_ASC
+  body_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FeedCommentReplyPreviousValues {
+  id: ID!
+  body: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type FeedCommentReplySubscriptionPayload {
+  mutation: MutationType!
+  node: FeedCommentReply
+  updatedFields: [String!]
+  previousValues: FeedCommentReplyPreviousValues
+}
+
+input FeedCommentReplySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedCommentReplySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedCommentReplySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedCommentReplySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FeedCommentReplyWhereInput
+}
+
+input FeedCommentReplyUpdateInput {
+  body: String
+  author: UserUpdateOneRequiredInput
+  comment: FeedCommentUpdateOneRequiredWithoutReplyInput
+  likes: LikesFeedCommentReplyUpdateManyWithoutReplyInput
+}
+
+input FeedCommentReplyUpdateManyMutationInput {
+  body: String
+}
+
+input FeedCommentReplyUpdateManyWithoutCommentInput {
+  create: [FeedCommentReplyCreateWithoutCommentInput!]
+  connect: [FeedCommentReplyWhereUniqueInput!]
+  disconnect: [FeedCommentReplyWhereUniqueInput!]
+  delete: [FeedCommentReplyWhereUniqueInput!]
+  update: [FeedCommentReplyUpdateWithWhereUniqueWithoutCommentInput!]
+  upsert: [FeedCommentReplyUpsertWithWhereUniqueWithoutCommentInput!]
+}
+
+input FeedCommentReplyUpdateOneRequiredWithoutLikesInput {
+  create: FeedCommentReplyCreateWithoutLikesInput
+  connect: FeedCommentReplyWhereUniqueInput
+  update: FeedCommentReplyUpdateWithoutLikesDataInput
+  upsert: FeedCommentReplyUpsertWithoutLikesInput
+}
+
+input FeedCommentReplyUpdateWithoutCommentDataInput {
+  body: String
+  author: UserUpdateOneRequiredInput
+  likes: LikesFeedCommentReplyUpdateManyWithoutReplyInput
+}
+
+input FeedCommentReplyUpdateWithoutLikesDataInput {
+  body: String
+  author: UserUpdateOneRequiredInput
+  comment: FeedCommentUpdateOneRequiredWithoutReplyInput
+}
+
+input FeedCommentReplyUpdateWithWhereUniqueWithoutCommentInput {
+  where: FeedCommentReplyWhereUniqueInput!
+  data: FeedCommentReplyUpdateWithoutCommentDataInput!
+}
+
+input FeedCommentReplyUpsertWithoutLikesInput {
+  update: FeedCommentReplyUpdateWithoutLikesDataInput!
+  create: FeedCommentReplyCreateWithoutLikesInput!
+}
+
+input FeedCommentReplyUpsertWithWhereUniqueWithoutCommentInput {
+  where: FeedCommentReplyWhereUniqueInput!
+  update: FeedCommentReplyUpdateWithoutCommentDataInput!
+  create: FeedCommentReplyCreateWithoutCommentInput!
+}
+
+input FeedCommentReplyWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedCommentReplyWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedCommentReplyWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedCommentReplyWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  body: String
+
+  """All values that are not equal to given value."""
+  body_not: String
+
+  """All values that are contained in given list."""
+  body_in: [String!]
+
+  """All values that are not contained in given list."""
+  body_not_in: [String!]
+
+  """All values less than the given value."""
+  body_lt: String
+
+  """All values less than or equal the given value."""
+  body_lte: String
+
+  """All values greater than the given value."""
+  body_gt: String
+
+  """All values greater than or equal the given value."""
+  body_gte: String
+
+  """All values containing the given string."""
+  body_contains: String
+
+  """All values not containing the given string."""
+  body_not_contains: String
+
+  """All values starting with the given string."""
+  body_starts_with: String
+
+  """All values not starting with the given string."""
+  body_not_starts_with: String
+
+  """All values ending with the given string."""
+  body_ends_with: String
+
+  """All values not ending with the given string."""
+  body_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  author: UserWhereInput
+  comment: FeedCommentWhereInput
+  likes_every: LikesFeedCommentReplyWhereInput
+  likes_some: LikesFeedCommentReplyWhereInput
+  likes_none: LikesFeedCommentReplyWhereInput
+}
+
+input FeedCommentReplyWhereUniqueInput {
+  id: ID
 }
 
 type FeedCommentSubscriptionPayload {
@@ -1511,7 +1841,7 @@ input FeedCommentUpdateInput {
   body: String
   feed: FeedUpdateOneRequiredWithoutCommentsInput
   author: UserUpdateOneRequiredInput
-  reply: FeedReplyUpdateManyInput
+  reply: FeedCommentReplyUpdateManyWithoutCommentInput
   likes: LikesFeedCommentUpdateManyWithoutCommentInput
 }
 
@@ -1535,10 +1865,17 @@ input FeedCommentUpdateOneRequiredWithoutLikesInput {
   upsert: FeedCommentUpsertWithoutLikesInput
 }
 
+input FeedCommentUpdateOneRequiredWithoutReplyInput {
+  create: FeedCommentCreateWithoutReplyInput
+  connect: FeedCommentWhereUniqueInput
+  update: FeedCommentUpdateWithoutReplyDataInput
+  upsert: FeedCommentUpsertWithoutReplyInput
+}
+
 input FeedCommentUpdateWithoutFeedDataInput {
   body: String
   author: UserUpdateOneRequiredInput
-  reply: FeedReplyUpdateManyInput
+  reply: FeedCommentReplyUpdateManyWithoutCommentInput
   likes: LikesFeedCommentUpdateManyWithoutCommentInput
 }
 
@@ -1546,7 +1883,14 @@ input FeedCommentUpdateWithoutLikesDataInput {
   body: String
   feed: FeedUpdateOneRequiredWithoutCommentsInput
   author: UserUpdateOneRequiredInput
-  reply: FeedReplyUpdateManyInput
+  reply: FeedCommentReplyUpdateManyWithoutCommentInput
+}
+
+input FeedCommentUpdateWithoutReplyDataInput {
+  body: String
+  feed: FeedUpdateOneRequiredWithoutCommentsInput
+  author: UserUpdateOneRequiredInput
+  likes: LikesFeedCommentUpdateManyWithoutCommentInput
 }
 
 input FeedCommentUpdateWithWhereUniqueWithoutFeedInput {
@@ -1557,6 +1901,11 @@ input FeedCommentUpdateWithWhereUniqueWithoutFeedInput {
 input FeedCommentUpsertWithoutLikesInput {
   update: FeedCommentUpdateWithoutLikesDataInput!
   create: FeedCommentCreateWithoutLikesInput!
+}
+
+input FeedCommentUpsertWithoutReplyInput {
+  update: FeedCommentUpdateWithoutReplyDataInput!
+  create: FeedCommentCreateWithoutReplyInput!
 }
 
 input FeedCommentUpsertWithWhereUniqueWithoutFeedInput {
@@ -1700,9 +2049,9 @@ input FeedCommentWhereInput {
   createdAt_gte: DateTime
   feed: FeedWhereInput
   author: UserWhereInput
-  reply_every: FeedReplyWhereInput
-  reply_some: FeedReplyWhereInput
-  reply_none: FeedReplyWhereInput
+  reply_every: FeedCommentReplyWhereInput
+  reply_some: FeedCommentReplyWhereInput
+  reply_none: FeedCommentReplyWhereInput
   likes_every: LikesFeedCommentWhereInput
   likes_some: LikesFeedCommentWhereInput
   likes_none: LikesFeedCommentWhereInput
@@ -2074,308 +2423,6 @@ type FeedPreviousValues {
   message: String!
   updatedAt: DateTime!
   createdAt: DateTime!
-}
-
-type FeedReply implements Node {
-  id: ID!
-  author: User!
-  body: String!
-  likes(where: LikesFeedReplyWhereInput, orderBy: LikesFeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeedReply!]
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-"""A connection to a list of items."""
-type FeedReplyConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [FeedReplyEdge]!
-  aggregate: AggregateFeedReply!
-}
-
-input FeedReplyCreateInput {
-  body: String!
-  author: UserCreateOneInput!
-  likes: LikesFeedReplyCreateManyWithoutReplyInput
-}
-
-input FeedReplyCreateManyInput {
-  create: [FeedReplyCreateInput!]
-  connect: [FeedReplyWhereUniqueInput!]
-}
-
-input FeedReplyCreateOneWithoutLikesInput {
-  create: FeedReplyCreateWithoutLikesInput
-  connect: FeedReplyWhereUniqueInput
-}
-
-input FeedReplyCreateWithoutLikesInput {
-  body: String!
-  author: UserCreateOneInput!
-}
-
-"""An edge in a connection."""
-type FeedReplyEdge {
-  """The item at the end of the edge."""
-  node: FeedReply!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum FeedReplyOrderByInput {
-  id_ASC
-  id_DESC
-  body_ASC
-  body_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type FeedReplyPreviousValues {
-  id: ID!
-  body: String!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-type FeedReplySubscriptionPayload {
-  mutation: MutationType!
-  node: FeedReply
-  updatedFields: [String!]
-  previousValues: FeedReplyPreviousValues
-}
-
-input FeedReplySubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [FeedReplySubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [FeedReplySubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [FeedReplySubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: FeedReplyWhereInput
-}
-
-input FeedReplyUpdateDataInput {
-  body: String
-  author: UserUpdateOneRequiredInput
-  likes: LikesFeedReplyUpdateManyWithoutReplyInput
-}
-
-input FeedReplyUpdateInput {
-  body: String
-  author: UserUpdateOneRequiredInput
-  likes: LikesFeedReplyUpdateManyWithoutReplyInput
-}
-
-input FeedReplyUpdateManyInput {
-  create: [FeedReplyCreateInput!]
-  connect: [FeedReplyWhereUniqueInput!]
-  disconnect: [FeedReplyWhereUniqueInput!]
-  delete: [FeedReplyWhereUniqueInput!]
-  update: [FeedReplyUpdateWithWhereUniqueNestedInput!]
-  upsert: [FeedReplyUpsertWithWhereUniqueNestedInput!]
-}
-
-input FeedReplyUpdateManyMutationInput {
-  body: String
-}
-
-input FeedReplyUpdateOneRequiredWithoutLikesInput {
-  create: FeedReplyCreateWithoutLikesInput
-  connect: FeedReplyWhereUniqueInput
-  update: FeedReplyUpdateWithoutLikesDataInput
-  upsert: FeedReplyUpsertWithoutLikesInput
-}
-
-input FeedReplyUpdateWithoutLikesDataInput {
-  body: String
-  author: UserUpdateOneRequiredInput
-}
-
-input FeedReplyUpdateWithWhereUniqueNestedInput {
-  where: FeedReplyWhereUniqueInput!
-  data: FeedReplyUpdateDataInput!
-}
-
-input FeedReplyUpsertWithoutLikesInput {
-  update: FeedReplyUpdateWithoutLikesDataInput!
-  create: FeedReplyCreateWithoutLikesInput!
-}
-
-input FeedReplyUpsertWithWhereUniqueNestedInput {
-  where: FeedReplyWhereUniqueInput!
-  update: FeedReplyUpdateDataInput!
-  create: FeedReplyCreateInput!
-}
-
-input FeedReplyWhereInput {
-  """Logical AND on all given filters."""
-  AND: [FeedReplyWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [FeedReplyWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [FeedReplyWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  body: String
-
-  """All values that are not equal to given value."""
-  body_not: String
-
-  """All values that are contained in given list."""
-  body_in: [String!]
-
-  """All values that are not contained in given list."""
-  body_not_in: [String!]
-
-  """All values less than the given value."""
-  body_lt: String
-
-  """All values less than or equal the given value."""
-  body_lte: String
-
-  """All values greater than the given value."""
-  body_gt: String
-
-  """All values greater than or equal the given value."""
-  body_gte: String
-
-  """All values containing the given string."""
-  body_contains: String
-
-  """All values not containing the given string."""
-  body_not_contains: String
-
-  """All values starting with the given string."""
-  body_starts_with: String
-
-  """All values not starting with the given string."""
-  body_not_starts_with: String
-
-  """All values ending with the given string."""
-  body_ends_with: String
-
-  """All values not ending with the given string."""
-  body_not_ends_with: String
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  author: UserWhereInput
-  likes_every: LikesFeedReplyWhereInput
-  likes_some: LikesFeedReplyWhereInput
-  likes_none: LikesFeedReplyWhereInput
-}
-
-input FeedReplyWhereUniqueInput {
-  id: ID
 }
 
 type FeedSubscriptionPayload {
@@ -3206,6 +3253,231 @@ type LikesFeedCommentPreviousValues {
   createdAt: DateTime!
 }
 
+type LikesFeedCommentReply implements Node {
+  id: ID!
+  user: User!
+  reply: FeedCommentReply!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type LikesFeedCommentReplyConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LikesFeedCommentReplyEdge]!
+  aggregate: AggregateLikesFeedCommentReply!
+}
+
+input LikesFeedCommentReplyCreateInput {
+  user: UserCreateOneInput!
+  reply: FeedCommentReplyCreateOneWithoutLikesInput!
+}
+
+input LikesFeedCommentReplyCreateManyWithoutReplyInput {
+  create: [LikesFeedCommentReplyCreateWithoutReplyInput!]
+  connect: [LikesFeedCommentReplyWhereUniqueInput!]
+}
+
+input LikesFeedCommentReplyCreateWithoutReplyInput {
+  user: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LikesFeedCommentReplyEdge {
+  """The item at the end of the edge."""
+  node: LikesFeedCommentReply!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LikesFeedCommentReplyOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LikesFeedCommentReplyPreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type LikesFeedCommentReplySubscriptionPayload {
+  mutation: MutationType!
+  node: LikesFeedCommentReply
+  updatedFields: [String!]
+  previousValues: LikesFeedCommentReplyPreviousValues
+}
+
+input LikesFeedCommentReplySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesFeedCommentReplySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesFeedCommentReplySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesFeedCommentReplySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LikesFeedCommentReplyWhereInput
+}
+
+input LikesFeedCommentReplyUpdateInput {
+  user: UserUpdateOneRequiredInput
+  reply: FeedCommentReplyUpdateOneRequiredWithoutLikesInput
+}
+
+input LikesFeedCommentReplyUpdateManyWithoutReplyInput {
+  create: [LikesFeedCommentReplyCreateWithoutReplyInput!]
+  connect: [LikesFeedCommentReplyWhereUniqueInput!]
+  disconnect: [LikesFeedCommentReplyWhereUniqueInput!]
+  delete: [LikesFeedCommentReplyWhereUniqueInput!]
+  update: [LikesFeedCommentReplyUpdateWithWhereUniqueWithoutReplyInput!]
+  upsert: [LikesFeedCommentReplyUpsertWithWhereUniqueWithoutReplyInput!]
+}
+
+input LikesFeedCommentReplyUpdateWithoutReplyDataInput {
+  user: UserUpdateOneRequiredInput
+}
+
+input LikesFeedCommentReplyUpdateWithWhereUniqueWithoutReplyInput {
+  where: LikesFeedCommentReplyWhereUniqueInput!
+  data: LikesFeedCommentReplyUpdateWithoutReplyDataInput!
+}
+
+input LikesFeedCommentReplyUpsertWithWhereUniqueWithoutReplyInput {
+  where: LikesFeedCommentReplyWhereUniqueInput!
+  update: LikesFeedCommentReplyUpdateWithoutReplyDataInput!
+  create: LikesFeedCommentReplyCreateWithoutReplyInput!
+}
+
+input LikesFeedCommentReplyWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesFeedCommentReplyWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesFeedCommentReplyWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesFeedCommentReplyWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  user: UserWhereInput
+  reply: FeedCommentReplyWhereInput
+}
+
+input LikesFeedCommentReplyWhereUniqueInput {
+  id: ID
+}
+
 type LikesFeedCommentSubscriptionPayload {
   mutation: MutationType!
   node: LikesFeedComment
@@ -3421,231 +3693,6 @@ type LikesFeedPreviousValues {
   id: ID!
   updatedAt: DateTime!
   createdAt: DateTime!
-}
-
-type LikesFeedReply implements Node {
-  id: ID!
-  user: User!
-  reply: FeedReply!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-"""A connection to a list of items."""
-type LikesFeedReplyConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [LikesFeedReplyEdge]!
-  aggregate: AggregateLikesFeedReply!
-}
-
-input LikesFeedReplyCreateInput {
-  user: UserCreateOneInput!
-  reply: FeedReplyCreateOneWithoutLikesInput!
-}
-
-input LikesFeedReplyCreateManyWithoutReplyInput {
-  create: [LikesFeedReplyCreateWithoutReplyInput!]
-  connect: [LikesFeedReplyWhereUniqueInput!]
-}
-
-input LikesFeedReplyCreateWithoutReplyInput {
-  user: UserCreateOneInput!
-}
-
-"""An edge in a connection."""
-type LikesFeedReplyEdge {
-  """The item at the end of the edge."""
-  node: LikesFeedReply!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum LikesFeedReplyOrderByInput {
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type LikesFeedReplyPreviousValues {
-  id: ID!
-  updatedAt: DateTime!
-  createdAt: DateTime!
-}
-
-type LikesFeedReplySubscriptionPayload {
-  mutation: MutationType!
-  node: LikesFeedReply
-  updatedFields: [String!]
-  previousValues: LikesFeedReplyPreviousValues
-}
-
-input LikesFeedReplySubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [LikesFeedReplySubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [LikesFeedReplySubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [LikesFeedReplySubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: LikesFeedReplyWhereInput
-}
-
-input LikesFeedReplyUpdateInput {
-  user: UserUpdateOneRequiredInput
-  reply: FeedReplyUpdateOneRequiredWithoutLikesInput
-}
-
-input LikesFeedReplyUpdateManyWithoutReplyInput {
-  create: [LikesFeedReplyCreateWithoutReplyInput!]
-  connect: [LikesFeedReplyWhereUniqueInput!]
-  disconnect: [LikesFeedReplyWhereUniqueInput!]
-  delete: [LikesFeedReplyWhereUniqueInput!]
-  update: [LikesFeedReplyUpdateWithWhereUniqueWithoutReplyInput!]
-  upsert: [LikesFeedReplyUpsertWithWhereUniqueWithoutReplyInput!]
-}
-
-input LikesFeedReplyUpdateWithoutReplyDataInput {
-  user: UserUpdateOneRequiredInput
-}
-
-input LikesFeedReplyUpdateWithWhereUniqueWithoutReplyInput {
-  where: LikesFeedReplyWhereUniqueInput!
-  data: LikesFeedReplyUpdateWithoutReplyDataInput!
-}
-
-input LikesFeedReplyUpsertWithWhereUniqueWithoutReplyInput {
-  where: LikesFeedReplyWhereUniqueInput!
-  update: LikesFeedReplyUpdateWithoutReplyDataInput!
-  create: LikesFeedReplyCreateWithoutReplyInput!
-}
-
-input LikesFeedReplyWhereInput {
-  """Logical AND on all given filters."""
-  AND: [LikesFeedReplyWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [LikesFeedReplyWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [LikesFeedReplyWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  user: UserWhereInput
-  reply: FeedReplyWhereInput
-}
-
-input LikesFeedReplyWhereUniqueInput {
-  id: ID
 }
 
 type LikesFeedSubscriptionPayload {
@@ -4355,6 +4402,7 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createProfilePicture(data: ProfilePictureCreateInput!): ProfilePicture!
   createProfile(data: ProfileCreateInput!): Profile!
   createTank(data: TankCreateInput!): Tank!
   createEquipment(data: EquipmentCreateInput!): Equipment!
@@ -4373,10 +4421,11 @@ type Mutation {
   createLikesFeed(data: LikesFeedCreateInput!): LikesFeed!
   createFeedComment(data: FeedCommentCreateInput!): FeedComment!
   createLikesFeedComment(data: LikesFeedCommentCreateInput!): LikesFeedComment!
-  createLikesFeedReply(data: LikesFeedReplyCreateInput!): LikesFeedReply!
+  createFeedCommentReply(data: FeedCommentReplyCreateInput!): FeedCommentReply!
+  createLikesFeedCommentReply(data: LikesFeedCommentReplyCreateInput!): LikesFeedCommentReply!
   createFeedImage(data: FeedImageCreateInput!): FeedImage!
-  createFeedReply(data: FeedReplyCreateInput!): FeedReply!
   createUser(data: UserCreateInput!): User!
+  updateProfilePicture(data: ProfilePictureUpdateInput!, where: ProfilePictureWhereUniqueInput!): ProfilePicture
   updateProfile(data: ProfileUpdateInput!, where: ProfileWhereUniqueInput!): Profile
   updateTank(data: TankUpdateInput!, where: TankWhereUniqueInput!): Tank
   updateEquipment(data: EquipmentUpdateInput!, where: EquipmentWhereUniqueInput!): Equipment
@@ -4395,10 +4444,11 @@ type Mutation {
   updateLikesFeed(data: LikesFeedUpdateInput!, where: LikesFeedWhereUniqueInput!): LikesFeed
   updateFeedComment(data: FeedCommentUpdateInput!, where: FeedCommentWhereUniqueInput!): FeedComment
   updateLikesFeedComment(data: LikesFeedCommentUpdateInput!, where: LikesFeedCommentWhereUniqueInput!): LikesFeedComment
-  updateLikesFeedReply(data: LikesFeedReplyUpdateInput!, where: LikesFeedReplyWhereUniqueInput!): LikesFeedReply
+  updateFeedCommentReply(data: FeedCommentReplyUpdateInput!, where: FeedCommentReplyWhereUniqueInput!): FeedCommentReply
+  updateLikesFeedCommentReply(data: LikesFeedCommentReplyUpdateInput!, where: LikesFeedCommentReplyWhereUniqueInput!): LikesFeedCommentReply
   updateFeedImage(data: FeedImageUpdateInput!, where: FeedImageWhereUniqueInput!): FeedImage
-  updateFeedReply(data: FeedReplyUpdateInput!, where: FeedReplyWhereUniqueInput!): FeedReply
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteProfilePicture(where: ProfilePictureWhereUniqueInput!): ProfilePicture
   deleteProfile(where: ProfileWhereUniqueInput!): Profile
   deleteTank(where: TankWhereUniqueInput!): Tank
   deleteEquipment(where: EquipmentWhereUniqueInput!): Equipment
@@ -4417,10 +4467,11 @@ type Mutation {
   deleteLikesFeed(where: LikesFeedWhereUniqueInput!): LikesFeed
   deleteFeedComment(where: FeedCommentWhereUniqueInput!): FeedComment
   deleteLikesFeedComment(where: LikesFeedCommentWhereUniqueInput!): LikesFeedComment
-  deleteLikesFeedReply(where: LikesFeedReplyWhereUniqueInput!): LikesFeedReply
+  deleteFeedCommentReply(where: FeedCommentReplyWhereUniqueInput!): FeedCommentReply
+  deleteLikesFeedCommentReply(where: LikesFeedCommentReplyWhereUniqueInput!): LikesFeedCommentReply
   deleteFeedImage(where: FeedImageWhereUniqueInput!): FeedImage
-  deleteFeedReply(where: FeedReplyWhereUniqueInput!): FeedReply
   deleteUser(where: UserWhereUniqueInput!): User
+  upsertProfilePicture(where: ProfilePictureWhereUniqueInput!, create: ProfilePictureCreateInput!, update: ProfilePictureUpdateInput!): ProfilePicture!
   upsertProfile(where: ProfileWhereUniqueInput!, create: ProfileCreateInput!, update: ProfileUpdateInput!): Profile!
   upsertTank(where: TankWhereUniqueInput!, create: TankCreateInput!, update: TankUpdateInput!): Tank!
   upsertEquipment(where: EquipmentWhereUniqueInput!, create: EquipmentCreateInput!, update: EquipmentUpdateInput!): Equipment!
@@ -4439,10 +4490,11 @@ type Mutation {
   upsertLikesFeed(where: LikesFeedWhereUniqueInput!, create: LikesFeedCreateInput!, update: LikesFeedUpdateInput!): LikesFeed!
   upsertFeedComment(where: FeedCommentWhereUniqueInput!, create: FeedCommentCreateInput!, update: FeedCommentUpdateInput!): FeedComment!
   upsertLikesFeedComment(where: LikesFeedCommentWhereUniqueInput!, create: LikesFeedCommentCreateInput!, update: LikesFeedCommentUpdateInput!): LikesFeedComment!
-  upsertLikesFeedReply(where: LikesFeedReplyWhereUniqueInput!, create: LikesFeedReplyCreateInput!, update: LikesFeedReplyUpdateInput!): LikesFeedReply!
+  upsertFeedCommentReply(where: FeedCommentReplyWhereUniqueInput!, create: FeedCommentReplyCreateInput!, update: FeedCommentReplyUpdateInput!): FeedCommentReply!
+  upsertLikesFeedCommentReply(where: LikesFeedCommentReplyWhereUniqueInput!, create: LikesFeedCommentReplyCreateInput!, update: LikesFeedCommentReplyUpdateInput!): LikesFeedCommentReply!
   upsertFeedImage(where: FeedImageWhereUniqueInput!, create: FeedImageCreateInput!, update: FeedImageUpdateInput!): FeedImage!
-  upsertFeedReply(where: FeedReplyWhereUniqueInput!, create: FeedReplyCreateInput!, update: FeedReplyUpdateInput!): FeedReply!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyProfilePictures(data: ProfilePictureUpdateManyMutationInput!, where: ProfilePictureWhereInput): BatchPayload!
   updateManyTanks(data: TankUpdateManyMutationInput!, where: TankWhereInput): BatchPayload!
   updateManyEquipments(data: EquipmentUpdateManyMutationInput!, where: EquipmentWhereInput): BatchPayload!
   updateManyWaterParameterses(data: WaterParametersUpdateManyMutationInput!, where: WaterParametersWhereInput): BatchPayload!
@@ -4452,9 +4504,10 @@ type Mutation {
   updateManyTankImages(data: TankImageUpdateManyMutationInput!, where: TankImageWhereInput): BatchPayload!
   updateManyFeeds(data: FeedUpdateManyMutationInput!, where: FeedWhereInput): BatchPayload!
   updateManyFeedComments(data: FeedCommentUpdateManyMutationInput!, where: FeedCommentWhereInput): BatchPayload!
+  updateManyFeedCommentReplies(data: FeedCommentReplyUpdateManyMutationInput!, where: FeedCommentReplyWhereInput): BatchPayload!
   updateManyFeedImages(data: FeedImageUpdateManyMutationInput!, where: FeedImageWhereInput): BatchPayload!
-  updateManyFeedReplies(data: FeedReplyUpdateManyMutationInput!, where: FeedReplyWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyProfilePictures(where: ProfilePictureWhereInput): BatchPayload!
   deleteManyProfiles(where: ProfileWhereInput): BatchPayload!
   deleteManyTanks(where: TankWhereInput): BatchPayload!
   deleteManyEquipments(where: EquipmentWhereInput): BatchPayload!
@@ -4473,9 +4526,9 @@ type Mutation {
   deleteManyLikesFeeds(where: LikesFeedWhereInput): BatchPayload!
   deleteManyFeedComments(where: FeedCommentWhereInput): BatchPayload!
   deleteManyLikesFeedComments(where: LikesFeedCommentWhereInput): BatchPayload!
-  deleteManyLikesFeedReplies(where: LikesFeedReplyWhereInput): BatchPayload!
+  deleteManyFeedCommentReplies(where: FeedCommentReplyWhereInput): BatchPayload!
+  deleteManyLikesFeedCommentReplies(where: LikesFeedCommentReplyWhereInput): BatchPayload!
   deleteManyFeedImages(where: FeedImageWhereInput): BatchPayload!
-  deleteManyFeedReplies(where: FeedReplyWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
@@ -4587,6 +4640,277 @@ enum ProfileOrderByInput {
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+}
+
+type ProfilePicture implements Node {
+  id: ID!
+  user: User!
+  picture: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type ProfilePictureConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ProfilePictureEdge]!
+  aggregate: AggregateProfilePicture!
+}
+
+input ProfilePictureCreateInput {
+  picture: String!
+  user: UserCreateOneWithoutProfilePictureInput!
+}
+
+input ProfilePictureCreateManyWithoutUserInput {
+  create: [ProfilePictureCreateWithoutUserInput!]
+  connect: [ProfilePictureWhereUniqueInput!]
+}
+
+input ProfilePictureCreateWithoutUserInput {
+  picture: String!
+}
+
+"""An edge in a connection."""
+type ProfilePictureEdge {
+  """The item at the end of the edge."""
+  node: ProfilePicture!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ProfilePictureOrderByInput {
+  id_ASC
+  id_DESC
+  picture_ASC
+  picture_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ProfilePicturePreviousValues {
+  id: ID!
+  picture: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ProfilePictureSubscriptionPayload {
+  mutation: MutationType!
+  node: ProfilePicture
+  updatedFields: [String!]
+  previousValues: ProfilePicturePreviousValues
+}
+
+input ProfilePictureSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProfilePictureSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProfilePictureSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProfilePictureSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ProfilePictureWhereInput
+}
+
+input ProfilePictureUpdateInput {
+  picture: String
+  user: UserUpdateOneRequiredWithoutProfilePictureInput
+}
+
+input ProfilePictureUpdateManyMutationInput {
+  picture: String
+}
+
+input ProfilePictureUpdateManyWithoutUserInput {
+  create: [ProfilePictureCreateWithoutUserInput!]
+  connect: [ProfilePictureWhereUniqueInput!]
+  disconnect: [ProfilePictureWhereUniqueInput!]
+  delete: [ProfilePictureWhereUniqueInput!]
+  update: [ProfilePictureUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ProfilePictureUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input ProfilePictureUpdateWithoutUserDataInput {
+  picture: String
+}
+
+input ProfilePictureUpdateWithWhereUniqueWithoutUserInput {
+  where: ProfilePictureWhereUniqueInput!
+  data: ProfilePictureUpdateWithoutUserDataInput!
+}
+
+input ProfilePictureUpsertWithWhereUniqueWithoutUserInput {
+  where: ProfilePictureWhereUniqueInput!
+  update: ProfilePictureUpdateWithoutUserDataInput!
+  create: ProfilePictureCreateWithoutUserInput!
+}
+
+input ProfilePictureWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProfilePictureWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProfilePictureWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProfilePictureWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  picture: String
+
+  """All values that are not equal to given value."""
+  picture_not: String
+
+  """All values that are contained in given list."""
+  picture_in: [String!]
+
+  """All values that are not contained in given list."""
+  picture_not_in: [String!]
+
+  """All values less than the given value."""
+  picture_lt: String
+
+  """All values less than or equal the given value."""
+  picture_lte: String
+
+  """All values greater than the given value."""
+  picture_gt: String
+
+  """All values greater than or equal the given value."""
+  picture_gte: String
+
+  """All values containing the given string."""
+  picture_contains: String
+
+  """All values not containing the given string."""
+  picture_not_contains: String
+
+  """All values starting with the given string."""
+  picture_starts_with: String
+
+  """All values not starting with the given string."""
+  picture_not_starts_with: String
+
+  """All values ending with the given string."""
+  picture_ends_with: String
+
+  """All values not ending with the given string."""
+  picture_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  user: UserWhereInput
+}
+
+input ProfilePictureWhereUniqueInput {
+  id: ID
 }
 
 type ProfilePreviousValues {
@@ -4800,6 +5124,7 @@ input ProfileWhereUniqueInput {
 }
 
 type Query {
+  profilePictures(where: ProfilePictureWhereInput, orderBy: ProfilePictureOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProfilePicture]!
   profiles(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Profile]!
   tanks(where: TankWhereInput, orderBy: TankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tank]!
   equipments(where: EquipmentWhereInput, orderBy: EquipmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Equipment]!
@@ -4818,10 +5143,11 @@ type Query {
   likesFeeds(where: LikesFeedWhereInput, orderBy: LikesFeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeed]!
   feedComments(where: FeedCommentWhereInput, orderBy: FeedCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedComment]!
   likesFeedComments(where: LikesFeedCommentWhereInput, orderBy: LikesFeedCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeedComment]!
-  likesFeedReplies(where: LikesFeedReplyWhereInput, orderBy: LikesFeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeedReply]!
+  feedCommentReplies(where: FeedCommentReplyWhereInput, orderBy: FeedCommentReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedCommentReply]!
+  likesFeedCommentReplies(where: LikesFeedCommentReplyWhereInput, orderBy: LikesFeedCommentReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikesFeedCommentReply]!
   feedImages(where: FeedImageWhereInput, orderBy: FeedImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedImage]!
-  feedReplies(where: FeedReplyWhereInput, orderBy: FeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedReply]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  profilePicture(where: ProfilePictureWhereUniqueInput!): ProfilePicture
   profile(where: ProfileWhereUniqueInput!): Profile
   tank(where: TankWhereUniqueInput!): Tank
   equipment(where: EquipmentWhereUniqueInput!): Equipment
@@ -4840,10 +5166,11 @@ type Query {
   likesFeed(where: LikesFeedWhereUniqueInput!): LikesFeed
   feedComment(where: FeedCommentWhereUniqueInput!): FeedComment
   likesFeedComment(where: LikesFeedCommentWhereUniqueInput!): LikesFeedComment
-  likesFeedReply(where: LikesFeedReplyWhereUniqueInput!): LikesFeedReply
+  feedCommentReply(where: FeedCommentReplyWhereUniqueInput!): FeedCommentReply
+  likesFeedCommentReply(where: LikesFeedCommentReplyWhereUniqueInput!): LikesFeedCommentReply
   feedImage(where: FeedImageWhereUniqueInput!): FeedImage
-  feedReply(where: FeedReplyWhereUniqueInput!): FeedReply
   user(where: UserWhereUniqueInput!): User
+  profilePicturesConnection(where: ProfilePictureWhereInput, orderBy: ProfilePictureOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProfilePictureConnection!
   profilesConnection(where: ProfileWhereInput, orderBy: ProfileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProfileConnection!
   tanksConnection(where: TankWhereInput, orderBy: TankOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TankConnection!
   equipmentsConnection(where: EquipmentWhereInput, orderBy: EquipmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EquipmentConnection!
@@ -4862,9 +5189,9 @@ type Query {
   likesFeedsConnection(where: LikesFeedWhereInput, orderBy: LikesFeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikesFeedConnection!
   feedCommentsConnection(where: FeedCommentWhereInput, orderBy: FeedCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedCommentConnection!
   likesFeedCommentsConnection(where: LikesFeedCommentWhereInput, orderBy: LikesFeedCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikesFeedCommentConnection!
-  likesFeedRepliesConnection(where: LikesFeedReplyWhereInput, orderBy: LikesFeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikesFeedReplyConnection!
+  feedCommentRepliesConnection(where: FeedCommentReplyWhereInput, orderBy: FeedCommentReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedCommentReplyConnection!
+  likesFeedCommentRepliesConnection(where: LikesFeedCommentReplyWhereInput, orderBy: LikesFeedCommentReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikesFeedCommentReplyConnection!
   feedImagesConnection(where: FeedImageWhereInput, orderBy: FeedImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedImageConnection!
-  feedRepliesConnection(where: FeedReplyWhereInput, orderBy: FeedReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedReplyConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -4875,6 +5202,7 @@ type Query {
 }
 
 type Subscription {
+  profilePicture(where: ProfilePictureSubscriptionWhereInput): ProfilePictureSubscriptionPayload
   profile(where: ProfileSubscriptionWhereInput): ProfileSubscriptionPayload
   tank(where: TankSubscriptionWhereInput): TankSubscriptionPayload
   equipment(where: EquipmentSubscriptionWhereInput): EquipmentSubscriptionPayload
@@ -4893,9 +5221,9 @@ type Subscription {
   likesFeed(where: LikesFeedSubscriptionWhereInput): LikesFeedSubscriptionPayload
   feedComment(where: FeedCommentSubscriptionWhereInput): FeedCommentSubscriptionPayload
   likesFeedComment(where: LikesFeedCommentSubscriptionWhereInput): LikesFeedCommentSubscriptionPayload
-  likesFeedReply(where: LikesFeedReplySubscriptionWhereInput): LikesFeedReplySubscriptionPayload
+  feedCommentReply(where: FeedCommentReplySubscriptionWhereInput): FeedCommentReplySubscriptionPayload
+  likesFeedCommentReply(where: LikesFeedCommentReplySubscriptionWhereInput): LikesFeedCommentReplySubscriptionPayload
   feedImage(where: FeedImageSubscriptionWhereInput): FeedImageSubscriptionPayload
-  feedReply(where: FeedReplySubscriptionWhereInput): FeedReplySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -6354,7 +6682,7 @@ type User implements Node {
   name: String!
   email: String!
   password: String!
-  profilePicture: String
+  profilePicture(where: ProfilePictureWhereInput, orderBy: ProfilePictureOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProfilePicture!]
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
@@ -6382,10 +6710,10 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureCreateManyWithoutUserInput
   followings: FollowingCreateManyWithoutUserInput
   followers: FollowerCreateManyWithoutUserInput
   profile: ProfileCreateOneWithoutAuthorInput
@@ -6419,6 +6747,11 @@ input UserCreateOneWithoutProfileInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutProfilePictureInput {
+  create: UserCreateWithoutProfilePictureInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateOneWithoutTankPostsInput {
   create: UserCreateWithoutTankPostsInput
   connect: UserWhereUniqueInput
@@ -6433,10 +6766,10 @@ input UserCreateWithoutFeedInput {
   name: String!
   email: String!
   password: String!
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureCreateManyWithoutUserInput
   followings: FollowingCreateManyWithoutUserInput
   followers: FollowerCreateManyWithoutUserInput
   profile: ProfileCreateOneWithoutAuthorInput
@@ -6448,10 +6781,10 @@ input UserCreateWithoutFollowersInput {
   name: String!
   email: String!
   password: String!
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureCreateManyWithoutUserInput
   followings: FollowingCreateManyWithoutUserInput
   profile: ProfileCreateOneWithoutAuthorInput
   tankPosts: TankPostCreateManyWithoutAuthorInput
@@ -6463,10 +6796,10 @@ input UserCreateWithoutFollowingsInput {
   name: String!
   email: String!
   password: String!
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureCreateManyWithoutUserInput
   followers: FollowerCreateManyWithoutUserInput
   profile: ProfileCreateOneWithoutAuthorInput
   tankPosts: TankPostCreateManyWithoutAuthorInput
@@ -6478,12 +6811,27 @@ input UserCreateWithoutProfileInput {
   name: String!
   email: String!
   password: String!
-  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  profilePicture: ProfilePictureCreateManyWithoutUserInput
+  followings: FollowingCreateManyWithoutUserInput
+  followers: FollowerCreateManyWithoutUserInput
+  tankPosts: TankPostCreateManyWithoutAuthorInput
+  tankReplies: TankReplyCreateManyWithoutAuthorInput
+  feed: FeedCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutProfilePictureInput {
+  name: String!
+  email: String!
+  password: String!
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
   followings: FollowingCreateManyWithoutUserInput
   followers: FollowerCreateManyWithoutUserInput
+  profile: ProfileCreateOneWithoutAuthorInput
   tankPosts: TankPostCreateManyWithoutAuthorInput
   tankReplies: TankReplyCreateManyWithoutAuthorInput
   feed: FeedCreateManyWithoutAuthorInput
@@ -6493,10 +6841,10 @@ input UserCreateWithoutTankPostsInput {
   name: String!
   email: String!
   password: String!
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureCreateManyWithoutUserInput
   followings: FollowingCreateManyWithoutUserInput
   followers: FollowerCreateManyWithoutUserInput
   profile: ProfileCreateOneWithoutAuthorInput
@@ -6508,10 +6856,10 @@ input UserCreateWithoutTankRepliesInput {
   name: String!
   email: String!
   password: String!
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureCreateManyWithoutUserInput
   followings: FollowingCreateManyWithoutUserInput
   followers: FollowerCreateManyWithoutUserInput
   profile: ProfileCreateOneWithoutAuthorInput
@@ -6537,8 +6885,6 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
-  profilePicture_ASC
-  profilePicture_DESC
   resetToken_ASC
   resetToken_DESC
   resetTokenExpiry_ASC
@@ -6556,7 +6902,6 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
@@ -6607,10 +6952,10 @@ input UserUpdateDataInput {
   name: String
   email: String
   password: String
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureUpdateManyWithoutUserInput
   followings: FollowingUpdateManyWithoutUserInput
   followers: FollowerUpdateManyWithoutUserInput
   profile: ProfileUpdateOneWithoutAuthorInput
@@ -6623,10 +6968,10 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureUpdateManyWithoutUserInput
   followings: FollowingUpdateManyWithoutUserInput
   followers: FollowerUpdateManyWithoutUserInput
   profile: ProfileUpdateOneWithoutAuthorInput
@@ -6639,7 +6984,6 @@ input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
@@ -6680,6 +7024,13 @@ input UserUpdateOneRequiredWithoutProfileInput {
   upsert: UserUpsertWithoutProfileInput
 }
 
+input UserUpdateOneRequiredWithoutProfilePictureInput {
+  create: UserCreateWithoutProfilePictureInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutProfilePictureDataInput
+  upsert: UserUpsertWithoutProfilePictureInput
+}
+
 input UserUpdateOneRequiredWithoutTankPostsInput {
   create: UserCreateWithoutTankPostsInput
   connect: UserWhereUniqueInput
@@ -6698,10 +7049,10 @@ input UserUpdateWithoutFeedDataInput {
   name: String
   email: String
   password: String
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureUpdateManyWithoutUserInput
   followings: FollowingUpdateManyWithoutUserInput
   followers: FollowerUpdateManyWithoutUserInput
   profile: ProfileUpdateOneWithoutAuthorInput
@@ -6713,10 +7064,10 @@ input UserUpdateWithoutFollowersDataInput {
   name: String
   email: String
   password: String
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureUpdateManyWithoutUserInput
   followings: FollowingUpdateManyWithoutUserInput
   profile: ProfileUpdateOneWithoutAuthorInput
   tankPosts: TankPostUpdateManyWithoutAuthorInput
@@ -6728,10 +7079,10 @@ input UserUpdateWithoutFollowingsDataInput {
   name: String
   email: String
   password: String
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureUpdateManyWithoutUserInput
   followers: FollowerUpdateManyWithoutUserInput
   profile: ProfileUpdateOneWithoutAuthorInput
   tankPosts: TankPostUpdateManyWithoutAuthorInput
@@ -6743,12 +7094,27 @@ input UserUpdateWithoutProfileDataInput {
   name: String
   email: String
   password: String
-  profilePicture: String
+  resetToken: String
+  resetTokenExpiry: String
+  permission: Permission
+  profilePicture: ProfilePictureUpdateManyWithoutUserInput
+  followings: FollowingUpdateManyWithoutUserInput
+  followers: FollowerUpdateManyWithoutUserInput
+  tankPosts: TankPostUpdateManyWithoutAuthorInput
+  tankReplies: TankReplyUpdateManyWithoutAuthorInput
+  feed: FeedUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutProfilePictureDataInput {
+  name: String
+  email: String
+  password: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
   followings: FollowingUpdateManyWithoutUserInput
   followers: FollowerUpdateManyWithoutUserInput
+  profile: ProfileUpdateOneWithoutAuthorInput
   tankPosts: TankPostUpdateManyWithoutAuthorInput
   tankReplies: TankReplyUpdateManyWithoutAuthorInput
   feed: FeedUpdateManyWithoutAuthorInput
@@ -6758,10 +7124,10 @@ input UserUpdateWithoutTankPostsDataInput {
   name: String
   email: String
   password: String
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureUpdateManyWithoutUserInput
   followings: FollowingUpdateManyWithoutUserInput
   followers: FollowerUpdateManyWithoutUserInput
   profile: ProfileUpdateOneWithoutAuthorInput
@@ -6773,10 +7139,10 @@ input UserUpdateWithoutTankRepliesDataInput {
   name: String
   email: String
   password: String
-  profilePicture: String
   resetToken: String
   resetTokenExpiry: String
   permission: Permission
+  profilePicture: ProfilePictureUpdateManyWithoutUserInput
   followings: FollowingUpdateManyWithoutUserInput
   followers: FollowerUpdateManyWithoutUserInput
   profile: ProfileUpdateOneWithoutAuthorInput
@@ -6807,6 +7173,11 @@ input UserUpsertWithoutFollowingsInput {
 input UserUpsertWithoutProfileInput {
   update: UserUpdateWithoutProfileDataInput!
   create: UserCreateWithoutProfileInput!
+}
+
+input UserUpsertWithoutProfilePictureInput {
+  update: UserUpdateWithoutProfilePictureDataInput!
+  create: UserCreateWithoutProfilePictureInput!
 }
 
 input UserUpsertWithoutTankPostsInput {
@@ -6988,46 +7359,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  profilePicture: String
-
-  """All values that are not equal to given value."""
-  profilePicture_not: String
-
-  """All values that are contained in given list."""
-  profilePicture_in: [String!]
-
-  """All values that are not contained in given list."""
-  profilePicture_not_in: [String!]
-
-  """All values less than the given value."""
-  profilePicture_lt: String
-
-  """All values less than or equal the given value."""
-  profilePicture_lte: String
-
-  """All values greater than the given value."""
-  profilePicture_gt: String
-
-  """All values greater than or equal the given value."""
-  profilePicture_gte: String
-
-  """All values containing the given string."""
-  profilePicture_contains: String
-
-  """All values not containing the given string."""
-  profilePicture_not_contains: String
-
-  """All values starting with the given string."""
-  profilePicture_starts_with: String
-
-  """All values not starting with the given string."""
-  profilePicture_not_starts_with: String
-
-  """All values ending with the given string."""
-  profilePicture_ends_with: String
-
-  """All values not ending with the given string."""
-  profilePicture_not_ends_with: String
   resetToken: String
 
   """All values that are not equal to given value."""
@@ -7162,6 +7493,9 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  profilePicture_every: ProfilePictureWhereInput
+  profilePicture_some: ProfilePictureWhereInput
+  profilePicture_none: ProfilePictureWhereInput
   followings_every: FollowingWhereInput
   followings_some: FollowingWhereInput
   followings_none: FollowingWhereInput

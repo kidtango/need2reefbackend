@@ -189,7 +189,7 @@ type FeedComment {
   feed: Feed! @relation(name: "FeedToFeedComment", onDelete: SET_NULL)
   author: User!
   body: String!
-  reply: [FeedReply!]!
+  reply: [FeedCommentReply!]!
     @relation(name: "FeedCommentToFeedReply", onDelete: CASCADE)
   likes: [LikesFeedComment!]!
     @relation(name: "FeedCommentToLikes", onDelete: CASCADE)
@@ -206,20 +206,23 @@ type LikesFeedComment {
   createdAt: DateTime!
 }
 
-type FeedReply {
+type FeedCommentReply {
   id: ID! @unique
   author: User! @relation(name: "UsertoFeedPost", onDelete: SET_NULL)
+  comment: FeedComment!
+    @relation(name: "FeedCommentToFeedReply", onDelete: SET_NULL)
   body: String!
-  likes: [LikesFeedReply!]!
+  likes: [LikesFeedCommentReply!]!
     @relation(name: "FeedReplyToLikes", onDelete: SET_NULL)
   updatedAt: DateTime!
   createdAt: DateTime!
 }
 
-type LikesFeedReply {
+type LikesFeedCommentReply {
   id: ID! @unique
   user: User!
-  reply: FeedReply! @relation(name: "FeedReplyToLikes", onDelete: SET_NULL)
+  reply: FeedCommentReply!
+    @relation(name: "FeedReplyToLikes", onDelete: SET_NULL)
   updatedAt: DateTime!
   createdAt: DateTime!
 }

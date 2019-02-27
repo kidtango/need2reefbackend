@@ -1,5 +1,5 @@
-# source: http://localhost:4466/tweef1/dev
-# timestamp: Mon Feb 25 2019 23:18:15 GMT-0600 (Central Standard Time)
+# source: http://localhost:4466/tweef2/dev
+# timestamp: Wed Feb 27 2019 11:44:12 GMT-0600 (Central Standard Time)
 
 type AggregateCoral {
   count: Int!
@@ -192,6 +192,123 @@ type CoralPreviousValues {
   createdAt: DateTime!
 }
 
+input CoralScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CoralScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CoralScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CoralScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  price: Float
+
+  """All values that are not equal to given value."""
+  price_not: Float
+
+  """All values that are contained in given list."""
+  price_in: [Float!]
+
+  """All values that are not contained in given list."""
+  price_not_in: [Float!]
+
+  """All values less than the given value."""
+  price_lt: Float
+
+  """All values less than or equal the given value."""
+  price_lte: Float
+
+  """All values greater than the given value."""
+  price_gt: Float
+
+  """All values greater than or equal the given value."""
+  price_gte: Float
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
 type CoralSubscriptionPayload {
   mutation: MutationType!
   node: Coral
@@ -248,6 +365,12 @@ input CoralUpdatelargeImagesInput {
   set: [String!]
 }
 
+input CoralUpdateManyDataInput {
+  price: Float
+  images: CoralUpdateimagesInput
+  largeImages: CoralUpdatelargeImagesInput
+}
+
 input CoralUpdateManyMutationInput {
   price: Float
   images: CoralUpdateimagesInput
@@ -257,10 +380,18 @@ input CoralUpdateManyMutationInput {
 input CoralUpdateManyWithoutProfileInput {
   create: [CoralCreateWithoutProfileInput!]
   connect: [CoralWhereUniqueInput!]
+  set: [CoralWhereUniqueInput!]
   disconnect: [CoralWhereUniqueInput!]
   delete: [CoralWhereUniqueInput!]
   update: [CoralUpdateWithWhereUniqueWithoutProfileInput!]
+  updateMany: [CoralUpdateManyWithWhereNestedInput!]
+  deleteMany: [CoralScalarWhereInput!]
   upsert: [CoralUpsertWithWhereUniqueWithoutProfileInput!]
+}
+
+input CoralUpdateManyWithWhereNestedInput {
+  where: CoralScalarWhereInput!
+  data: CoralUpdateManyDataInput!
 }
 
 input CoralUpdateOneRequiredWithoutLikesInput {
@@ -1560,6 +1691,141 @@ type FeedCommentReplyPreviousValues {
   createdAt: DateTime!
 }
 
+input FeedCommentReplyScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedCommentReplyScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedCommentReplyScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedCommentReplyScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  body: String
+
+  """All values that are not equal to given value."""
+  body_not: String
+
+  """All values that are contained in given list."""
+  body_in: [String!]
+
+  """All values that are not contained in given list."""
+  body_not_in: [String!]
+
+  """All values less than the given value."""
+  body_lt: String
+
+  """All values less than or equal the given value."""
+  body_lte: String
+
+  """All values greater than the given value."""
+  body_gt: String
+
+  """All values greater than or equal the given value."""
+  body_gte: String
+
+  """All values containing the given string."""
+  body_contains: String
+
+  """All values not containing the given string."""
+  body_not_contains: String
+
+  """All values starting with the given string."""
+  body_starts_with: String
+
+  """All values not starting with the given string."""
+  body_not_starts_with: String
+
+  """All values ending with the given string."""
+  body_ends_with: String
+
+  """All values not ending with the given string."""
+  body_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
 type FeedCommentReplySubscriptionPayload {
   mutation: MutationType!
   node: FeedCommentReply
@@ -1606,6 +1872,10 @@ input FeedCommentReplyUpdateInput {
   likes: LikesFeedCommentReplyUpdateManyWithoutReplyInput
 }
 
+input FeedCommentReplyUpdateManyDataInput {
+  body: String
+}
+
 input FeedCommentReplyUpdateManyMutationInput {
   body: String
 }
@@ -1613,10 +1883,18 @@ input FeedCommentReplyUpdateManyMutationInput {
 input FeedCommentReplyUpdateManyWithoutCommentInput {
   create: [FeedCommentReplyCreateWithoutCommentInput!]
   connect: [FeedCommentReplyWhereUniqueInput!]
+  set: [FeedCommentReplyWhereUniqueInput!]
   disconnect: [FeedCommentReplyWhereUniqueInput!]
   delete: [FeedCommentReplyWhereUniqueInput!]
   update: [FeedCommentReplyUpdateWithWhereUniqueWithoutCommentInput!]
+  updateMany: [FeedCommentReplyUpdateManyWithWhereNestedInput!]
+  deleteMany: [FeedCommentReplyScalarWhereInput!]
   upsert: [FeedCommentReplyUpsertWithWhereUniqueWithoutCommentInput!]
+}
+
+input FeedCommentReplyUpdateManyWithWhereNestedInput {
+  where: FeedCommentReplyScalarWhereInput!
+  data: FeedCommentReplyUpdateManyDataInput!
 }
 
 input FeedCommentReplyUpdateOneRequiredWithoutLikesInput {
@@ -1798,6 +2076,141 @@ input FeedCommentReplyWhereUniqueInput {
   id: ID
 }
 
+input FeedCommentScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedCommentScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedCommentScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedCommentScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  body: String
+
+  """All values that are not equal to given value."""
+  body_not: String
+
+  """All values that are contained in given list."""
+  body_in: [String!]
+
+  """All values that are not contained in given list."""
+  body_not_in: [String!]
+
+  """All values less than the given value."""
+  body_lt: String
+
+  """All values less than or equal the given value."""
+  body_lte: String
+
+  """All values greater than the given value."""
+  body_gt: String
+
+  """All values greater than or equal the given value."""
+  body_gte: String
+
+  """All values containing the given string."""
+  body_contains: String
+
+  """All values not containing the given string."""
+  body_not_contains: String
+
+  """All values starting with the given string."""
+  body_starts_with: String
+
+  """All values not starting with the given string."""
+  body_not_starts_with: String
+
+  """All values ending with the given string."""
+  body_ends_with: String
+
+  """All values not ending with the given string."""
+  body_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
 type FeedCommentSubscriptionPayload {
   mutation: MutationType!
   node: FeedComment
@@ -1845,6 +2258,10 @@ input FeedCommentUpdateInput {
   likes: LikesFeedCommentUpdateManyWithoutCommentInput
 }
 
+input FeedCommentUpdateManyDataInput {
+  body: String
+}
+
 input FeedCommentUpdateManyMutationInput {
   body: String
 }
@@ -1852,10 +2269,18 @@ input FeedCommentUpdateManyMutationInput {
 input FeedCommentUpdateManyWithoutFeedInput {
   create: [FeedCommentCreateWithoutFeedInput!]
   connect: [FeedCommentWhereUniqueInput!]
+  set: [FeedCommentWhereUniqueInput!]
   disconnect: [FeedCommentWhereUniqueInput!]
   delete: [FeedCommentWhereUniqueInput!]
   update: [FeedCommentUpdateWithWhereUniqueWithoutFeedInput!]
+  updateMany: [FeedCommentUpdateManyWithWhereNestedInput!]
+  deleteMany: [FeedCommentScalarWhereInput!]
   upsert: [FeedCommentUpsertWithWhereUniqueWithoutFeedInput!]
+}
+
+input FeedCommentUpdateManyWithWhereNestedInput {
+  where: FeedCommentScalarWhereInput!
+  data: FeedCommentUpdateManyDataInput!
 }
 
 input FeedCommentUpdateOneRequiredWithoutLikesInput {
@@ -2195,6 +2620,141 @@ type FeedImagePreviousValues {
   createdAt: DateTime!
 }
 
+input FeedImageScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedImageScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedImageScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedImageScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
 type FeedImageSubscriptionPayload {
   mutation: MutationType!
   node: FeedImage
@@ -2239,6 +2799,10 @@ input FeedImageUpdateInput {
   feed: FeedUpdateOneRequiredWithoutImagesInput
 }
 
+input FeedImageUpdateManyDataInput {
+  url: String
+}
+
 input FeedImageUpdateManyMutationInput {
   url: String
 }
@@ -2246,10 +2810,18 @@ input FeedImageUpdateManyMutationInput {
 input FeedImageUpdateManyWithoutFeedInput {
   create: [FeedImageCreateWithoutFeedInput!]
   connect: [FeedImageWhereUniqueInput!]
+  set: [FeedImageWhereUniqueInput!]
   disconnect: [FeedImageWhereUniqueInput!]
   delete: [FeedImageWhereUniqueInput!]
   update: [FeedImageUpdateWithWhereUniqueWithoutFeedInput!]
+  updateMany: [FeedImageUpdateManyWithWhereNestedInput!]
+  deleteMany: [FeedImageScalarWhereInput!]
   upsert: [FeedImageUpsertWithWhereUniqueWithoutFeedInput!]
+}
+
+input FeedImageUpdateManyWithWhereNestedInput {
+  where: FeedImageScalarWhereInput!
+  data: FeedImageUpdateManyDataInput!
 }
 
 input FeedImageUpdateWithoutFeedDataInput {
@@ -2425,6 +2997,141 @@ type FeedPreviousValues {
   createdAt: DateTime!
 }
 
+input FeedScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FeedScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FeedScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FeedScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  message: String
+
+  """All values that are not equal to given value."""
+  message_not: String
+
+  """All values that are contained in given list."""
+  message_in: [String!]
+
+  """All values that are not contained in given list."""
+  message_not_in: [String!]
+
+  """All values less than the given value."""
+  message_lt: String
+
+  """All values less than or equal the given value."""
+  message_lte: String
+
+  """All values greater than the given value."""
+  message_gt: String
+
+  """All values greater than or equal the given value."""
+  message_gte: String
+
+  """All values containing the given string."""
+  message_contains: String
+
+  """All values not containing the given string."""
+  message_not_contains: String
+
+  """All values starting with the given string."""
+  message_starts_with: String
+
+  """All values not starting with the given string."""
+  message_not_starts_with: String
+
+  """All values ending with the given string."""
+  message_ends_with: String
+
+  """All values not ending with the given string."""
+  message_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
 type FeedSubscriptionPayload {
   mutation: MutationType!
   node: Feed
@@ -2472,6 +3179,10 @@ input FeedUpdateInput {
   likes: LikesFeedUpdateManyWithoutFeedInput
 }
 
+input FeedUpdateManyDataInput {
+  message: String
+}
+
 input FeedUpdateManyMutationInput {
   message: String
 }
@@ -2479,10 +3190,18 @@ input FeedUpdateManyMutationInput {
 input FeedUpdateManyWithoutAuthorInput {
   create: [FeedCreateWithoutAuthorInput!]
   connect: [FeedWhereUniqueInput!]
+  set: [FeedWhereUniqueInput!]
   disconnect: [FeedWhereUniqueInput!]
   delete: [FeedWhereUniqueInput!]
   update: [FeedUpdateWithWhereUniqueWithoutAuthorInput!]
+  updateMany: [FeedUpdateManyWithWhereNestedInput!]
+  deleteMany: [FeedScalarWhereInput!]
   upsert: [FeedUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input FeedUpdateManyWithWhereNestedInput {
+  where: FeedScalarWhereInput!
+  data: FeedUpdateManyDataInput!
 }
 
 input FeedUpdateOneRequiredWithoutCommentsInput {
@@ -2754,6 +3473,57 @@ type FollowerPreviousValues {
   id: ID!
 }
 
+input FollowerScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FollowerScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FollowerScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FollowerScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
 type FollowerSubscriptionPayload {
   mutation: MutationType!
   node: Follower
@@ -2799,8 +3569,10 @@ input FollowerUpdateInput {
 
 input FollowerUpdateManyWithoutUserInput {
   connect: [FollowerWhereUniqueInput!]
+  set: [FollowerWhereUniqueInput!]
   disconnect: [FollowerWhereUniqueInput!]
   delete: [FollowerWhereUniqueInput!]
+  deleteMany: [FollowerScalarWhereInput!]
 }
 
 input FollowerWhereInput {
@@ -2904,6 +3676,57 @@ type FollowingPreviousValues {
   id: ID!
 }
 
+input FollowingScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FollowingScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FollowingScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FollowingScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
 type FollowingSubscriptionPayload {
   mutation: MutationType!
   node: Following
@@ -2949,8 +3772,10 @@ input FollowingUpdateInput {
 
 input FollowingUpdateManyWithoutUserInput {
   connect: [FollowingWhereUniqueInput!]
+  set: [FollowingWhereUniqueInput!]
   disconnect: [FollowingWhereUniqueInput!]
   delete: [FollowingWhereUniqueInput!]
+  deleteMany: [FollowingScalarWhereInput!]
 }
 
 input FollowingWhereInput {
@@ -3009,9 +3834,6 @@ input FollowingWhereUniqueInput {
   id: ID
 }
 
-"""Raw JSON value"""
-scalar Json
-
 type LikesCoral implements Node {
   id: ID!
   coral: Coral!
@@ -3064,6 +3886,57 @@ type LikesCoralPreviousValues {
   id: ID!
 }
 
+input LikesCoralScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesCoralScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesCoralScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesCoralScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
 type LikesCoralSubscriptionPayload {
   mutation: MutationType!
   node: LikesCoral
@@ -3111,9 +3984,11 @@ input LikesCoralUpdateInput {
 input LikesCoralUpdateManyWithoutCoralInput {
   create: [LikesCoralCreateWithoutCoralInput!]
   connect: [LikesCoralWhereUniqueInput!]
+  set: [LikesCoralWhereUniqueInput!]
   disconnect: [LikesCoralWhereUniqueInput!]
   delete: [LikesCoralWhereUniqueInput!]
   update: [LikesCoralUpdateWithWhereUniqueWithoutCoralInput!]
+  deleteMany: [LikesCoralScalarWhereInput!]
   upsert: [LikesCoralUpsertWithWhereUniqueWithoutCoralInput!]
 }
 
@@ -3309,6 +4184,101 @@ type LikesFeedCommentReplyPreviousValues {
   createdAt: DateTime!
 }
 
+input LikesFeedCommentReplyScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesFeedCommentReplyScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesFeedCommentReplyScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesFeedCommentReplyScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
 type LikesFeedCommentReplySubscriptionPayload {
   mutation: MutationType!
   node: LikesFeedCommentReply
@@ -3356,9 +4326,11 @@ input LikesFeedCommentReplyUpdateInput {
 input LikesFeedCommentReplyUpdateManyWithoutReplyInput {
   create: [LikesFeedCommentReplyCreateWithoutReplyInput!]
   connect: [LikesFeedCommentReplyWhereUniqueInput!]
+  set: [LikesFeedCommentReplyWhereUniqueInput!]
   disconnect: [LikesFeedCommentReplyWhereUniqueInput!]
   delete: [LikesFeedCommentReplyWhereUniqueInput!]
   update: [LikesFeedCommentReplyUpdateWithWhereUniqueWithoutReplyInput!]
+  deleteMany: [LikesFeedCommentReplyScalarWhereInput!]
   upsert: [LikesFeedCommentReplyUpsertWithWhereUniqueWithoutReplyInput!]
 }
 
@@ -3478,6 +4450,101 @@ input LikesFeedCommentReplyWhereUniqueInput {
   id: ID
 }
 
+input LikesFeedCommentScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesFeedCommentScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesFeedCommentScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesFeedCommentScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
 type LikesFeedCommentSubscriptionPayload {
   mutation: MutationType!
   node: LikesFeedComment
@@ -3525,9 +4592,11 @@ input LikesFeedCommentUpdateInput {
 input LikesFeedCommentUpdateManyWithoutCommentInput {
   create: [LikesFeedCommentCreateWithoutCommentInput!]
   connect: [LikesFeedCommentWhereUniqueInput!]
+  set: [LikesFeedCommentWhereUniqueInput!]
   disconnect: [LikesFeedCommentWhereUniqueInput!]
   delete: [LikesFeedCommentWhereUniqueInput!]
   update: [LikesFeedCommentUpdateWithWhereUniqueWithoutCommentInput!]
+  deleteMany: [LikesFeedCommentScalarWhereInput!]
   upsert: [LikesFeedCommentUpsertWithWhereUniqueWithoutCommentInput!]
 }
 
@@ -3695,6 +4764,101 @@ type LikesFeedPreviousValues {
   createdAt: DateTime!
 }
 
+input LikesFeedScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesFeedScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesFeedScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesFeedScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
 type LikesFeedSubscriptionPayload {
   mutation: MutationType!
   node: LikesFeed
@@ -3742,9 +4906,11 @@ input LikesFeedUpdateInput {
 input LikesFeedUpdateManyWithoutFeedInput {
   create: [LikesFeedCreateWithoutFeedInput!]
   connect: [LikesFeedWhereUniqueInput!]
+  set: [LikesFeedWhereUniqueInput!]
   disconnect: [LikesFeedWhereUniqueInput!]
   delete: [LikesFeedWhereUniqueInput!]
   update: [LikesFeedUpdateWithWhereUniqueWithoutFeedInput!]
+  deleteMany: [LikesFeedScalarWhereInput!]
   upsert: [LikesFeedUpsertWithWhereUniqueWithoutFeedInput!]
 }
 
@@ -3964,6 +5130,57 @@ type LikesTankPostPreviousValues {
   id: ID!
 }
 
+input LikesTankPostScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesTankPostScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesTankPostScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesTankPostScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
 type LikesTankPostSubscriptionPayload {
   mutation: MutationType!
   node: LikesTankPost
@@ -4011,9 +5228,11 @@ input LikesTankPostUpdateInput {
 input LikesTankPostUpdateManyWithoutPostInput {
   create: [LikesTankPostCreateWithoutPostInput!]
   connect: [LikesTankPostWhereUniqueInput!]
+  set: [LikesTankPostWhereUniqueInput!]
   disconnect: [LikesTankPostWhereUniqueInput!]
   delete: [LikesTankPostWhereUniqueInput!]
   update: [LikesTankPostUpdateWithWhereUniqueWithoutPostInput!]
+  deleteMany: [LikesTankPostScalarWhereInput!]
   upsert: [LikesTankPostUpsertWithWhereUniqueWithoutPostInput!]
 }
 
@@ -4145,6 +5364,57 @@ type LikesTankReplyPreviousValues {
   id: ID!
 }
 
+input LikesTankReplyScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesTankReplyScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesTankReplyScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesTankReplyScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
 type LikesTankReplySubscriptionPayload {
   mutation: MutationType!
   node: LikesTankReply
@@ -4192,9 +5462,11 @@ input LikesTankReplyUpdateInput {
 input LikesTankReplyUpdateManyWithoutReplyInput {
   create: [LikesTankReplyCreateWithoutReplyInput!]
   connect: [LikesTankReplyWhereUniqueInput!]
+  set: [LikesTankReplyWhereUniqueInput!]
   disconnect: [LikesTankReplyWhereUniqueInput!]
   delete: [LikesTankReplyWhereUniqueInput!]
   update: [LikesTankReplyUpdateWithWhereUniqueWithoutReplyInput!]
+  deleteMany: [LikesTankReplyScalarWhereInput!]
   upsert: [LikesTankReplyUpsertWithWhereUniqueWithoutReplyInput!]
 }
 
@@ -4270,6 +5542,57 @@ input LikesTankReplyWhereUniqueInput {
   id: ID
 }
 
+input LikesTankScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikesTankScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikesTankScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikesTankScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+}
+
 type LikesTankSubscriptionPayload {
   mutation: MutationType!
   node: LikesTank
@@ -4317,9 +5640,11 @@ input LikesTankUpdateInput {
 input LikesTankUpdateManyWithoutTankInput {
   create: [LikesTankCreateWithoutTankInput!]
   connect: [LikesTankWhereUniqueInput!]
+  set: [LikesTankWhereUniqueInput!]
   disconnect: [LikesTankWhereUniqueInput!]
   delete: [LikesTankWhereUniqueInput!]
   update: [LikesTankUpdateWithWhereUniqueWithoutTankInput!]
+  deleteMany: [LikesTankScalarWhereInput!]
   upsert: [LikesTankUpsertWithWhereUniqueWithoutTankInput!]
 }
 
@@ -4530,7 +5855,6 @@ type Mutation {
   deleteManyLikesFeedCommentReplies(where: LikesFeedCommentReplyWhereInput): BatchPayload!
   deleteManyFeedImages(where: FeedImageWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
-  executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
 enum MutationType {
@@ -4563,10 +5887,6 @@ type PageInfo {
 enum Permission {
   ADMIN
   USER
-}
-
-enum PrismaDatabase {
-  default
 }
 
 type Profile implements Node {
@@ -4701,6 +6021,141 @@ type ProfilePicturePreviousValues {
   updatedAt: DateTime!
 }
 
+input ProfilePictureScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ProfilePictureScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ProfilePictureScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ProfilePictureScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  picture: String
+
+  """All values that are not equal to given value."""
+  picture_not: String
+
+  """All values that are contained in given list."""
+  picture_in: [String!]
+
+  """All values that are not contained in given list."""
+  picture_not_in: [String!]
+
+  """All values less than the given value."""
+  picture_lt: String
+
+  """All values less than or equal the given value."""
+  picture_lte: String
+
+  """All values greater than the given value."""
+  picture_gt: String
+
+  """All values greater than or equal the given value."""
+  picture_gte: String
+
+  """All values containing the given string."""
+  picture_contains: String
+
+  """All values not containing the given string."""
+  picture_not_contains: String
+
+  """All values starting with the given string."""
+  picture_starts_with: String
+
+  """All values not starting with the given string."""
+  picture_not_starts_with: String
+
+  """All values ending with the given string."""
+  picture_ends_with: String
+
+  """All values not ending with the given string."""
+  picture_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+}
+
 type ProfilePictureSubscriptionPayload {
   mutation: MutationType!
   node: ProfilePicture
@@ -4745,6 +6200,10 @@ input ProfilePictureUpdateInput {
   user: UserUpdateOneRequiredWithoutProfilePictureInput
 }
 
+input ProfilePictureUpdateManyDataInput {
+  picture: String
+}
+
 input ProfilePictureUpdateManyMutationInput {
   picture: String
 }
@@ -4752,10 +6211,18 @@ input ProfilePictureUpdateManyMutationInput {
 input ProfilePictureUpdateManyWithoutUserInput {
   create: [ProfilePictureCreateWithoutUserInput!]
   connect: [ProfilePictureWhereUniqueInput!]
+  set: [ProfilePictureWhereUniqueInput!]
   disconnect: [ProfilePictureWhereUniqueInput!]
   delete: [ProfilePictureWhereUniqueInput!]
   update: [ProfilePictureUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [ProfilePictureUpdateManyWithWhereNestedInput!]
+  deleteMany: [ProfilePictureScalarWhereInput!]
   upsert: [ProfilePictureUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input ProfilePictureUpdateManyWithWhereNestedInput {
+  where: ProfilePictureScalarWhereInput!
+  data: ProfilePictureUpdateManyDataInput!
 }
 
 input ProfilePictureUpdateWithoutUserDataInput {
@@ -5408,6 +6875,97 @@ type TankImagePreviousValues {
   url: String!
 }
 
+input TankImageScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankImageScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankImageScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankImageScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+}
+
 type TankImageSubscriptionPayload {
   mutation: MutationType!
   node: TankImage
@@ -5452,6 +7010,10 @@ input TankImageUpdateInput {
   tank: TankUpdateOneRequiredWithoutImagesInput
 }
 
+input TankImageUpdateManyDataInput {
+  url: String
+}
+
 input TankImageUpdateManyMutationInput {
   url: String
 }
@@ -5459,10 +7021,18 @@ input TankImageUpdateManyMutationInput {
 input TankImageUpdateManyWithoutTankInput {
   create: [TankImageCreateWithoutTankInput!]
   connect: [TankImageWhereUniqueInput!]
+  set: [TankImageWhereUniqueInput!]
   disconnect: [TankImageWhereUniqueInput!]
   delete: [TankImageWhereUniqueInput!]
   update: [TankImageUpdateWithWhereUniqueWithoutTankInput!]
+  updateMany: [TankImageUpdateManyWithWhereNestedInput!]
+  deleteMany: [TankImageScalarWhereInput!]
   upsert: [TankImageUpsertWithWhereUniqueWithoutTankInput!]
+}
+
+input TankImageUpdateManyWithWhereNestedInput {
+  where: TankImageScalarWhereInput!
+  data: TankImageUpdateManyDataInput!
 }
 
 input TankImageUpdateWithoutTankDataInput {
@@ -5691,6 +7261,141 @@ type TankPostPreviousValues {
   createdAt: DateTime!
 }
 
+input TankPostScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankPostScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankPostScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankPostScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  body: String
+
+  """All values that are not equal to given value."""
+  body_not: String
+
+  """All values that are contained in given list."""
+  body_in: [String!]
+
+  """All values that are not contained in given list."""
+  body_not_in: [String!]
+
+  """All values less than the given value."""
+  body_lt: String
+
+  """All values less than or equal the given value."""
+  body_lte: String
+
+  """All values greater than the given value."""
+  body_gt: String
+
+  """All values greater than or equal the given value."""
+  body_gte: String
+
+  """All values containing the given string."""
+  body_contains: String
+
+  """All values not containing the given string."""
+  body_not_contains: String
+
+  """All values starting with the given string."""
+  body_starts_with: String
+
+  """All values not starting with the given string."""
+  body_not_starts_with: String
+
+  """All values ending with the given string."""
+  body_ends_with: String
+
+  """All values not ending with the given string."""
+  body_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
 type TankPostSubscriptionPayload {
   mutation: MutationType!
   node: TankPost
@@ -5738,6 +7443,10 @@ input TankPostUpdateInput {
   likes: LikesTankPostUpdateManyWithoutPostInput
 }
 
+input TankPostUpdateManyDataInput {
+  body: String
+}
+
 input TankPostUpdateManyMutationInput {
   body: String
 }
@@ -5745,19 +7454,30 @@ input TankPostUpdateManyMutationInput {
 input TankPostUpdateManyWithoutAuthorInput {
   create: [TankPostCreateWithoutAuthorInput!]
   connect: [TankPostWhereUniqueInput!]
+  set: [TankPostWhereUniqueInput!]
   disconnect: [TankPostWhereUniqueInput!]
   delete: [TankPostWhereUniqueInput!]
   update: [TankPostUpdateWithWhereUniqueWithoutAuthorInput!]
+  updateMany: [TankPostUpdateManyWithWhereNestedInput!]
+  deleteMany: [TankPostScalarWhereInput!]
   upsert: [TankPostUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
 input TankPostUpdateManyWithoutTankInput {
   create: [TankPostCreateWithoutTankInput!]
   connect: [TankPostWhereUniqueInput!]
+  set: [TankPostWhereUniqueInput!]
   disconnect: [TankPostWhereUniqueInput!]
   delete: [TankPostWhereUniqueInput!]
   update: [TankPostUpdateWithWhereUniqueWithoutTankInput!]
+  updateMany: [TankPostUpdateManyWithWhereNestedInput!]
+  deleteMany: [TankPostScalarWhereInput!]
   upsert: [TankPostUpsertWithWhereUniqueWithoutTankInput!]
+}
+
+input TankPostUpdateManyWithWhereNestedInput {
+  where: TankPostScalarWhereInput!
+  data: TankPostUpdateManyDataInput!
 }
 
 input TankPostUpdateOneRequiredWithoutLikesInput {
@@ -6075,6 +7795,141 @@ type TankReplyPreviousValues {
   createdAt: DateTime!
 }
 
+input TankReplyScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankReplyScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankReplyScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankReplyScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  body: String
+
+  """All values that are not equal to given value."""
+  body_not: String
+
+  """All values that are contained in given list."""
+  body_in: [String!]
+
+  """All values that are not contained in given list."""
+  body_not_in: [String!]
+
+  """All values less than the given value."""
+  body_lt: String
+
+  """All values less than or equal the given value."""
+  body_lte: String
+
+  """All values greater than the given value."""
+  body_gt: String
+
+  """All values greater than or equal the given value."""
+  body_gte: String
+
+  """All values containing the given string."""
+  body_contains: String
+
+  """All values not containing the given string."""
+  body_not_contains: String
+
+  """All values starting with the given string."""
+  body_starts_with: String
+
+  """All values not starting with the given string."""
+  body_not_starts_with: String
+
+  """All values ending with the given string."""
+  body_ends_with: String
+
+  """All values not ending with the given string."""
+  body_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
 type TankReplySubscriptionPayload {
   mutation: MutationType!
   node: TankReply
@@ -6121,6 +7976,10 @@ input TankReplyUpdateInput {
   likes: LikesTankReplyUpdateManyWithoutReplyInput
 }
 
+input TankReplyUpdateManyDataInput {
+  body: String
+}
+
 input TankReplyUpdateManyMutationInput {
   body: String
 }
@@ -6128,19 +7987,30 @@ input TankReplyUpdateManyMutationInput {
 input TankReplyUpdateManyWithoutAuthorInput {
   create: [TankReplyCreateWithoutAuthorInput!]
   connect: [TankReplyWhereUniqueInput!]
+  set: [TankReplyWhereUniqueInput!]
   disconnect: [TankReplyWhereUniqueInput!]
   delete: [TankReplyWhereUniqueInput!]
   update: [TankReplyUpdateWithWhereUniqueWithoutAuthorInput!]
+  updateMany: [TankReplyUpdateManyWithWhereNestedInput!]
+  deleteMany: [TankReplyScalarWhereInput!]
   upsert: [TankReplyUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
 input TankReplyUpdateManyWithoutPostInput {
   create: [TankReplyCreateWithoutPostInput!]
   connect: [TankReplyWhereUniqueInput!]
+  set: [TankReplyWhereUniqueInput!]
   disconnect: [TankReplyWhereUniqueInput!]
   delete: [TankReplyWhereUniqueInput!]
   update: [TankReplyUpdateWithWhereUniqueWithoutPostInput!]
+  updateMany: [TankReplyUpdateManyWithWhereNestedInput!]
+  deleteMany: [TankReplyScalarWhereInput!]
   upsert: [TankReplyUpsertWithWhereUniqueWithoutPostInput!]
+}
+
+input TankReplyUpdateManyWithWhereNestedInput {
+  where: TankReplyScalarWhereInput!
+  data: TankReplyUpdateManyDataInput!
 }
 
 input TankReplyUpdateOneRequiredWithoutLikesInput {
@@ -6339,6 +8209,141 @@ input TankReplyWhereUniqueInput {
   id: ID
 }
 
+input TankScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TankScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TankScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TankScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
 type TankSubscriptionPayload {
   mutation: MutationType!
   node: Tank
@@ -6388,6 +8393,10 @@ input TankUpdateInput {
   likes: LikesTankUpdateManyWithoutTankInput
 }
 
+input TankUpdateManyDataInput {
+  title: String
+}
+
 input TankUpdateManyMutationInput {
   title: String
 }
@@ -6395,10 +8404,18 @@ input TankUpdateManyMutationInput {
 input TankUpdateManyWithoutProfileInput {
   create: [TankCreateWithoutProfileInput!]
   connect: [TankWhereUniqueInput!]
+  set: [TankWhereUniqueInput!]
   disconnect: [TankWhereUniqueInput!]
   delete: [TankWhereUniqueInput!]
   update: [TankUpdateWithWhereUniqueWithoutProfileInput!]
+  updateMany: [TankUpdateManyWithWhereNestedInput!]
+  deleteMany: [TankScalarWhereInput!]
   upsert: [TankUpsertWithWhereUniqueWithoutProfileInput!]
+}
+
+input TankUpdateManyWithWhereNestedInput {
+  where: TankScalarWhereInput!
+  data: TankUpdateManyDataInput!
 }
 
 input TankUpdateOneRequiredWithoutEquipementInput {

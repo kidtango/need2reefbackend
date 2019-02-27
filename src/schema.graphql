@@ -93,6 +93,18 @@ type Mutation {
   deleteFeedComment(id: ID!): FeedComment!
   createFeedCommentReply(data: FeedCommentReplyCreateInput!): FeedCommentReply!
   deleteFeedCommentReply(id: ID!): FeedCommentReply
+  updateFeedComment(data: FeedCommentUpdateInput!): FeedComment
+  updateFeedCommentReply(data: FeedCommentReplyUpdateInput!): FeedCommentReply
+}
+
+input FeedCommentReplyUpdateInput {
+  body: String!
+  feedCommentReplyId: ID!
+}
+
+input FeedCommentUpdateInput {
+  body: String!
+  feedCommentId: ID!
 }
 
 input FeedCommentReplyCreateInput {

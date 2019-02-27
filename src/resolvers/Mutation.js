@@ -336,7 +336,7 @@ const Mutation = {
   async deleteFeedComment(parent, { id }, { prisma, request }, info) {
     const userId = getUserId(request);
 
-    //Get author of the feed
+    //Get author for the feed comment
     const where = { id };
     const feedComment = await prisma.query.feedComment(
       { where },
@@ -350,6 +350,34 @@ const Mutation = {
     }
 
     return prisma.mutation.deleteFeedComment({ where }, info);
+  },
+  async updateFeedComment(parent, { data }, { prisma, request }, info) {
+    const { body, feedCommentId } = data;
+
+    const userId = getUserId(request);
+
+    //Get author for the feed comment
+    const feedComment = await prisma.query.feedComment(
+      { where: { id: feedCommentId } },
+      `{author { id }}`
+    );
+
+    //Check if user owns feed comment
+    const ownsFeedComment = feedComment.author.id === userId;
+
+    if (!ownsFeedComment) {
+      throw new Error("You don't have permission to update this comment!");
+    }
+
+    return prisma.mutation.updateFeedComment(
+      {
+        where: { id: feedCommentId },
+        data: {
+          body
+        }
+      },
+      info
+    );
   },
 
   async createFeedCommentReply(parent, { data }, { prisma, request }, info) {
@@ -390,6 +418,34 @@ const Mutation = {
     }
 
     return prisma.mutation.deleteFeedCommentReply({ where }, info);
+  },
+  async updateFeedCommentReply(parent, { data }, { prisma, request }, info) {
+    const { body, feedCommentReplyId } = data;
+
+    const userId = getUserId(request);
+
+    //Get author for the feed comment
+    const feedCommentReply = await prisma.query.feedCommentReply(
+      { where: { id: feedCommentReplyId } },
+      `{author { id }}`
+    );
+
+    //Check if user owns feed comment
+    const ownsFeedCommentReply = feedCommentReply.author.id === userId;
+
+    if (!ownsFeedCommentReply) {
+      throw new Error("You don't have permission to update this comment!");
+    }
+
+    return prisma.mutation.updateFeedCommentReply(
+      {
+        where: { id: feedCommentReplyId },
+        data: {
+          body
+        }
+      },
+      info
+    );
   }
 };
 

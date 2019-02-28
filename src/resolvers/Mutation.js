@@ -3,6 +3,7 @@ import getUserId from '../utils/getUserId';
 import generateToken from '../utils/generateToken';
 import hashPassword from '../utils/hashPassword';
 import { concatSeries } from 'async';
+import { forwardTo } from 'prisma-binding';
 
 const Mutation = {
   async createUser(parent, args, { prisma, response }, info) {
@@ -16,7 +17,6 @@ const Mutation = {
       }
     });
 
-    // console.log(user.id);
     // create aquarium profile for user
     await prisma.mutation.createProfile({
       data: {
@@ -25,6 +25,18 @@ const Mutation = {
             id: user.id
           }
         }
+      }
+    });
+
+    // Create empty profile picture for user
+    await prisma.mutation.createProfilePicture({
+      data: {
+        user: {
+          connect: {
+            id: user.id
+          }
+        },
+        picture: ''
       }
     });
 
@@ -446,7 +458,8 @@ const Mutation = {
       },
       info
     );
-  }
+  },
+  updateProfilePicture: forwardTo('prisma')
 };
 
 export { Mutation as default };

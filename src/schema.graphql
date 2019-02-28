@@ -95,6 +95,7 @@ type Mutation {
   deleteFeedCommentReply(id: ID!): FeedCommentReply
   updateFeedComment(data: FeedCommentUpdateInput!): FeedComment
   updateFeedCommentReply(data: FeedCommentReplyUpdateInput!): FeedCommentReply
+  updateProfilePicture(data: ProfilePictureUpdateInput!, where: ProfilePictureWhereUniqueInput!): ProfilePicture
 }
 
 input FeedCommentReplyUpdateInput {

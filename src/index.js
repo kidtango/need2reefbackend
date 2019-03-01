@@ -24,12 +24,21 @@ import server from './server';
 //   next();
 // });
 
+// server.start(
+//   {
+//     cors: {
+//       credentials: true,
+//       origin: process.env.FRONTEND_URL
+//     }
+//   },
+//   () => {
+//     console.log('The server is up!');
+//   }
+// );
+
 server.start(
   {
-    cors: {
-      credentials: true,
-      origin: process.env.FRONTEND_URL
-    }
+    port: process.env.PORT || 4000
   },
   () => {
     console.log('The server is up!');
